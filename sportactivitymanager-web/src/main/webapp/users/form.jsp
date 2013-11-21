@@ -3,8 +3,8 @@
     Created on : Nov 21, 2013, 8:00:03 AM
     Author     : Kuba Dobes
 
-    Formulá? pro zobrazení 5 údaj? o u?ivateli pro vypln?ní/editaci
-    Neobsahuje tla?ítko pro ulo?ení. To se p?idává a? v .jsp který form.jsp
+    Formular pro zobrazení 5 údaju o uzivateli pro vyplnení/editaci
+    Neobsahuje tlcitko pro ulození. To se pridává az v .jsp který form.jsp
 --%>
 
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>

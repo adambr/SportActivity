@@ -2,6 +2,8 @@
     Document   : edit
     Created on : Nov 21, 2013, 8:47:04 AM
     Author     : Kuba Dobes
+
+    Stránka pro editaci uzivatele. Obsahuje nadpis formular form.jsp s udaji o uzivateli a 2 tlacitka Uloz a
 --%>
 
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
