@@ -125,20 +125,22 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
      }
     
     //submitovací metoda pro save
+    //součást edit.jsp
     public Resolution save() {
         log.debug("save() user={}", user);
         userService.update(user);
         return new RedirectResolution(this.getClass(), "list");
     }
     //tlactiko pro CANCEL (Task 2)
-    //TODO
+    //součást edit.jsp
+    //TODO    
      public Resolution cancel() {
     //    log.debug("cancel() book={}", book);
         return new ForwardResolution("/book/list.jsp");
     }
-     
+          
     public List<UserDTO> getUsersList() {
-        return userService.findAll();
+        return usersList;
     }
     
     /**
