@@ -42,7 +42,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     protected UserService userService;
    
     //podle web2, pro zobrazení seznamu uživatelů
-    private List<UserDTO> usersList;
+    private List<UserDTO> users;
 
     public UserDTO getUser() {
         return user;
@@ -57,9 +57,9 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     @DefaultHandler
     public Resolution list() {
         log.debug("list()");
-        usersList = userService.findAll();
+        users = userService.findAll();
         //předání řízení jsp stránce
-        return new ForwardResolution("/users/list.jsp");
+        return new ForwardResolution("/user/list.jsp");
     }
         
    /** --- part for adding a user 
@@ -136,11 +136,11 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     //TODO    
      public Resolution cancel() {
     //    log.debug("cancel() book={}", book);
-        return new ForwardResolution("/book/list.jsp");
+        return new ForwardResolution("/user/list.jsp");
     }
           
     public List<UserDTO> getUsersList() {
-        return usersList;
+        return users;
     }
     
     /**
@@ -168,7 +168,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
     //fill up the data for the table if validation errors occured
-        usersList = userService.findAll();
+        users = userService.findAll();
         //return null to let the event handling continue
         return null;
     }

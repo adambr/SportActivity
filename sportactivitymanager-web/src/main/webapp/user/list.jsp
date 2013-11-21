@@ -33,6 +33,7 @@
             
             <%--buňky tabulky - hodnoty 
             actionBean.users - zavolá metodu findAll z DefaultHnadleru v UserActionBean
+            
             --%>
             <c:forEach items="${actionBean.users}" var="user">
                 <tr>

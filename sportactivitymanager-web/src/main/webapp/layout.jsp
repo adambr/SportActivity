@@ -20,7 +20,7 @@
    </div>
    <div id="content">
        <%--<s:messages/> - umožnuje vypsat zprávy typu: kniha byla přidána, smazána--%>
-       <s:messages
+       <s:messages/>
        <%--zde se zobrazí ta hlavní stránka s name=body - stejne name ma i index.jsp--%>
        <s:layout-component name="body"/>
     </div>

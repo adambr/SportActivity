@@ -22,7 +22,7 @@
                      stejný form.jsp se používá na úvodní stránce (list.jsp) pro přidání nového uživatele--%>
                 <%@include file="form.jsp"%>
                 <%-- tlacitko pro Uložení--%>
-                <s:submit name="save"><f:message key="user.edit.save"/></s:submit>                     <%-- edit.jsp formular se otervre podle nastaveni v BooksActionBean--%>
+                <s:submit name="save"><f:message key="user.edit.save"/></s:submit>                 <%-- edit.jsp formular se otervre podle nastaveni v UserActionBean--%>
                 
                 <%-- tlacitko pro Cancel Edit (Task 2)--%>
                 <s:submit name="cancel"><f:message key="user.edit.cancel"/></s:submit>  
