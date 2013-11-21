@@ -15,12 +15,13 @@
    <div id="navigation">
      <ul>
        <li><s:link href="/index.jsp"><f:message key="navigation.index"/></s:link></li>
-       <li><s:link href="/user.jsp"><f:message key="navigation.user"/></s:link></li>
        
      </ul>
    </div>
    <div id="content">
-       <s:messages/>
+       <%--<s:messages/> - umožnuje vypsat zprávy typu: kniha byla přidána, smazána--%>
+       <s:messages
+       <%--zde se zobrazí ta hlavní stránka s name=body - stejne name ma i index.jsp--%>
        <s:layout-component name="body"/>
     </div>
 </body>

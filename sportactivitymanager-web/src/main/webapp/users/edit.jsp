@@ -15,6 +15,7 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" var="actionBean"/>
 
         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
+            <%-- s:hidden pro drzeni ID editované knihy--%>
             <s:hidden name="user.id"/>
             <fieldset><legend><f:message key="user.edit.edit"/></legend>
                 <%-- vložení formuláře pro zadání noých údajů

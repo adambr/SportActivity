@@ -31,7 +31,9 @@
                 <th></th>
             </tr>
             
-            <%--buňky tabulky - hodnoty --%>
+            <%--buňky tabulky - hodnoty 
+            actionBean.users - zavolá metodu findAll z DefaultHnadleru v UserActionBean
+            --%>
             <c:forEach items="${actionBean.users}" var="user">
                 <tr>
                     <td>${user.id}</td>
@@ -45,6 +47,7 @@
                      <%-- odkaz "edit" pro editování
                           zobrazuje se napravo v řádku
                           EVENT = EDIT
+                     URL na webu ukazuje ID usera kterého budu editovat
                      --%>
                      <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" event="edit">
                          <s:param name="user.id" value="${user.id}"/> edit </s:link>
@@ -54,7 +57,10 @@
                         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
                            <%-- skryti user ID pro zapamatování--%>
                             <s:hidden name="user.id" value="${user.id}"/>
-                            <%-- tlacitko pro smazani--%>
+                            <%-- tlacitko pro smazani
+                                Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
+                                Podle toho Stripes poznají že mají volat metodu delete
+                            --%>
                             <s:submit name="delete"><f:message key="user.list.delete"/></s:submit>
                         </s:form>
                     </td>
@@ -70,6 +76,7 @@
                     Tim se zobrazi formular (5 řadků pro zadáni nového uživatele)--%>
                 <%@include file="form.jsp"%>                
                 <%--tlačítko pod formulářem pro vytvoření uživatele:--%>
+                <%-- submit add vyvolá metodu add--%>
                 <s:submit name="add">Vytvořit nového uživatele</s:submit>
             </fieldset>
         </s:form>

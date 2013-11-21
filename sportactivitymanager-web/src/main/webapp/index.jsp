@@ -6,7 +6,7 @@
     <s:layout-component name="body">
 
        <ul>
-           <li><s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web"><f:message key="index.users.link"/></s:link></li>
+           <li><s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean"><f:message key="index.users.link"/></s:link></li>
        </ul>
 
     </s:layout-component>

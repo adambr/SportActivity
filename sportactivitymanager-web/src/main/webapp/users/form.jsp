@@ -8,6 +8,7 @@
 --%>
 
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
+<%--zde se zobrazují chyby (tam kde je tag s:errors)--%>
 <s:errors/>
 <table>
     <tr>
@@ -22,7 +23,7 @@
         <th><s:label for="b3" name="user.birthday"/></th>
         <td><s:checkbox id="b3" name="user.birthday"/></td>
         
-        <td><s: id="b3" name="user.birthday"/></td>
+    <%-- REDO data Picker    <td><s: id="b3" name="user.birthday"/></td> --%>
     
     </tr>
     <tr>

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.web;
 
 import net.sourceforge.stripes.action.ActionBean;
@@ -10,7 +6,7 @@ import org.apache.taglibs.standard.functions.Functions;
 
 /**
  * Base actionBean implementing the required methods for setting and getting context.
- *
+ * For not write set/get method in every ActionBean
  * @author Dobes Kuba
  */
 public abstract class BaseActionBean implements ActionBean {
