@@ -1,15 +1,11 @@
 package cz.muni.fi.pa165.sportactivitymanager.web;
  
-import cz.muni.fi.pa165.sportactivitymanager.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Date;
  
 import java.util.List;
 import net.sourceforge.stripes.validation.Validate;
