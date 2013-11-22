@@ -50,9 +50,9 @@
             <c:forEach items="${actionBean.users}" var="user">
                 <tr>
                     <td>${user.id}</td>
-                    <td><c:out value="${user.firstname}"/></td>
-                    <td><c:out value="${user.lastname}"/></td>
-                    <td><c:out value="${user.birthday}"/></td>
+                    <td><c:out value="${user.firstName}"/></td>
+                    <td><c:out value="${user.lastName}"/></td>
+                    <td><c:out value="${user.birthDay}"/></td>
                     <td><c:out value="${user.weight}"/></td>
                     <td><c:out value="${user.gender}"/></td>
                     

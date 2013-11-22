@@ -65,17 +65,16 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     *   validuje to při volání metody add a save
     **/
     @ValidateNestedProperties(value = {        
-            @Validate(on = {"add", "save"}, field = "firstname", required = true),
-            @Validate(on = {"add", "save"}, field = "lastname", required = true),
-            @Validate(on = {"add", "save"}, field = "birthday", required = true),
+            @Validate(on = {"add", "save"}, field = "firstName", required = true),
+            @Validate(on = {"add", "save"}, field = "lastName", required = true),
+            @Validate(on = {"add", "save"}, field = "birthDay", required = true),
             @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 1  ),
             @Validate(on = {"add", "save"}, field = "gender", required = true)
     })
     
     /**
      * Save user part
-    **/
-    
+    **/    
     //escapeHTML - aby uživatel nevkládal žádny ošklivý znaky(javascript) - nespustí se
     //tlacitko "Vytvořit nového uživatele"
     //user je asi stejnej user co je ve form.jsp  user.něco

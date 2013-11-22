@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Fri Nov 22 11:41:20 CET 2013:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-0142-7f66-4d59-00000688aa40 
-on database directory memory:C:\Users\Phaser\Documents\NetBeansProjects\SportActivity\sport-activity-manager\unit-testing-jpa  with class loader sun.misc.Launcher$AppClassLoader@3af4d6b3 
-Loaded from file:/C:/Users/Phaser/.m2/repository/org/apache/derby/derby/10.9.1.0/derby-10.9.1.0.jar
+Fri Nov 22 20:38:11 CET 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-0142-8151-cc83-000002cf2830 
+on database directory memory:C:\Users\tempest\Documents\NetBeansProjects\SportActivity\sport-activity-manager\unit-testing-jpa  with class loader sun.misc.Launcher$AppClassLoader@4187a8e0 
+Loaded from file:/C:/Users/tempest/.m2/repository/org/apache/derby/derby/10.9.1.0/derby-10.9.1.0.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_17-b02
-user.dir=C:\Users\Phaser\Documents\NetBeansProjects\SportActivity\sport-activity-manager
+java.runtime.version=1.7.0_40-b43
+user.dir=C:\Users\tempest\Documents\NetBeansProjects\SportActivity\sport-activity-manager
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

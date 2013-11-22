@@ -12,16 +12,16 @@
 <s:errors/>
 <table>
     <tr>
-        <th><s:label for="b1" name="user.firstname"/></th>
-        <td><s:text id="b1" name="user.firstname"/></td>
+        <th><s:label for="b1" name="user.firstName"/></th>
+        <td><s:text id="b1" name="user.firstName"/></td>
     </tr>
     <tr>
-        <th><s:label for="b2" name="user.lastname"/></th>
-        <td><s:text id="b2" name="user.lastname"/></td>
+        <th><s:label for="b2" name="user.lastName"/></th>
+        <td><s:text id="b2" name="user.lastName"/></td>
     </tr>
     <tr>
-        <th><s:label for="b3" name="user.birthday"/></th>
-        <td><s:text id="datepicker" name="user.birthday"/></td>
+        <th><s:label for="b3" name="user.birthDay"/></th>
+        <td><s:text id="datepicker" name="user.birthDay"/></td>
     <%-- 
         <th><s:label for="b3" name="user.birthday"/></th>
         <td><s:text id="b3" name="user.birthday"/></td>
