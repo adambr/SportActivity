@@ -5,8 +5,7 @@ import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
- 
+import org.slf4j.LoggerFactory; 
 import java.util.List;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -16,23 +15,19 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.escapeHTML;
 import net.sourceforge.stripes.controller.LifecycleStage;
 /*
- * @author tempest
+ * @author Kuba Dobes
  * ValidationErrorHandler slouží pro ověření vyplněných vstupů
  */
 
 //říká na jaká URL to reaguje- ty co začínají /users
 //za lomítkem je název metody, která se má zavolat (list, add...)
-//v url může být ID usera
+//v url může být i ID usera
 @UrlBinding("/users/{$event}/{user.id}")
 public class UserActionBean extends BaseActionBean implements ValidationErrorHandler {
- 
-    //ve web2 se ActionBean implementuje v BaseActionBean a pak se context pouzíva jinak
-    
+
     final static Logger log = LoggerFactory.getLogger(UserActionBean.class);
- 
- //   private ActionBeanContext context;
-    private UserDTO user;    
-    
+
+    private UserDTO user;        
     //Spring injektuje instanci userServiceImpl a já se nemusím starat o to kde se vezme (viz web.xml)
     @SpringBean
     protected UserService userService;
@@ -158,7 +153,6 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         return new RedirectResolution(this.getClass(), "list");
     }    
 
-    //podle web2
     //po implementaci Validation bylo potreba pridat tuto tridu, 
     //když neproběhla Validace správně tak se musí zde uložit seznam chyb.
     @Override

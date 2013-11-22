@@ -13,20 +13,20 @@
         <body>
             <div id="page">
                 <div id="login-panel-cont">
-                    <div id="title">Sport Activity Manager</div>
+                    <div id="title"><f:message key="${titlekey}"/></div>
                     <div id="login">Administrator | logout</div>
                 </div>
                 <div id="header">
                     <div id="logo"><img src="${pageContext.request.contextPath}/img/logo.png" alt="logo"></div>
                     <div id="logo-title">
                         <div class="title-line1">
-                            <span class="highlight">TRACK</span> YOUR ACTIVITIES<br>
+                            <span class="highlight"><f:message key="header.track"/> </span> <f:message key="header.track.subject"/> <br>
                         </div>
                         <div class="title-line2">
-                            <span class="highlight">CHECK</span> CALORIES BURNED<br>
+                            <span class="highlight"><f:message key="header.check"/></span> <f:message key="header.check.subject"/><br>
                         </div>
                         <div class="title-line3">
-                            JUST BE <span class="highlight">FIT</span><br>
+                            <f:message key="header.just"/><span class="highlight"> <f:message key="header.just.subject"/></span><br>
                         </div>
                     </div>
                 </div>
