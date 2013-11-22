@@ -5,15 +5,10 @@
 package cz.muni.fi.pa165.sportactivitymanager.web;
 
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
-import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
-import cz.muni.fi.pa165.sportactivitymanager.service.impl.SportRecordServiceImpl;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;

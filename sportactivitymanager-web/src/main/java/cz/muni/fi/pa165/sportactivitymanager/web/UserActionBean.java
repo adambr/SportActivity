@@ -34,7 +34,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     //pro zobrazení seznamu uživatelů
     private List<UserDTO> users;
              
-    public List<UserDTO> getUsersList() {
+    public List<UserDTO> getUsers() {
         return users;
     }
     public UserDTO getUser() {

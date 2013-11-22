@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <th><s:label for="b4" name="user.weight"/></th>
-        <td><s:text id="b4" name="user.weight"></td>
+        <td><s:text id="b4" name="user.weight"/></td>
     </tr>
     <tr>
         <th><s:label for="b5" name="user.gender"/></th>
