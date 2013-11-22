@@ -21,9 +21,12 @@
     </tr>
     <tr>
         <th><s:label for="b3" name="user.birthday"/></th>
-        <td><s:checkbox id="b3" name="user.birthday"/></td>
+        <td><s:text id="datepicker" name="user.birthday"/></td>
+    <%-- 
+        <th><s:label for="b3" name="user.birthday"/></th>
+        <td><s:text id="b3" name="user.birthday"/></td>
         
-    <%-- REDO data Picker    <td><s: id="b3" name="user.birthday"/></td> --%>
+    REDO dataPicker    <td><s: id="b3" name="user.birthday"/></td> --%>
     
     </tr>
     <tr>

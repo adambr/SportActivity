@@ -28,21 +28,21 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     final static Logger log = LoggerFactory.getLogger(UserActionBean.class);
 
     private UserDTO user;        
-    //Spring injektuje instanci userServiceImpl a já se nemusím starat o to kde se vezme (viz web.xml)
+    //nnotace SpringBean injektuje instanci userServiceImpl a já se nemusím starat o to kde se vezme (viz web.xml)
     @SpringBean
     protected UserService userService;
-   
-    //podle web2, pro zobrazení seznamu uživatelů
+    //pro zobrazení seznamu uživatelů
     private List<UserDTO> users;
-
+             
+    public List<UserDTO> getUsersList() {
+        return users;
+    }
     public UserDTO getUser() {
         return user;
     }
-
     public void setUser(UserDTO user) {
         this.user = user;
-    }        
-     
+    }
     
     //zajišťuje zobrazení stránky s tabulkou
     @DefaultHandler
@@ -128,10 +128,6 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
      public Resolution cancel() {
     //    log.debug("cancel() book={}", book);
         return new ForwardResolution("/user/list.jsp");
-    }
-          
-    public List<UserDTO> getUsersList() {
-        return users;
     }
     
     /**

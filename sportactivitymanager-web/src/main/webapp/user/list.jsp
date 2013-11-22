@@ -32,9 +32,7 @@
             </tr>
             
             <%--buňky tabulky - hodnoty 
-            actionBean.users - zavolá metodu findAll z DefaultHnadleru v UserActionBean
-            
-            --%>
+            actionBean.users - zavolá metodu findAll z DefaultHnadleru v UserActionBean--%>
             <c:forEach items="${actionBean.users}" var="user">
                 <tr>
                     <td>${user.id}</td>
@@ -43,28 +41,31 @@
                     <td><c:out value="${user.birthday}"/></td>
                     <td><c:out value="${user.weight}"/></td>
                     <td><c:out value="${user.gender}"/></td>
-                    <td>
-                     <%-- edit.jsp formular se otevre podle nastaveni v UserActionBean--%>
+                    
                      <%-- odkaz "edit" pro editování
                           zobrazuje se napravo v řádku
                           EVENT = EDIT
-                     URL na webu ukazuje ID usera kterého budu editovat
+                          URL na webu ukazuje ID usera kterého budu editovat
                      --%>
+                     <%-- edit.jsp formular se otevre podle nastaveni v UserActionBean--%>
+                    <td>
                      <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" event="edit">
-                         <s:param name="user.id" value="${user.id}"/> edit </s:link>
+                         <s:param name="user.id" value="${user.id}"/> <f:message key="user.list.edit"/> </s:link>
                     </td>
                     
+                    
+                    <%-- tlacitko pro smazani
+                                Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
+                                Podle toho Stripes poznají že mají volat metodu delete
+                    --%>
                     <td>
                         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
                            <%-- skryti user ID pro zapamatování--%>
                             <s:hidden name="user.id" value="${user.id}"/>
-                            <%-- tlacitko pro smazani
-                                Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
-                                Podle toho Stripes poznají že mají volat metodu delete
-                            --%>
                             <s:submit name="delete"><f:message key="user.list.delete"/></s:submit>
                         </s:form>
                     </td>
+                    
                 </tr>
             </c:forEach>
         </table>
