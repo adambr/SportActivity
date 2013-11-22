@@ -44,10 +44,16 @@ public class CaloriesTableDAOImpl implements CaloriesTableDAO
     {
         if (caloriesTable == null) throw new NullPointerException();
         
-        if (em.find(CaloriesTable.class, caloriesTable.getId()) == null)
+        CaloriesTable calories = em.find(CaloriesTable.class, caloriesTable.getId());
+        
+        if (calories == null)
             throw new IllegalArgumentException("This CaloriesTable entity does not exist in DB.");
                
-        em.persist(caloriesTable);               
+        calories.setCalories60Kg(caloriesTable.getCalories60Kg());
+        calories.setCalories70Kg(caloriesTable.getCalories70Kg());
+        calories.setCalories80Kg(caloriesTable.getCalories80Kg());
+        calories.setCalories90Kg(caloriesTable.getCalories90Kg());
+        em.persist(calories);               
     }
     
     public void delete(Long id)

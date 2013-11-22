@@ -79,10 +79,13 @@ public class SportActivityDAOImpl implements SportActivityDAO {
         if (sportActivity == null)
             throw new NullPointerException();
         
-        if (em.find(SportActivity.class, sportActivity.getId()) == null)
+        SportActivity activity = em.find(SportActivity.class, sportActivity.getId());
+        
+        if (activity == null)
             throw new IllegalArgumentException("this entity does not exist in database");
         
-        em.persist(sportActivity);
+        activity.setName(sportActivity.getName());
+        em.persist(activity);
     }
 
     public List<SportActivity> findAll() {
