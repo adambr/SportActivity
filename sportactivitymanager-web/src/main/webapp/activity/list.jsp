@@ -17,6 +17,13 @@
         <c:forEach items="${actionBean.activities}" var="activity">
             ${activity}<br>
         </c:forEach>
+            
+        <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean">
+            <fieldset><legend>nová aktivita</legend>
+                <%@include file="form.jsp"%>
+                <s:submit name="add">Vytvořit novou aktivitu</s:submit>
+            </fieldset>
+        </s:form>
         
     </s:layout-component>
 </s:layout-render>
