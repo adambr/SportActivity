@@ -31,6 +31,11 @@
         
         <!-- servlet, JSP, JSTL -->
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>SportActivityManager</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>

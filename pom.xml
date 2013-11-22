@@ -11,5 +11,41 @@
         <module>sport-activity-manager</module>
         
         <module>sportactivitymanager-web</module>
+        <module>SportActivityManager-Model</module>
     </modules>
+    
+      <developers>
+        <developer>
+            <name>Petr Jelínek</name>
+        </developer>
+        <developer>
+            <name>Adam Brauner</name>
+        </developer>
+        <developer>
+            <name>Kuba Dobeš</name>
+        </developer>
+        <developer>
+            <name>Michal Galo</name>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <!-- Java language version -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>7</source>
+                    <target>7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
 </project>
