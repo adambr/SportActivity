@@ -1,0 +1,81 @@
+body {
+	background: url(../img/bg.jpg) center repeat-y;
+	margin: 0;
+}
+
+h2 {
+	color: #5ac846;
+	margin: 1px 0 0 0;
+	font-size: 22px;
+	text-align: center;
+}
+
+.clear {
+    clear: both;
+}
+
+.h2-cont {
+	float: left;
+	background-color: #ccf0ca;
+	height: 25px;
+	width: 800px;
+	margin: 0 80px 10px 80px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#page {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#login-panel-cont {
+	background-color: #5ac846;
+	width: 960px;
+	height: 30px;
+}
+
+#login {
+	float: right;
+	margin: 5px 10px 0 0;
+	color: #ccf0ca;
+}
+
+#title {
+	float: left;
+	margin: 1px 0 0 73px;
+	color: #ccf0ca;
+	font-size: 22px;
+}
+
+#logo {
+	position: absolute;
+	top: 10px;
+	left: 30px;
+}
+
+#header {
+	width: 960px;
+	height: 200px;
+	position: relative;
+}
+
+#logo-title {
+	position: absolute;
+	top: 50px;
+	left: 400px;
+	font-size: 17px;
+}
+
+.highlight {
+	color: #5ac846;
+	font-weight: bold;
+}
+
+.title-line2 {
+	margin: 2px 0 0 120px;
+}
+.title-line3 {
+	margin: 2px 0 0 245px;
+}
