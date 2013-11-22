@@ -13,15 +13,14 @@
 <s:layout-render name="/layout.jsp" titlekey="records">
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" var="actionBean"/>
-        
-       
+
         <table class="basic">
             <tr>
                 <th>id</th>
                 <th><f:message key="record.user"/></th>
                 <th><f:message key="record.duration"/></th>
                 <th><f:message key="record.distance"/></th>
-                <th><f:message key="record.StartTime"/></th>
+                <th><f:message key="record.startTime"/></th>
             </tr>
             <c:forEach items="${actionBean.records}" var="record">
                 <tr>
@@ -29,10 +28,17 @@
                     <td><c:out value="${record.user}"/></td>
                     <td><c:out value="${record.duration}"/></td>
                     <td><c:out value="${record.distance}"/></td>
-                    <td><c:out value="${record.StartTime}"/></td>
+                    <td><c:out value="${record.startTime}"/></td>
                 </tr>
             </c:forEach>
-        </table>    
-        
+        </table>   
+            
+              <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
+            <fieldset><legend><f:message key="record.list.newRecord"/></legend>
+                <%@include file="form.jsp"%>
+                <s:submit name="add"><f:message key="record.list.addNewRecord"/></s:submit>
+                </fieldset>
+        </s:form>      
+
     </s:layout-component>
 </s:layout-render>
