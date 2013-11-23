@@ -21,10 +21,11 @@
     <tr>
         <th><s:label for="b4" name="record.startTime"/></th>
         <td>
-            <s:select name="activityId">
+            <s:select name="aktivita">
                 <s:option value="">Select One</s:option>
                 <s:options-collection collection="${actionBean.activity}" value="id" label="name"/>
             </s:select>
+            <s:hidden name="user.id"/>
         </td>
     </tr>
 

@@ -38,6 +38,18 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     @SpringBean
     protected SportRecordService srs;
     private List<SportRecordDTO> records;
+    private Long aktivita;
+
+    public Long getAktivita() {
+        return aktivita;
+    }
+
+    public void setAktivita(Long aktivita) {
+        this.aktivita = aktivita;
+    }
+
+
+
 
     public List<SportRecordDTO> getRecords() {
         return records;
@@ -67,6 +79,7 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
         String ids = getContext().getRequest().getParameter("user.id");
         log.info("******************************************");
         log.info(ids);
+        log.info(user.getId().toString());
         log.info("******************************************");
         user = userService.getByID(Long.parseLong(ids));
         records = srs.findAll();
@@ -81,24 +94,16 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
         @Validate(on = {"add", "save"}, field = "startTime", required = true)
     })
     private SportRecordDTO record;
-
-    
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"add"})
-    public void loadBookFromDatabase() {
-        String ids = getContext().getRequest().getParameter("user.id");
-        log.info(ids);
-        if (ids == null) return;
-        user = userService.getByID(Long.parseLong(ids));
-        record.setUserDTO(user);
-        //add activity
-    }
     
     public Resolution add() {
-        
-        srs.create(record);
+        log.info(user.getId().toString());
+        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        //log.info(aktivita.toString());
+        //srs.create(record);
 //        sr.getUserDTO()
         //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(sr.getTitle()),escapeHTML(book.getAuthor())));
-        return new RedirectResolution(this.getClass(), "list");
+        return new RedirectResolution(this.getClass(), "list")
+                .addParameter("user.id", user.getId());
     }
 
 //    
@@ -133,6 +138,7 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
 
     @Override
     public Resolution handleValidationErrors(ValidationErrors ve) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        records = srs.findAll();
+        return null;
     }
 }

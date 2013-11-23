@@ -54,7 +54,6 @@
         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
             <fieldset><legend><f:message key="record.list.newRecord"/></legend>
                 <%@include file="form.jsp"%>
-                <s:hidden name="user.id"/>
                 <s:submit name="add"><f:message key="record.list.addNewRecord"/></s:submit>
                 </fieldset>
         </s:form>      
