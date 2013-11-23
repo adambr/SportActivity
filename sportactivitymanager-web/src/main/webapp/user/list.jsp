@@ -44,9 +44,9 @@
                 <%--hlavièka tabulky--%>
                 <tr>
                     <th>ID</th>
-                    <th><f:message key="user.firstname"/></th>
-                    <th><f:message key="user.lastname"/></th>
-                    <th><f:message key="user.birthday"/></th>
+                    <th><f:message key="user.firstName"/></th>
+                    <th><f:message key="user.lastName"/></th>
+                    <th><f:message key="user.birthDay"/></th>
                     <th><f:message key="user.weight"/></th>
                     <th><f:message key="user.gender"/></th>
                         <%-- <th></th> 2 bunky hlavicky pro sloupec edit a smazat. v novem stylu nejsou potøeba

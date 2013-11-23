@@ -15,14 +15,13 @@
         <td><s:text id="b2" name="record.distance"/></td>
     </tr>
     <tr>
-        <th><s:label for="b3" name="record.startTime"/></th>
+        <th><s:label for="datepicker" name="record.startTime"/></th>
         <td><s:text id="datepicker" name="record.startTime"/></td>
     </tr>
     <tr>
         <th><s:label for="b4" name="record.aktivity"/></th>
         <td>
             <s:select name="aktivita">
-                <s:option value=""><f:message key="record.form.select"/></s:option>
                 <s:options-collection collection="${actionBean.activity}" value="id" label="name"/>
             </s:select>
             <s:hidden name="user.id"/>

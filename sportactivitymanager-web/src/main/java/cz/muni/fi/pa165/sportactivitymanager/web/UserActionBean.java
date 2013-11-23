@@ -109,7 +109,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
 
     public Resolution edit() {
         log.debug("edit() user={}", user);
-        return new ForwardResolution("/user/list.jsp");
+        return new ForwardResolution("/user/edit.jsp");
     }
 
     //submitovací metoda pro save

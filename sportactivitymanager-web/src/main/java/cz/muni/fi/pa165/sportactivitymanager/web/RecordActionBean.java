@@ -37,6 +37,11 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     protected SportRecordService srs;
     private List<SportRecordDTO> records;
     private Long aktivita;
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"add", "save"}, field = "duration", required = true),
+        @Validate(on = {"add", "save"}, field = "distance", required = true),
+        @Validate(on = {"add", "save"}, field = "startTime", required = true)
+    })
     private SportRecordDTO record;
 
     public SportRecordDTO getRecord() {
@@ -91,12 +96,6 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
         return new ForwardResolution("/record/list.jsp");
     }
 
-    @ValidateNestedProperties(value = {
-        @Validate(on = {"add", "save"}, field = "duration", required = true),
-        @Validate(on = {"add", "save"}, field = "distance", required = true),
-        @Validate(on = {"add", "save"}, field = "startTime", required = true),
-        @Validate(on = {"add", "save"}, field = "aktivity", required = true)
-    })
     public Resolution add() {
         log.info(user.getId().toString());
         log.info(aktivita.toString());

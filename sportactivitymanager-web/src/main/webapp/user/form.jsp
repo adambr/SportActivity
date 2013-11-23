@@ -11,15 +11,15 @@
 <s:errors/>     <%--zde se zobrazují chyby (tam kde je tag s:errors)--%>
 <table>
     <tr>
-        <th><s:label for="b1" name="user.firstname"/></th> <%--nazev pole, bere podle lokalizace proto vse male--%>
+        <th><s:label for="b1" name="user.firstName"/></th> <%--nazev pole, bere podle lokalizace proto vse male--%>
         <td><s:text id="b1" name="user.firstName"/></td> <%--nazev atributu usera. Bere z UserDTO, proto camelCase--%>
     </tr>
     <tr>
-        <th><s:label for="b2" name="user.lastname"/></th>
+        <th><s:label for="b2" name="user.lastName"/></th>
         <td><s:text id="b2" name="user.lastName"/></td>
     </tr>
     <tr>
-        <th><s:label for="b3" name="user.birthday"/></th>
+        <th><s:label for="datepicker" name="user.birthDay"/></th>
         <td><s:text id="datepicker" name="user.birthDay"/></td>
     </tr>
     <tr>
