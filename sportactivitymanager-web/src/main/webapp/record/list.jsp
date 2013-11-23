@@ -11,7 +11,7 @@
 <%--<s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" var="actionBean"/>
 --%>
 
-<s:layout-render name="/layout.jsp" titlekey="records">
+<s:layout-render name="/layout.jsp" titlekey="record.title">
     <s:layout-component name="header">
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -29,41 +29,47 @@
     </s:layout-component> 
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" var="actionBean"/>
+
+        <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" class="nav"> 
+            <f:message key="record.list.userlist"/>
+        </s:link>
         <div class="list">
-        <table>
-            <tr>
-                <th>id</th>
-                <th><f:message key="record.duration"/></th>
-                <th><f:message key="record.distance"/></th>
-                <th><f:message key="record.startTime"/></th>
-                <th><f:message key="record.user"/></th>
-                <th><f:message key="record.activity"/></th>
-            </tr>
-            <c:forEach items="${actionBean.records}" var="record">
+            <table>
                 <tr>
-                    <td>${record.id}</td>
-                    <td><c:out value="${record.duration}"/></td>
-                    <td><c:out value="${record.distance}"/></td>
-                    <td><c:out value="${record.startTime}"/></td>
-                    <td><c:out value="${record.userDTO.firstName} ${record.userDTO.lastName}"/></td>
-                    <td><c:out value="${record.activityDTO.name}"/></td>
-                    <td width="20">
+                    <th>id</th>
+                    <th><f:message key="record.duration"/></th>
+                    <th><f:message key="record.distance"/></th>
+                    <th><f:message key="record.startTime"/></th>
+                    <th><f:message key="record.user"/></th>
+                    <th><f:message key="record.aktivity"/></th>
+                </tr>
+                <c:forEach items="${actionBean.records}" var="record">
+                    <tr>
+                        <td>${record.id}</td>
+                        <td><c:out value="${record.duration}"/></td>
+                        <td><c:out value="${record.distance}"/></td>
+                        <td><c:out value="${record.startTime}"/></td>
+                        <td><c:out value="${record.userDTO.firstName} ${record.userDTO.lastName}"/></td>
+                        <td><c:out value="${record.activityDTO.name}"/></td>
+                        <td width="20">
                             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
                                 <s:hidden name="record.id" value="${record.id}"/>
                                 <s:hidden name="user.id" value="${user.id}"/>
-                                <s:submit name="delete">Smazat</s:submit>
+                                <s:submit name="delete"><f:message key="record.list.delete"/></s:submit>
                             </s:form>
                         </td>
-                </tr>
-            </c:forEach>
-        </table>   
+                    </tr>
+                </c:forEach>
+            </table>   
         </div>
-        <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
-            <fieldset><legend><f:message key="record.list.newRecord"/></legend>
-                <%@include file="form.jsp"%>
-                <s:submit name="add"><f:message key="record.list.addNewRecord"/></s:submit>
-                </fieldset>
-        </s:form>      
+        <div class="new">
+            <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
+                <fieldset><legend><f:message key="record.list.newRecord"/></legend>
+                    <%@include file="form.jsp"%>
+                    <s:submit name="add"><f:message key="record.list.addNewRecord"/></s:submit>
+                    </fieldset>
+            </s:form>     
+        </div>
 
     </s:layout-component>
 </s:layout-render>

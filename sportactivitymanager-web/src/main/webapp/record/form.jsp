@@ -22,7 +22,7 @@
         <th><s:label for="b4" name="record.aktivity"/></th>
         <td>
             <s:select name="aktivita">
-                <s:option value="">Select One</s:option>
+                <s:option value=""><f:message key="record.form.select"/></s:option>
                 <s:options-collection collection="${actionBean.activity}" value="id" label="name"/>
             </s:select>
             <s:hidden name="user.id"/>
