@@ -8,6 +8,14 @@
         <head>
             <title><f:message key="${titlekey}"/></title>
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
+            <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+            <script>
+                $(function() {
+                    setTimeout(function() {
+                        $('.messages').fadeOut('fast');
+                    }, 3000);
+                });
+            </script>
             <s:layout-component name="header"/>
 
         </head>

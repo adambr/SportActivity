@@ -11,7 +11,7 @@ h2 {
 }
 
 .clear {
-    margin-top: 20xp;
+    margin-top: 20px;
     clear: both;
 }
 
@@ -155,4 +155,17 @@ h2 {
 
 .list a:hover {
     text-decoration: underline;
+}
+
+.messages {
+    position: absolute;
+    border: 1px solid darkgreen;
+    background-color: lightgreen;
+    left: 306px;
+    top: -37px;
+    padding-right: 5px;
+}
+
+#content {
+    position: relative;
 }

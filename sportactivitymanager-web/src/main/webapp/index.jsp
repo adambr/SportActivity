@@ -7,7 +7,6 @@
         <div id="menu-box">
             <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" class="users"><f:message key="index.users.link"/></s:link>
             <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" class="activity"><f:message key="index.activities.link"/></s:link>
-            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" class="universal">Správa záznamů aktivit</s:link>
             </div>
     </s:layout-component>
 </s:layout-render>

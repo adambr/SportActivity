@@ -9,11 +9,13 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.CaloriesTableService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
+import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.escapeHTML;
 import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
@@ -100,6 +102,7 @@ public class ActivityActionBean extends BaseActionBean implements ValidationErro
 
     @DefaultHandler
     public Resolution list() {
+        log.info("@@@@@@@@@@@@@@@@@@@@@@");
         activities = activityService.findAll();
         return new ForwardResolution("/activity/list.jsp");
     }
@@ -109,12 +112,14 @@ public class ActivityActionBean extends BaseActionBean implements ValidationErro
         caloriesService.create(calories);
         activity.setCalories(calories);
         activityService.create(activity);
+        getContext().getMessages().add(new LocalizableMessage("activity.add.message", escapeHTML(activity.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
     
     public Resolution delete() {
         activity = activityService.getSportActivity(activity.getId());
         activityService.delete(activity);
+        getContext().getMessages().add(new LocalizableMessage("activity.del.message", escapeHTML(activity.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
     
