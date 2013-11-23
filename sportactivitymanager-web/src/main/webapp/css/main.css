@@ -15,15 +15,40 @@ h2 {
     clear: both;
 }
 
-.h2-cont {
+
+
+#menu-box {
+    width: 650px;
+    margin: 40px auto 0 auto;
+}
+
+#menu-box a {
     float: left;
+    display: block;
+    width: 300px;
+    height: 100px;
+    margin: 0 10px 10px 0;
+    text-align: right;
+    padding: 10px 10px 0 0;
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+}
+
+.users {
+    background: #ccf0ca url(../img/users.png) left bottom no-repeat;
+}
+
+.activity {
+    background: #ccf0ca url(../img/activity.png) left bottom no-repeat;
+}
+
+.universal {
     background-color: #ccf0ca;
-    height: 25px;
-    width: 800px;
-    margin: 0 80px 10px 80px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+}
+
+#menu-box a:hover {
+    background-color: #5ac846;
 }
 
 #page {
