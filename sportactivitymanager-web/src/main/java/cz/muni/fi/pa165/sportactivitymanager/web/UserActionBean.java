@@ -27,8 +27,20 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
 
     final static Logger log = LoggerFactory.getLogger(UserActionBean.class);
 
+    /**field = název pole z form(formulář pro vkládání knih/uzivatelů) 
+    * název ve filed se musí shodovat s name z form:  <td><s:text id="b1" name="user.firstname"/></td>
+    *   
+    *   validuje to při volání metody add a save
+    **/
+    @ValidateNestedProperties(value = {        
+            @Validate(on = {"add", "save"}, field = "firstName", required = true, minlength = 2),
+            @Validate(on = {"add", "save"}, field = "lastName", required = true),
+            @Validate(on = {"add", "save"}, field = "birthDay", required = true),
+            @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 1  ),
+            @Validate(on = {"add", "save"}, field = "gender", required = true)
+    })
     private UserDTO user;        
-    //nnotace SpringBean injektuje instanci userServiceImpl a já se nemusím starat o to kde se vezme (viz web.xml)
+    //anotace SpringBean injektuje instanci userServiceImpl a já se nemusím starat o to kde se vezme (viz web.xml)
     @SpringBean
     protected UserService userService;
     //pro zobrazení seznamu uživatelů
@@ -54,24 +66,8 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     }
         
    /** --- part for adding a user 
-     * a ověření vyplnění vstupu
-     * reguired: true - musi to byt vyplnene
-     * minvalue - min. hodnota = tím se vynutí i vstup jako číslo
      */
-    
-  /**field = název pole z form(formulář pro vkládání knih/uzivatelů) 
-    * název ve filed se musí shodovat s name z form:  <td><s:text id="b1" name="user.firstname"/></td>
-    *   
-    *   validuje to při volání metody add a save
-    **/
-    @ValidateNestedProperties(value = {        
-            @Validate(on = {"add", "save"}, field = "firstName", required = true),
-            @Validate(on = {"add", "save"}, field = "lastName", required = true),
-            @Validate(on = {"add", "save"}, field = "birthDay", required = true),
-            @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 1  ),
-            @Validate(on = {"add", "save"}, field = "gender", required = true)
-    })
-    
+        
     /**
      * Save user part
     **/    
@@ -83,11 +79,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     // vezme obsah proměnné user. a ten obsahuje data z formuláře - to zajistí STRIPES automaticky. Z formuláře pozná že mám položku firstname a zjistí že třída User obsahuje metodu setfirstName a položku nastaví.
     public Resolution add() {
         log.debug("add() user={}", user);
-        try{
-            userService.create(user);
-        }catch(Exception ex){
-            log.error("exception during user creation: " + ex);
-        }
+        userService.create(user);
         //výpis že byl uživatel přidán
         getContext().getMessages().add(new LocalizableMessage("user.add.message",escapeHTML(user.getFirstName()),escapeHTML(user.getLastName())));
         //redirect aby mohl uživatel mačkat Reload a už se user znovu neuložil.
@@ -97,7 +89,6 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
    /**
      * User Editing part
     **/
-
     //1. metoda pro Edit
     //anotace before vytahne data predem z databaze
     // vytáhu si usera a ID. Je to predtím než se data Bindují, proto dostanu ID jako řetězec a musím si ho převést na Long.
@@ -106,8 +97,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         String ids = getContext().getRequest().getParameter("user.id");
         if (ids == null) return;
         user = userService.getByID(Long.parseLong(ids));
-    }
-   
+    }   
     //2. metoda pro Edit - jsou potřeba obě
     public Resolution edit() {
         log.debug("edit() user={}", user);
@@ -137,11 +127,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         // podle id vytvořím usera a toho smažu
         log.debug("delete({})", user.getId());
         user = userService.getByID(user.getId());
-        try{
-            userService.delete(user);
-        }catch(Exception ex){
-            return new StreamingResolution("Delete of user with ID "+user.getId()+" was not successfull.");
-        }
+        userService.delete(user);
         //vypise ze user jmeno prijmeni byl smazán. jmeno a prijmeni se bere z formulare a vklada se do textu "book.delete.message" z lokalizace.
         getContext().getMessages().add(new LocalizableMessage("user.delete.message",escapeHTML(user.getFirstName()),escapeHTML(user.getLastName())));
         //znovu vypise seznam knih, aby uživatel mohl mačkat Reload

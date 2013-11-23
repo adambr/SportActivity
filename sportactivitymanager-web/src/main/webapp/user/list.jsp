@@ -3,26 +3,31 @@
     Created on : Nov 20, 2013, 14:42:11 AM
     Author     : Kuba Dobes
     
-    VÃ½pis tabulky vÅ¡ech uÅ¾ivatelÅ¯ 
-    a pod nÃ­ formulÃ¡Å™ (form.jsp) pro vloÅ¾enÃ­ novÃ©ho uÅ¾ivatele
+    Výpis tabulky v¹ech u¾ivatelù 
+    a pod ní formuláø (form.jsp) pro vlo¾ení nového u¾ivatele
 --%>
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page contentType="text/html; charset=iso-8859-2" pageEncoding="iso-8859-2" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 
 <s:layout-render name="/layout.jsp" titlekey="user.list.title">
     
-    <%-- Jquery DATEPICKER zobrazÃ­ v user/form.jsp kalendÃ¡Å™ pro vÃ½bÄ›r data narozenÃ­ uÅ¾ivatele--%>
+    <%-- Jquery DATEPICKER zobrazí v user/form.jsp kalendáø pro výbìr data narození u¾ivatele--%>
     <s:layout-component name="header">
            <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
             <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
             <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+            <script src="jquery.ui.datepicker-cs.js"></script>
             <%--  <link rel="stylesheet" href="/resources/demos/style.css" />   --%>
             <script>
                 $(function() {
-                  $( "#datepicker" ).datepicker();
-                });
+                  $( "#datepicker" ).datepicker( $.datepicker.regional[ "cs" ] );
+                    $( "#locale" ).change(function() {
+                      $( "#datepicker" ).datepicker( "option",
+                        $.datepicker.regional[ $( this ).val() ] );
+                    });
+                  });
             </script>
      </s:layout-component>            
             
@@ -33,7 +38,7 @@
 
         <table class="basic">
            
-            <%--hlaviÄka tabulky--%>
+            <%--hlavièka tabulky--%>
             <tr>
                 <th>id</th>
                 <th><f:message key="user.firstname"/></th>
@@ -45,21 +50,25 @@
                 <th></th>
             </tr>
             
-            <%--buÅˆky tabulky - hodnoty 
-            actionBean.users - zavolÃ¡ metodu findAll z DefaultHnadleru v UserActionBean--%>
+            <%--buòky tabulky - hodnoty 
+            actionBean.users - zavolá metodu findAll z DefaultHnadleru v UserActionBean--%>
             <c:forEach items="${actionBean.users}" var="user">
                 <tr>
                     <td>${user.id}</td>
-                    <td><c:out value="${user.firstName}"/></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
+                        <s:param name="user.id" value="${user.id}"/>
+                        <c:out value="${user.firstName}"/>
+                        </s:link>
+                    </td>
                     <td><c:out value="${user.lastName}"/></td>
                     <td><c:out value="${user.birthDay}"/></td>
                     <td><c:out value="${user.weight}"/></td>
                     <td><c:out value="${user.gender}"/></td>
                     
-                     <%-- odkaz "edit" pro editovÃ¡nÃ­
-                          zobrazuje se napravo v Å™Ã¡dku
+                     <%-- odkaz "edit" pro editování
+                          zobrazuje se napravo v øádku
                           EVENT = EDIT
-                          URL na webu ukazuje ID usera kterÃ©ho budu editovat
+                          URL na webu ukazuje ID usera kterého budu editovat
                      --%>
                      <%-- edit.jsp formular se otevre podle nastaveni v UserActionBean--%>
                     <td>
@@ -69,12 +78,12 @@
                     
                     
                     <%-- tlacitko pro smazani
-                                Kdyz ho stisknu, tak bude mÃ­t 2 parametry: user.id a delete
-                                Podle toho Stripes poznajÃ­ Å¾e majÃ­ volat metodu delete
+                                Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
+                                Podle toho Stripes poznají ¾e mají volat metodu delete
                     --%>
                     <td>
                         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
-                           <%-- skryti user ID pro zapamatovÃ¡nÃ­--%>
+                           <%-- skryti user ID pro zapamatování--%>
                             <s:hidden name="user.id" value="${user.id}"/>
                             <s:submit name="delete"><f:message key="user.list.delete"/></s:submit>
                         </s:form>
@@ -85,15 +94,15 @@
         </table>
 
         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
-            <%--Titulek formulÃ¡Å™e pro pÅ™idÃ¡nÃ­ uÅ¾ivatele--%>
+            <%--Titulek formuláøe pro pøidání u¾ivatele--%>
             <fieldset><legend><f:message key="user.list.newuser"/></legend>
                
                 <%--vlozeny formular z FORM.jsp. 
-                    Tim se zobrazi formular (5 Å™adkÅ¯ pro zadÃ¡ni novÃ©ho uÅ¾ivatele)--%>
+                    Tim se zobrazi formular (5 øadkù pro zadáni nového u¾ivatele)--%>
                 <%@include file="form.jsp"%>                
-                <%--tlaÄÃ­tko pod formulÃ¡Å™em pro vytvoÅ™enÃ­ uÅ¾ivatele:--%>
-                <%-- submit add vyvolÃ¡ metodu add--%>
-                <s:submit name="add">VytvoÅ™it novÃ©ho uÅ¾ivatele</s:submit>
+                <%--tlaèítko pod formuláøem pro vytvoøení u¾ivatele:--%>
+                <%-- submit add vyvolá metodu add--%>
+                <s:submit name="add">Vytvoøit nového u¾ivatele</s:submit>
             </fieldset>
         </s:form>
     </s:layout-component>

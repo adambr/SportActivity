@@ -39,6 +39,24 @@ public class SportRecordServiceImpl implements SportRecordService {
         }
     }
 
+//    @Transactional
+//    public SportRecordDTO getSportRecordByUser(User) {
+//        SportRecordDTO sportRecordTO = null;
+//
+//        if (id != null) {
+//            try {
+//                SportRecord sportRecord = sRDao.getSportRecord(id);
+//                sportRecordTO = SportRecordDTOChanger.entityToDTO(sportRecord);
+//            } catch (Exception ex) {
+//                throw new DataAccException(ex.toString());
+//            }
+//        } else {
+//            throw new NullPointerException("SportRecord ID is Null");
+//        }
+//        return sportRecordTO;
+//
+//    }
+        
     @Transactional
     public SportRecordDTO getSportRecord(Long id) {
         SportRecordDTO sportRecordTO = null;

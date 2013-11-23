@@ -22,6 +22,18 @@ public class UserDTO {
    private Gender gender;
 
    
+   public  UserDTO(){
+   }
+   
+   public  UserDTO(Long id, String firstName, String lastName, Date birthDay, Integer weight, Gender gender){
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.birthDay = birthDay; 
+    this.weight = weight;
+    this.gender = gender;
+   }
+   
     public String getFirstName() {
         return firstName;
     }

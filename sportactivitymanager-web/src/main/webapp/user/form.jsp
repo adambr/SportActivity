@@ -22,12 +22,6 @@
     <tr>
         <th><s:label for="b3" name="user.birthDay"/></th>
         <td><s:text id="datepicker" name="user.birthDay"/></td>
-    <%-- 
-        <th><s:label for="b3" name="user.birthday"/></th>
-        <td><s:text id="b3" name="user.birthday"/></td>
-        
-    REDO dataPicker    <td><s: id="b3" name="user.birthday"/></td> --%>
-    
     </tr>
     <tr>
         <th><s:label for="b4" name="user.weight"/></th>
@@ -38,6 +32,15 @@
         <td><s:select id="b5" name="user.gender">
                 <s:options-enumeration enum="cz.muni.fi.pa165.sportactivitymanager.Gender"/>
             </s:select></td>
-        
     </tr>
+    
 </table>
+         <%-- tlacitko pro smazani
+                                Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
+                                Podle toho Stripes poznají ?e mají volat metodu delete
+         --%>
+        <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
+                           <%-- skryti user ID pro zapamatování--%>
+                            <s:hidden name="user.id" value="${user.id}"/>
+                            <s:submit name="delete"><f:message key="user.list.delete"/></s:submit>
+                        </s:form>

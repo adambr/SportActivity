@@ -28,8 +28,7 @@ public class SportRecordDTO {
         this.duration = duration;
         this.distance = distance;
         this.StartTime = StartTime;
-    }
-    
+    }    
 
     public Long getId() {
         return id;

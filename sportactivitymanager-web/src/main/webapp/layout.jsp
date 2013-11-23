@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page contentType="text/html; charset=iso-8859-2" pageEncoding="iso-8859-2" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -32,9 +32,9 @@
                     </div>
                 </div>
                 <div id="content">
-                    <%--<s:messages/> - umoÅ¾nuje vypsat zprÃ¡vy typu: kniha byla pÅ™idÃ¡na, smazÃ¡na--%>
+                    <%--<s:messages/> - umo¾nuje vypsat zprávy typu: kniha byla pøidána, smazána--%>
                     <s:messages/>
-                    <%--zde se zobrazÃ­ ta hlavnÃ­ strÃ¡nka s name=body - stejne name ma i index.jsp--%>
+                    <%--zde se zobrazí ta hlavní stránka s name=body - stejne name ma i index.jsp--%>
                     <s:layout-component name="body"/>
                 </div>
             </div>
