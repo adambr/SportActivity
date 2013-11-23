@@ -36,18 +36,19 @@
 
         <p><f:message key="user.list.allusers"/></p>
 
+        <div class="list">
         <table class="basic">
            
             <%--hlavièka tabulky--%>
             <tr>
-                <th>id</th>
+                <th>ID</th>
                 <th><f:message key="user.firstname"/></th>
                 <th><f:message key="user.lastname"/></th>
                 <th><f:message key="user.birthday"/></th>
                 <th><f:message key="user.weight"/></th>
                 <th><f:message key="user.gender"/></th>
-                <th></th>
-                <th></th>
+           <%-- <th></th> 2 bunky hlavicky pro sloupec edit a smazat. v novem stylu nejsou potøeba
+                <th></th>--%>
             </tr>
             
             <%--buòky tabulky - hodnoty 
@@ -92,6 +93,7 @@
                 </tr>
             </c:forEach>
         </table>
+        </div>
 
         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
             <%--Titulek formuláøe pro pøidání u¾ivatele--%>

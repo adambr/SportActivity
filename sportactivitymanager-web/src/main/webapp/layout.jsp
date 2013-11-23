@@ -14,6 +14,7 @@
         <body>
             <div id="page">
                 <div id="login-panel-cont">
+                    <div id="title"><a class="brand" href="${pageContext.request.contextPath}/index.jsp"><f:message key="HOME"/></a></div>
                     <div id="title"><f:message key="${titlekey}"/></div>
                     <div id="login">Administrator | logout</div>
                 </div>
