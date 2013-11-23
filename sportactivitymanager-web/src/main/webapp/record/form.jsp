@@ -16,12 +16,12 @@
     </tr>
     <tr>
         <th><s:label for="b4" name="record.startTime"/></th>
-        <td><s:text id="b4" name="record.startTime"/></td>
+        <td><s:text id="datepicker" name="record.startTime"/></td>
     </tr>
     <tr>
         <th><s:label for="b4" name="record.startTime"/></th>
         <td>
-            <s:select name="record.activity">
+            <s:select name="activityId">
                 <s:option value="">Select One</s:option>
                 <s:options-collection collection="${actionBean.activity}" value="id" label="name"/>
             </s:select>

@@ -92,6 +92,11 @@
                             </s:form>
                         </td>
 
+                        <td>
+                           <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" event="list">
+                                <s:param name="user.id" value="${user.id}"/>show records</s:link>
+                        </td>
+
                     </tr>
                 </c:forEach>
             </table>

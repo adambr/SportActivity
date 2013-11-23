@@ -8,10 +8,8 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
-import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
-import static cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean.log;
-import java.util.ArrayList;
+import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import java.util.Collection;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
@@ -33,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Adam Brauner
  */
-@UrlBinding("/records/{$event}/{record.id}")
+@UrlBinding("/records/{$event}/{record.id}/")
 public class RecordActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     final static Logger log = LoggerFactory.getLogger(RecordActionBean.class);
@@ -46,36 +44,63 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     }
     @SpringBean
     protected SportActivityService activityService;
-    
     private Collection<SportActivityDTO> activity;
 
     public Collection<SportActivityDTO> getActivity() {
         return activity;
-    }    
+    }
+    @SpringBean
+    protected UserService userService;
+    //pro zobrazení seznamu uživatelů
+    private UserDTO user;
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
 
     @DefaultHandler
     public Resolution list() {
+        String ids = getContext().getRequest().getParameter("user.id");
+        log.info("******************************************");
+        log.info(ids);
+        log.info("******************************************");
+        user = userService.getByID(Long.parseLong(ids));
         records = srs.findAll();
-        activity = activityService.findAll();
+        activity = activityService.findAll();        
         return new ForwardResolution("/record/list.jsp");
-
     }
-    //--- part for adding a book ----
+
     @ValidateNestedProperties(value = {
-        @Validate(on = {"add", "save"}, field = "user", required = true),
         @Validate(on = {"add", "save"}, field = "duration", required = true),
         @Validate(on = {"add", "save"}, field = "distance", required = true),
+        @Validate(on = {"add", "save"}, field = "activityDTO", required = true),
         @Validate(on = {"add", "save"}, field = "startTime", required = true)
     })
-    private SportRecordDTO sr;
+    private SportRecordDTO record;
 
+    
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"add"})
+    public void loadBookFromDatabase() {
+        String ids = getContext().getRequest().getParameter("user.id");
+        log.info(ids);
+        if (ids == null) return;
+        user = userService.getByID(Long.parseLong(ids));
+        record.setUserDTO(user);
+        //add activity
+    }
+    
     public Resolution add() {
-        log.debug("add() book={}", sr);
-        srs.create(sr);
+        
+        srs.create(record);
 //        sr.getUserDTO()
         //getContext().getMessages().add(new LocalizableMessage("book.add.message",escapeHTML(sr.getTitle()),escapeHTML(book.getAuthor())));
         return new RedirectResolution(this.getClass(), "list");
     }
+
 //    
 //    private UserService userService;
 //    private UserDTO user;
@@ -101,9 +126,8 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
 //        }
 //    }   
     //2. metoda pro Edit - jsou potřeba obě
-
     public Resolution edit() {
-        log.debug("edit() user={}", sr);
+        log.debug("edit() user={}", record);
         return new ForwardResolution("/record/list.jsp");
     }
 
