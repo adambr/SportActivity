@@ -12,8 +12,11 @@
 <s:layout-render name="/layout.jsp" titlekey="activities">
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" var="actionBean"/>
-
-        <br>
+        
+        <a href="${pageContext.request.contextPath}" class="nav">
+            Hlavní nabídka
+        </a>
+        
         <div class="list">
             <table>
                 <tr>

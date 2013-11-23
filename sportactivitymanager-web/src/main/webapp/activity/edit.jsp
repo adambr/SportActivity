@@ -12,6 +12,10 @@
 <s:layout-render name="/layout.jsp" titlekey="activities">
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" var="actionBean"/>
+        
+        <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" class="nav">
+            Seznam aktivit
+        </s:link>
 
         <div class="new">
             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean">

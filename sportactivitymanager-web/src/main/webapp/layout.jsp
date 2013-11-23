@@ -9,7 +9,7 @@
             <title><f:message key="${titlekey}"/></title>
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
             <s:layout-component name="header"/>
-            
+
         </head>
         <body>
             <div id="page">
@@ -19,7 +19,11 @@
                     <div id="login">Administrator | logout</div>
                 </div>
                 <div id="header">
-                    <div id="logo"><img src="${pageContext.request.contextPath}/img/logo.png" alt="logo"></div>
+                    <div id="logo">
+                        <a href="${pageContext.request.contextPath}">
+                            <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
+                        </a>
+                    </div>
                     <div id="logo-title">
                         <div class="title-line1">
                             <span class="highlight"><f:message key="header.track"/> </span> <f:message key="header.track.subject"/> <br>
@@ -33,9 +37,9 @@
                     </div>
                 </div>
                 <div id="content">
-                    <%--<s:messages/> - umo¾nuje vypsat zprávy typu: kniha byla pøidána, smazána--%>
+                    <%--<s:messages/> - umo?nuje vypsat zpr?vy typu: kniha byla p?id?na, smaz?na--%>
                     <s:messages/>
-                    <%--zde se zobrazí ta hlavní stránka s name=body - stejne name ma i index.jsp--%>
+                    <%--zde se zobraz? ta hlavn? str?nka s name=body - stejne name ma i index.jsp--%>
                     <s:layout-component name="body"/>
                 </div>
             </div>
