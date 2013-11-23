@@ -8,8 +8,7 @@
 --%>
 
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
-<%--zde se zobrazují chyby (tam kde je tag s:errors)--%>
-<s:errors/>
+<s:errors/>     <%--zde se zobrazují chyby (tam kde je tag s:errors)--%>
 <table>
     <tr>
         <th><s:label for="b1" name="user.firstname"/></th> <%--nazev pole, bere podle lokalizace proto vse male--%>
@@ -32,15 +31,15 @@
         <td><s:select id="b5" name="user.gender">
                 <s:options-enumeration enum="cz.muni.fi.pa165.sportactivitymanager.Gender"/>
             </s:select></td>
-    </tr>
-    
+    </tr>    
 </table>
+        
          <%-- tlacitko pro smazani
                                 Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
                                 Podle toho Stripes poznají ?e mají volat metodu delete
-         --%>
+        
         <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
-                           <%-- skryti user ID pro zapamatování--%>
+                         //   skryti user ID pro zapamatování
                             <s:hidden name="user.id" value="${user.id}"/>
-                            <s:submit name="delete"><f:message key="user.list.delete"/></s:submit>
-                        </s:form>
+                            <s:submit name="delete"><f:message key="user.list.delete"/></s:submit> 
+                        </s:form>--%>

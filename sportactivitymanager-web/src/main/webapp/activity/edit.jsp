@@ -24,7 +24,7 @@
                 <fieldset><legend>editace aktivity</legend>
                     <%@include file="form.jsp"%>
                     <s:submit name="save">Uložit</s:submit>
-                    </fieldset>
+                </fieldset>
             </s:form>
         </div>
 

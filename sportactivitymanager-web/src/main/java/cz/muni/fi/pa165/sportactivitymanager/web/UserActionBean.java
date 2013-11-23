@@ -92,7 +92,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     //1. metoda pro Edit
     //anotace before vytahne data predem z databaze
     // vytáhu si usera a ID. Je to predtím než se data Bindují, proto dostanu ID jako řetězec a musím si ho převést na Long.
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save", "cancel"})
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit"})
     public void loadBookFromDatabase() {
         String ids = getContext().getRequest().getParameter("user.id");
         if (ids == null) return;
@@ -111,7 +111,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         userService.update(user);
         return new RedirectResolution(this.getClass(), "list");
     }
-    //tlactiko pro CANCEL (Task 2)
+    //tlactiko pro CANCEL (Task 2)  
     //součást edit.jsp
     //TODO    
      public Resolution cancel() {
