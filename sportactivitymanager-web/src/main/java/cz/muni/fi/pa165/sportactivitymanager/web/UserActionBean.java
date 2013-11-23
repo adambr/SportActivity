@@ -143,14 +143,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         //znovu vypise seznam knih, aby uživatel mohl mačkat Reload
         return new RedirectResolution(this.getClass(), "list");
     }
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-    public Resolution addRecord() {
-        user = userService.getByID(user.getId());
-        return new ForwardResolution("/records/?user.id"+ user.getId());
-    }
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
+
 
     //po implementaci Validation bylo potreba pridat tuto tridu, 
     //když neproběhla Validace správně tak se musí zde uložit seznam chyb.

@@ -7,19 +7,19 @@
 <s:errors/>
 <table>
     <tr>
-        <th><s:label for="b2" name="record.duration"/></th>
-        <td><s:text id="b2" name="record.duration"/></td>
+        <th><s:label for="b1" name="record.duration"/></th>
+        <td><s:text id="b1" name="record.duration"/></td>
     </tr>
     <tr>
-        <th><s:label for="b3" name="record.distance"/></th>
-        <td><s:text id="b3" name="record.distance"/></td>
+        <th><s:label for="b2" name="record.distance"/></th>
+        <td><s:text id="b2" name="record.distance"/></td>
     </tr>
     <tr>
-        <th><s:label for="b4" name="record.startTime"/></th>
+        <th><s:label for="b3" name="record.startTime"/></th>
         <td><s:text id="datepicker" name="record.startTime"/></td>
     </tr>
     <tr>
-        <th><s:label for="b4" name="record.startTime"/></th>
+        <th><s:label for="b4" name="record.aktivity"/></th>
         <td>
             <s:select name="aktivita">
                 <s:option value="">Select One</s:option>

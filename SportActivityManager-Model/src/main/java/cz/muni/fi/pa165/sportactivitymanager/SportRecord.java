@@ -39,7 +39,7 @@ public class SportRecord implements Serializable {
     private Long duration;
     //in meters
     private int distance;
-    @Temporal(TemporalType.TIME)
+   @Temporal(javax.persistence.TemporalType.DATE)
     private Date StartTime;
 
     public Long getId() {
