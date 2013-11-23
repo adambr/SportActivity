@@ -15,7 +15,7 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" var="actionBean"/>
 
         <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" class="nav">
-            Zpět
+            <f:message key="user.list.title"/>
         </s:link>
                     
         <div class="new">            

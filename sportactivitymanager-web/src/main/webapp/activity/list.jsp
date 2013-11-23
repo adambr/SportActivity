@@ -14,20 +14,20 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" var="actionBean"/>
         
         <a href="${pageContext.request.contextPath}" class="nav">
-            Hlavní nabídka
+            <f:message key="main.page"/>
         </a>
         
         <div class="list">
             <table>
                 <tr>
-                    <th ROWSPAN=2>Název</th>
-                    <th COLSPAN=4>Kalorie</th>
+                    <th ROWSPAN=2><f:message key="activity.name"/></th>
+                    <th COLSPAN=4><f:message key="calories"/></th>
                 </tr>
                 <tr>
-                    <th>60KG</th>
-                    <th>70KG</th>
-                    <th>80KG</th>
-                    <th>90KG</th>
+                    <th><f:message key="calories.calories60Kg"/></th>
+                    <th><f:message key="calories.calories70Kg"/></th>
+                    <th><f:message key="calories.calories80Kg"/></th>
+                    <th><f:message key="calories.calories90Kg"/></th>
                 </tr>
                 <c:forEach items="${actionBean.activities}" var="activity">
                     <tr>
@@ -38,12 +38,12 @@
                         <td>${activity.calories.calories90Kg}</td>
                         <td width="20">
                             <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" event="edit">
-                                <s:param name="activity.id" value="${activity.id}"/>editovat</s:link>
+                                <s:param name="activity.id" value="${activity.id}"/><f:message key="activity.edit"/></s:link>
                         </td>
                         <td width="20">
                             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean">
                                 <s:hidden name="activity.id" value="${activity.id}"/>
-                                <s:submit name="delete">Smazat</s:submit>
+                                <s:submit name="delete"><f:message key="activity.del"/></s:submit>
                             </s:form>
                         </td>
                     </tr>
@@ -52,9 +52,9 @@
         </div>
         <div class="new">
             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean">
-                <fieldset><legend>nová aktivita</legend>
+                <fieldset><legend><f:message key="activity.new.title"/></legend>
                     <%@include file="form.jsp"%>
-                    <s:submit name="add">Vytvořit novou aktivitu</s:submit>
+                    <s:submit name="add"><f:message key="activity.create"/></s:submit>
                     </fieldset>
             </s:form>
         </div>

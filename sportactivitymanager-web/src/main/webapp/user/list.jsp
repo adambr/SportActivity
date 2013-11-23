@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <script src="jquery.ui.datepicker-cs.js"></script>
+        <!--<script src="jquery.ui.datepicker-cs.js"></script>-->
         <%--  <link rel="stylesheet" href="/resources/demos/style.css" />   --%>
         <script>
             $(function() {
@@ -35,7 +35,7 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" var="actionBean"/>
 
         <a href="${pageContext.request.contextPath}" class="nav">
-            Hlavní nabídka
+            <f:message key="main.page"/>
         </a>
 
         <div class="list">
@@ -94,7 +94,7 @@
 
                         <td>
                            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" event="list">
-                                <s:param name="user.id" value="${user.id}"/>show records</s:link>
+                                <s:param name="user.id" value="${user.id}"/><f:message key="user.record"/></s:link>
                         </td>
 
                     </tr>
@@ -112,7 +112,7 @@
                     <%@include file="form.jsp"%>                
                     <%--tlaèítko pod formuláøem pro vytvoøení u¾ivatele:--%>
                     <%-- submit add vyvolá metodu add--%>
-                    <s:submit name="add">Vytvoøit nového u¾ivatele</s:submit>
+                    <s:submit name="add"><f:message key="user.create"/></s:submit>
                     </fieldset>
             </s:form>
         </div>

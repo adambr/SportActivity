@@ -12,7 +12,7 @@
         <td COLSPAN=4><s:text id="name" name="activity.name"/></td>
     </tr>
     <tr>
-        <th ROWSPAN=2>Kalorie</th>
+        <th ROWSPAN=2><f:message key="calories"/></th>
         <td><s:label for="c1" name="calories.calories60Kg"/></td>
         <td><s:label for="c2" name="calories.calories70Kg"/></td>
         <td><s:label for="c3" name="calories.calories80Kg"/></td>

@@ -23,7 +23,7 @@
             <div id="page">
                 <div id="login-panel-cont">
                     <div id="title"><f:message key="${titlekey}"/></div>
-                    <div id="login">Administrator | logout</div>
+                    <div id="login">Administrator | <f:message key="logout"/></div>
                 </div>
                 <div id="header">
                     <div id="logo">
