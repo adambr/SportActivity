@@ -13,47 +13,52 @@ import java.util.List;
  * @author Phaser
  */
 public class SportRecordDTOChanger {
-    
+
     //convert SportRecordTO to Entity SportRecord
-    public static SportRecord DTOToEntity(SportRecordDTO sportRecordTO) {
+    public static SportRecord DTOToEntity(SportRecordDTO sportRecordDTO) {
         
-        if(null == sportRecordTO) return null;
+        if (null == sportRecordDTO) {
+            return null;
+        }
         
-        SportRecord sportRecord = new SportRecord();  
+        SportRecord sportRecord = new SportRecord();
         
-        sportRecord.setId(sportRecordTO.getId());
-        sportRecord.setDistance(sportRecordTO.getDistance());
-        sportRecord.setDuration(sportRecordTO.getDuration());
-        sportRecord.setStartTime(sportRecordTO.getStartTime());        
-        sportRecord.setUser(UserDTOChanger.dtoToUserEntity(sportRecordTO.getUserDTO()));
+        sportRecord.setId(sportRecordDTO.getId());
+        sportRecord.setDistance(sportRecordDTO.getDistance());
+        sportRecord.setDuration(sportRecordDTO.getDuration());
+        sportRecord.setStartTime(sportRecordDTO.getStartTime());
+        sportRecord.setUser(UserDTOChanger.dtoToUserEntity(sportRecordDTO.getUserDTO()));
+        sportRecord.setActivity(SportActivityDTOChanger.dtoToEntity(sportRecordDTO.getActivityDTO()));
         return sportRecord;
     }
-    
-        //convert SportRecord to Entity SportRecordTO
+
+    //convert SportRecord to Entity SportRecordTO
     public static SportRecordDTO entityToDTO(SportRecord sportRecord) {
         
-        if(null == sportRecord) return null;
+        if (null == sportRecord) {
+            return null;
+        }
         
-        SportRecordDTO sportRecordTO = new SportRecordDTO();  
+        SportRecordDTO sportRecordDTO = new SportRecordDTO();
         
-        sportRecordTO.setId(sportRecord.getId());
-        sportRecordTO.setDistance(sportRecord.getDistance());
-        sportRecordTO.setDuration(sportRecord.getDuration());
-        sportRecordTO.setStartTime(sportRecord.getStartTime());        
-        sportRecordTO.setUserDTO(UserDTOChanger.entityToDTO(sportRecord.getUser()));
-        return sportRecordTO;
+        sportRecordDTO.setId(sportRecord.getId());
+        sportRecordDTO.setDistance(sportRecord.getDistance());
+        sportRecordDTO.setDuration(sportRecord.getDuration());
+        sportRecordDTO.setStartTime(sportRecord.getStartTime());
+        sportRecordDTO.setUserDTO(UserDTOChanger.entityToDTO(sportRecord.getUser()));
+        sportRecordDTO.setActivityDTO(SportActivityDTOChanger.entityToDTO(sportRecord.getActivity()));
+        return sportRecordDTO;
     }
     
-    public static List<SportRecordDTO> entityListDTOToList( List<SportRecord> sportRecord ) {
-        if(sportRecord == null) return null;
+    public static List<SportRecordDTO> entityListDTOToList(List<SportRecord> sportRecord) {
+        if (sportRecord == null) {
+            return null;
+        }
         
-        List<SportRecordDTO> sportRecordTOList =  new ArrayList<SportRecordDTO>();
-        for(int i = 0; i<sportRecord.size(); i++){
+        List<SportRecordDTO> sportRecordTOList = new ArrayList<SportRecordDTO>();
+        for (int i = 0; i < sportRecord.size(); i++) {
             sportRecordTOList.add(entityToDTO(sportRecord.get(i)));
         }
         return sportRecordTOList;
     }
-    
-    
-    
 }

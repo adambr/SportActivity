@@ -23,8 +23,7 @@
                 <th><f:message key="record.distance"/></th>
                 <th><f:message key="record.startTime"/></th>
             </tr>
-    <%--    <c:forEach items="${actionBean.records}" var="record">
-        <c:if test="${(record.user).id = user.id  --%>
+            <c:forEach items="${actionBean.records}" var="record">
                 <tr>
                     <td>${record.id}</td>
                     <td><c:out value="${record.user}"/></td>
@@ -32,11 +31,10 @@
                     <td><c:out value="${record.distance}"/></td>
                     <td><c:out value="${record.startTime}"/></td>
                 </tr>
-   <%--                 </c:if>
-            </c:forEach>--%>
+            </c:forEach>
         </table>   
-            
-              <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
+
+        <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
             <fieldset><legend><f:message key="record.list.newRecord"/></legend>
                 <%@include file="form.jsp"%>
                 <s:submit name="add"><f:message key="record.list.addNewRecord"/></s:submit>

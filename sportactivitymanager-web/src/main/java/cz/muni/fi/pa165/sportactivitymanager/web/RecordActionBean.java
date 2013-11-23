@@ -4,12 +4,15 @@
  */
 package cz.muni.fi.pa165.sportactivitymanager.web;
 
+import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
+import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import static cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean.log;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -32,33 +35,38 @@ import org.slf4j.LoggerFactory;
  */
 @UrlBinding("/records/{$event}/{record.id}")
 public class RecordActionBean extends BaseActionBean implements ValidationErrorHandler {
-   final static Logger log = LoggerFactory.getLogger(RecordActionBean.class);
-    
+
+    final static Logger log = LoggerFactory.getLogger(RecordActionBean.class);
     @SpringBean
     protected SportRecordService srs;
-        
-    private List<SportRecordDTO> records ;
+    private List<SportRecordDTO> records;
 
     public List<SportRecordDTO> getRecords() {
         return records;
-        }
+    }
+    @SpringBean
+    protected SportActivityService activityService;
     
-     @DefaultHandler
+    private Collection<SportActivityDTO> activity;
+
+    public Collection<SportActivityDTO> getActivity() {
+        return activity;
+    }    
+
+    @DefaultHandler
     public Resolution list() {
-        records = srs.findAll();   
+        records = srs.findAll();
+        activity = activityService.findAll();
         return new ForwardResolution("/record/list.jsp");
 
     }
-     
-         //--- part for adding a book ----
-
+    //--- part for adding a book ----
     @ValidateNestedProperties(value = {
-            @Validate(on = {"add", "save"}, field = "user", required = true),
-            @Validate(on = {"add", "save"}, field = "duration", required = true),
-            @Validate(on = {"add", "save"}, field = "distance", required = true),
-            @Validate(on = {"add", "save"}, field = "startTime", required = true)
-    })    
-    
+        @Validate(on = {"add", "save"}, field = "user", required = true),
+        @Validate(on = {"add", "save"}, field = "duration", required = true),
+        @Validate(on = {"add", "save"}, field = "distance", required = true),
+        @Validate(on = {"add", "save"}, field = "startTime", required = true)
+    })
     private SportRecordDTO sr;
 
     public Resolution add() {
@@ -93,15 +101,14 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
 //        }
 //    }   
     //2. metoda pro Edit - jsou potřeba obě
+
     public Resolution edit() {
         log.debug("edit() user={}", sr);
         return new ForwardResolution("/record/list.jsp");
-     }
-    
-    
+    }
+
     @Override
     public Resolution handleValidationErrors(ValidationErrors ve) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

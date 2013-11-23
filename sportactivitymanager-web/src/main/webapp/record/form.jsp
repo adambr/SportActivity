@@ -7,10 +7,6 @@
 <s:errors/>
 <table>
     <tr>
-        <th><s:label for="b1" name="record.user"/></th>
-        <td><s:text id="b1" name="record.user"/></td>
-    </tr>
-    <tr>
         <th><s:label for="b2" name="record.duration"/></th>
         <td><s:text id="b2" name="record.duration"/></td>
     </tr>
@@ -22,4 +18,14 @@
         <th><s:label for="b4" name="record.startTime"/></th>
         <td><s:text id="b4" name="record.startTime"/></td>
     </tr>
+    <tr>
+        <th><s:label for="b4" name="record.startTime"/></th>
+        <td>
+            <s:select name="record.activity">
+                <s:option value="">Select One</s:option>
+                <s:options-collection collection="${actionBean.activity}" value="id" label="name"/>
+            </s:select>
+        </td>
+    </tr>
+
 </table>

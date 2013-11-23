@@ -27,12 +27,14 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "findAllSportRecord",
             query = "SELECT sr FROM SportRecord sr"),})
 public class SportRecord implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
     private User user;
+    @OneToOne
+    private SportActivity activity;
     //In seconds
     private Long duration;
     //in meters
@@ -50,6 +52,14 @@ public class SportRecord implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    public void setActivity(SportActivity activity) {
+        this.activity = activity;
+    }
+
+    public SportActivity getActivity() {
+        return activity;
     }
 
     public void setUser(User user) {

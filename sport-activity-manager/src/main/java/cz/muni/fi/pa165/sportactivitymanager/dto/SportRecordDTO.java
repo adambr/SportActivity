@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package cz.muni.fi.pa165.sportactivitymanager.dto;
+
 import java.util.Date;
 
 /**
@@ -10,8 +11,10 @@ import java.util.Date;
  * @author Phaser
  */
 public class SportRecordDTO {
+
     private Long id;
-    private UserDTO user;
+    private UserDTO userDTO;
+    private SportActivityDTO activityDTO;
     //In seconds
     private Long duration;
     //in meters
@@ -20,15 +23,16 @@ public class SportRecordDTO {
 
     public SportRecordDTO() {
     }
-    
-    public SportRecordDTO(Long id, UserDTO user, Long duration, int distance, Date StartTime) {
+
+    public SportRecordDTO(Long id, UserDTO user, SportActivityDTO activity, Long duration, int distance, Date StartTime) {
         this();
         this.id = id;
-        this.user = user;
+        this.userDTO = user;
+        this.activityDTO = activity;
         this.duration = duration;
         this.distance = distance;
         this.StartTime = StartTime;
-    }    
+    }
 
     public Long getId() {
         return id;
@@ -39,11 +43,19 @@ public class SportRecordDTO {
     }
 
     public UserDTO getUserDTO() {
-        return user;
+        return userDTO;
     }
 
     public void setUserDTO(UserDTO user) {
-        this.user = user;
+        this.userDTO = user;
+    }
+
+    public SportActivityDTO getActivityDTO() {
+        return activityDTO;
+    }
+
+    public void setActivityDTO(SportActivityDTO activity) {
+        this.activityDTO = activity;
     }
 
     public Long getDuration() {
@@ -68,7 +80,7 @@ public class SportRecordDTO {
 
     public void setStartTime(Date StartTime) {
         this.StartTime = StartTime;
-    }   
+    }
 
     @Override
     public int hashCode() {
@@ -90,6 +102,4 @@ public class SportRecordDTO {
         }
         return true;
     }
-    
-    
 }
