@@ -1,7 +1,8 @@
 
-package cz.muni.fi.pa165.sportactivitymanager.dto;
+package cz.muni.fi.pa165.sportactivitymanager.changer;
 
 import cz.muni.fi.pa165.sportactivitymanager.CaloriesTable;
+import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
 import java.util.ArrayList;
 import java.util.List;
 

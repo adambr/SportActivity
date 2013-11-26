@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.muni.fi.pa165.sportactivitymanager.dto;
+package cz.muni.fi.pa165.sportactivitymanager.changer;
 
 import cz.muni.fi.pa165.sportactivitymanager.User;
+import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import java.util.ArrayList;
 import java.util.List;
 

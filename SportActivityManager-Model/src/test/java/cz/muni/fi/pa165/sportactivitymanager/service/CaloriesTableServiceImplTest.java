@@ -1,10 +1,10 @@
 
 package cz.muni.fi.pa165.sportactivitymanager.service;
 
-import cz.muni.fi.pa165.sportactivitymanager.Gender;
+import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.dao.CaloriesTableDAO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.changer.CaloriesTableDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.impl.CaloriesTableServiceImpl;
 import java.util.List;
 import org.junit.Before;

@@ -4,28 +4,23 @@
  */
 package cz.muni.fi.pa165.sportactivitymanager.service;
 
-import cz.muni.fi.pa165.sportactivitymanager.Gender;
+import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.User;
+import cz.muni.fi.pa165.sportactivitymanager.changer.UserDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.dao.UserDAO;
 import cz.muni.fi.pa165.sportactivitymanager.dao.impl.UserDAOImpl;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTOChanger;
+
 
 import cz.muni.fi.pa165.sportactivitymanager.service.impl.UserServiceImpl;
-import cz.muni.fi.pa165.sportactivitymanager.mock.UserDAOMock;
 import java.util.ArrayList;
 import static org.mockito.Mockito.*;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.dao.DataAccessException;
 
 /**
  *

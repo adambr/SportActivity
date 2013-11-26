@@ -1,7 +1,6 @@
 
 package cz.muni.fi.pa165.sportactivitymanager.dto;
 
-import cz.muni.fi.pa165.sportactivitymanager.Gender;
 
 /**
  *

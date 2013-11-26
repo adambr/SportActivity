@@ -1,8 +1,8 @@
 
 package cz.muni.fi.pa165.sportactivitymanager.dependencyInjection;
 
-import cz.muni.fi.pa165.sportactivitymanager.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
+import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.service.CaloriesTableService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

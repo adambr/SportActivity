@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.sportactivitymanager;
 
+import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;

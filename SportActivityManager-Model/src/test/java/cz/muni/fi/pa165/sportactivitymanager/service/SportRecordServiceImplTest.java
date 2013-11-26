@@ -6,7 +6,7 @@ package cz.muni.fi.pa165.sportactivitymanager.service;
 
 import cz.muni.fi.pa165.sportactivitymanager.dao.SportRecordDAO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.changer.SportRecordDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;

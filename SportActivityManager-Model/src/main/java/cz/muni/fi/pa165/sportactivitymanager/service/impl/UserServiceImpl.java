@@ -7,7 +7,7 @@ package cz.muni.fi.pa165.sportactivitymanager.service.impl;
 import cz.muni.fi.pa165.sportactivitymanager.DataAccException;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dao.UserDAO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.changer.UserDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.User;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import java.util.ArrayList;

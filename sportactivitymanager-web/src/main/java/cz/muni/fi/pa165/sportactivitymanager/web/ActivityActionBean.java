@@ -4,13 +4,13 @@
  */
 package cz.muni.fi.pa165.sportactivitymanager.web;
 
-import cz.muni.fi.pa165.sportactivitymanager.Gender;
+
 import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
+import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.CaloriesTableService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.escapeHTML;
-import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;

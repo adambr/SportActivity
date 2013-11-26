@@ -4,6 +4,7 @@
  */
 package cz.muni.fi.pa165.sportactivitymanager;
 
+import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;

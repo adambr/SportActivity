@@ -5,7 +5,7 @@ import cz.muni.fi.pa165.sportactivitymanager.CaloriesTable;
 import cz.muni.fi.pa165.sportactivitymanager.DataAccException;
 import cz.muni.fi.pa165.sportactivitymanager.dao.CaloriesTableDAO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.changer.CaloriesTableDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.CaloriesTableService;
 import java.util.ArrayList;
 import java.util.List;

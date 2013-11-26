@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.sportactivitymanager.service;
 
 import cz.muni.fi.pa165.sportactivitymanager.dao.SportActivityDAO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.changer.SportActivityDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.impl.SportActivityServiceImpl;
 import java.util.List;
 import org.junit.Before;

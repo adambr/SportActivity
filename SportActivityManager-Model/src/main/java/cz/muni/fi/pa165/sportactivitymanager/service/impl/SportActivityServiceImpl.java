@@ -8,7 +8,7 @@ import cz.muni.fi.pa165.sportactivitymanager.DataAccException;
 import cz.muni.fi.pa165.sportactivitymanager.SportActivity;
 import cz.muni.fi.pa165.sportactivitymanager.dao.SportActivityDAO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.changer.SportActivityDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import java.util.ArrayList;
 import java.util.List;
