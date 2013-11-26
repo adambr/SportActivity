@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.sportactivitymanager.web;
 
-import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
+import cz.muni.fi.pa165.sportactivitymanager.dto.*;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;

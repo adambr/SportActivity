@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Adam Brauner
  */
-@UrlBinding("/records/{$event}/{record.id}/")
+@UrlBinding("/records/{$event}/user/{user.id}/")
 public class RecordActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     final static Logger log = LoggerFactory.getLogger(RecordActionBean.class);

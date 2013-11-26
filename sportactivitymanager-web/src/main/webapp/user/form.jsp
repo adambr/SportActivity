@@ -29,7 +29,7 @@
     <tr>
         <th><s:label for="b5" name="user.gender"/></th>
         <td><s:select id="b5" name="user.gender">
-                <s:options-enumeration enum="cz.muni.fi.pa165.sportactivitymanager.Gender"/>
+                <s:options-enumeration enum="cz.muni.fi.pa165.sportactivitymanager.dto.Gender"/>
             </s:select></td>
     </tr>    
 </table>

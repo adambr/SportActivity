@@ -5,7 +5,6 @@
 package cz.muni.fi.pa165.sportactivitymanager.dto;
 
 import java.util.Date;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -15,7 +14,6 @@ public class UserDTO {
    private Long id;
    private String firstName;
    private String lastName;
-   @Temporal(javax.persistence.TemporalType.DATE)
    private Date birthDay; 
    private Integer weight;
    private Gender gender;

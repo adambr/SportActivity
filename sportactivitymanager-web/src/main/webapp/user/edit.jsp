@@ -3,9 +3,8 @@
     Created on : Nov 21, 2013, 8:47:04 AM
     Author     : Kuba Dobes
 
-    StrÃ¡nka pro editaci uzivatele. Obsahuje nadpis formular form.jsp s udaji o uzivateli a 2 tlacitka Uloz a
+    Stránka pro editaci uzivatele. Obsahuje nadpis formular form.jsp s udaji o uzivateli a 2 tlacitka Uloz a
 --%>
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
@@ -37,7 +36,7 @@
                     
         <div class="new">            
             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
-                <%-- s:hidden pro drzeni ID editovanÃ© knihy--%>
+                <%-- s:hidden pro drzeni ID editované knihy--%>
                 <s:hidden name="user.id"/>
                 <fieldset><legend><f:message key="user.edit.edit"/></legend>
                    <%@include file="form.jsp"%>

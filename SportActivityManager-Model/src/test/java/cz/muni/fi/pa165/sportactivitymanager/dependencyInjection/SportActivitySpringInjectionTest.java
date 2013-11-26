@@ -24,7 +24,7 @@ public class SportActivitySpringInjectionTest extends BaseSpringInjectionTest {
         sportService.create(sportDto);
         assertNotNull(sportDto.getId());
 
-        SportActivityDTO sport2fromDB = sportService.getSportActivity(sportDto.getName());
+        SportActivityDTO sport2fromDB = sportService.getSportActivity(sportDto.getId());
         assertEquals(sportDto, sport2fromDB);
     }
     

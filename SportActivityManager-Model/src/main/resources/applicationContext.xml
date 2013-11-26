@@ -10,7 +10,7 @@
       
     <!-- entityManagerFactory -->
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="SportActivityTestInMemory-PU"/>
+        <property name="persistenceUnitName" value="Sport"/>
     </bean>
     
     <!-- add spring transaction support (@Transactional)-->
@@ -81,22 +81,4 @@
         <property name="DAO" ref="tableDAO" />
     </bean>
 
-
-
-    <!-- je potreba upravit ostatni beany podle sportActivity,
-        pridat defaultni konstruktor a seter pro entityManager
-    
-
-    <bean id="userDao" class="cz.muni.fi.pa165.sportactivitymanager.dao.impl.UserDAOImpl">
-    </bean>
- 
-    <bean id="userService" class="cz.muni.fi.pa165.sportactivitymanager.service.impl.UserServiceImpl">
-        <property name="uDao" ref="userDao"/>
-    </bean>
-
-   
-    -->
-    
-   
- 
 </beans>

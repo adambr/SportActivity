@@ -3,17 +3,16 @@
     Created on : Nov 20, 2013, 14:42:11 AM
     Author     : Kuba Dobes
     
-    Výpis tabulky v¹ech u¾ivatelù 
-    a pod ní formuláø (form.jsp) pro vlo¾ení nového u¾ivatele
+    Výpis tabulky v?ech u?ivatel? 
+    a pod ní formulá? (form.jsp) pro vlo?ení nového u?ivatele
 --%>
-<%@ page contentType="text/html; charset=iso-8859-2" pageEncoding="iso-8859-2" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 
 <s:layout-render name="/layout.jsp" titlekey="user.list.title">
 
-    <%-- Jquery DATEPICKER zobrazí v user/form.jsp kalendáø pro výbìr data narození u¾ivatele--%>
+    <%-- Jquery DATEPICKER zobrazí v user/form.jsp kalendá? pro výb?r data narození u?ivatele--%>
     <s:layout-component name="header">
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -41,7 +40,7 @@
         <div class="list">
             <table>
 
-                <%--hlavièka tabulky--%>
+                <%--hlavi?ka tabulky--%>
                 <tr>
                     <th>ID</th>
                     <th><f:message key="user.firstName"/></th>
@@ -49,11 +48,11 @@
                     <th><f:message key="user.birthDay"/></th>
                     <th><f:message key="user.weight"/></th>
                     <th><f:message key="user.gender"/></th>
-                        <%-- <th></th> 2 bunky hlavicky pro sloupec edit a smazat. v novem stylu nejsou potøeba
+                        <%-- <th></th> 2 bunky hlavicky pro sloupec edit a smazat. v novem stylu nejsou pot?eba
                              <th></th>--%>
                 </tr>
 
-                <%--buòky tabulky - hodnoty 
+                <%--bu?ky tabulky - hodnoty 
                 actionBean.users - zavolá metodu findAll z DefaultHnadleru v UserActionBean--%>
                 <c:forEach items="${actionBean.users}" var="user">
                     <tr>
@@ -69,7 +68,7 @@
                         <td><c:out value="${user.gender}"/></td>
 
                         <%-- odkaz "edit" pro editování
-                             zobrazuje se napravo v øádku
+                             zobrazuje se napravo v ?ádku
                              EVENT = EDIT
                              URL na webu ukazuje ID usera kterého budu editovat
                         --%>
@@ -82,7 +81,7 @@
 
                         <%-- tlacitko pro smazani
                                     Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
-                                    Podle toho Stripes poznají ¾e mají volat metodu delete
+                                    Podle toho Stripes poznají ?e mají volat metodu delete
                         --%>
                         <td>
                             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
@@ -104,13 +103,13 @@
 
         <div class="new">
             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
-                <%--Titulek formuláøe pro pøidání u¾ivatele--%>
+                <%--Titulek formulá?e pro p?idání u?ivatele--%>
                 <fieldset><legend><f:message key="user.list.newuser"/></legend>
 
                     <%--vlozeny formular z FORM.jsp. 
-                        Tim se zobrazi formular (5 øadkù pro zadáni nového u¾ivatele)--%>
+                        Tim se zobrazi formular (5 ?adk? pro zadáni nového u?ivatele)--%>
                     <%@include file="form.jsp"%>                
-                    <%--tlaèítko pod formuláøem pro vytvoøení u¾ivatele:--%>
+                    <%--tla?ítko pod formulá?em pro vytvo?ení u?ivatele:--%>
                     <%-- submit add vyvolá metodu add--%>
                     <s:submit name="add"><f:message key="user.create"/></s:submit>
                     </fieldset>
