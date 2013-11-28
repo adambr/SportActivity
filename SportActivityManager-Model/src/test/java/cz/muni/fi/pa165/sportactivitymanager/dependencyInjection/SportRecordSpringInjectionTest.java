@@ -26,7 +26,6 @@ public class SportRecordSpringInjectionTest extends BaseSpringInjectionTest{
         sportDto.setDistance(100);
         sportDto.setDuration(Long.MIN_VALUE);
         sportDto.setStartTime(new Date());
-        sportDto.setUserDTO(null);
         
         sportService.create(sportDto);
         assertNotNull(sportDto.getId());

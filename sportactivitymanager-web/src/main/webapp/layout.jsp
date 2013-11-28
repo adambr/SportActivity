@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page language="java" pageEncoding="utf-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -6,6 +6,7 @@
     <!DOCTYPE html>
     <html lang="${pageContext.request.locale}">
         <head>
+            <meta equiv="Content-Type" content="text/html; charset=UTF-8">
             <title><f:message key="${titlekey}"/></title>
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
             <script src="http://code.jquery.com/jquery-1.9.1.js"></script>

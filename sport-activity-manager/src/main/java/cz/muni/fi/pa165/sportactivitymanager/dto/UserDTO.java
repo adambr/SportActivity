@@ -5,32 +5,33 @@
 package cz.muni.fi.pa165.sportactivitymanager.dto;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Dobes Kuba
  */
 public class UserDTO {
-   private Long id;
-   private String firstName;
-   private String lastName;
-   private Date birthDay; 
-   private Integer weight;
-   private Gender gender;
 
-   
-   public  UserDTO(){
-   }
-   
-   public  UserDTO(Long id, String firstName, String lastName, Date birthDay, Integer weight, Gender gender){
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.birthDay = birthDay; 
-    this.weight = weight;
-    this.gender = gender;
-   }
-   
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private Date birthDay;
+    private Integer weight;
+    private Gender gender;
+    private List<SportRecordDTO> records;
+
+    public UserDTO() {
+    }
+
+    public List<SportRecordDTO> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<SportRecordDTO> records) {
+        this.records = records;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -88,7 +89,7 @@ public class UserDTO {
 
     @Override
     public boolean equals(Object object) {
-        
+
         if (object == null) {
             return false;
         }
@@ -101,13 +102,12 @@ public class UserDTO {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "UserDTO name = " + firstName + lastName + 
-               ", id = " + id +
-               ", gender = " + gender + 
-               ", Birdthday = " + birthDay ;
+        return "UserDTO name = " + firstName + lastName
+                + ", id = " + id
+                + ", gender = " + gender
+                + ", Birdthday = " + birthDay;
     }
-    
 }

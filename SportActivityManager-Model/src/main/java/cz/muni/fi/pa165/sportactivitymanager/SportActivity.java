@@ -5,12 +5,16 @@
 package cz.muni.fi.pa165.sportactivitymanager;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,18 +23,21 @@ import javax.persistence.Table;
  * @author Petr Jelínek
  */
 @Entity
-@Table( name="Activity" )
+@Table(name = "Activity")
 @NamedQueries({
     @NamedQuery(name = "findByName", query = "SELECT s FROM SportActivity s where s.name = :name"),
     @NamedQuery(name = "findAll", query = "SELECT s FROM SportActivity s")
 })
 public class SportActivity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @OneToOne
     private CaloriesTable calories;
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SportRecord> records;
 
     public SportActivity() {
     }
@@ -38,6 +45,14 @@ public class SportActivity implements Serializable {
     public SportActivity(String name, CaloriesTable calories) {
         this.name = name;
         this.calories = calories;
+    }
+
+    public List<SportRecord> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<SportRecord> records) {
+        this.records = records;
     }
 
     public CaloriesTable getCalories() {

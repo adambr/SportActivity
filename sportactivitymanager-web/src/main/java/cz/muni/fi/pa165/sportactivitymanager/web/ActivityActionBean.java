@@ -11,6 +11,7 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.CaloriesTableService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.escapeHTML;
+import java.nio.charset.Charset;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -103,6 +104,7 @@ public class ActivityActionBean extends BaseActionBean implements ValidationErro
     @DefaultHandler
     public Resolution list() {
         log.info("@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(Charset.defaultCharset());
         activities = activityService.findAll();
         return new ForwardResolution("/activity/list.jsp");
     }

@@ -121,7 +121,7 @@ public class SportRecordServiceImpl implements SportRecordService {
         List<SportRecord> sportRecords;
         try {
             sportRecords = sRDao.findAll();
-            sportRecordsTO = SportRecordDTOChanger.entityListDTOToList(sportRecords);
+            sportRecordsTO = SportRecordDTOChanger.entityListToDTOList(sportRecords);
         } catch (Exception ex) {
             throw new DataAccException(ex.toString());
         }

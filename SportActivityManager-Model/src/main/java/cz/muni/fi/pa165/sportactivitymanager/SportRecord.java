@@ -6,20 +6,25 @@ package cz.muni.fi.pa165.sportactivitymanager;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author Adam Brauner
+ * @author Adam Brauner, Petr Jelínek
  */
 @Entity
 @Table(name = "sport_record")
@@ -31,15 +36,13 @@ public class SportRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
-    private User user;
-    @OneToOne
+    @ManyToOne
     private SportActivity activity;
     //In seconds
     private Long duration;
     //in meters
     private int distance;
-   @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     private Date StartTime;
 
     public Long getId() {
@@ -50,20 +53,12 @@ public class SportRecord implements Serializable {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public void setActivity(SportActivity activity) {
         this.activity = activity;
     }
 
     public SportActivity getActivity() {
         return activity;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Long getDuration() {
@@ -94,7 +89,6 @@ public class SportRecord implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 67 * hash + (this.user != null ? this.user.hashCode() : 0);
         return hash;
     }
 
@@ -111,5 +105,35 @@ public class SportRecord implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public void persist(Object object) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Sport");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        try {
+            em.persist(object);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void persist1(Object object) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Sport");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        try {
+            em.persist(object);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
     }
 }

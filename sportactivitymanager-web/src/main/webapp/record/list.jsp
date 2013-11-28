@@ -39,7 +39,6 @@
                     <th><f:message key="record.duration"/></th>
                     <th><f:message key="record.distance"/></th>
                     <th><f:message key="record.startTime"/></th>
-                    <th><f:message key="record.user"/></th>
                     <th><f:message key="record.aktivity"/></th>
                 </tr>
                 <c:forEach items="${actionBean.records}" var="record">
@@ -48,7 +47,6 @@
                         <td><c:out value="${record.duration}"/></td>
                         <td><c:out value="${record.distance}"/></td>
                         <td><c:out value="${record.startTime}"/></td>
-                        <td><c:out value="${record.userDTO.firstName} ${record.userDTO.lastName}"/></td>
                         <td><c:out value="${record.activityDTO.name}"/></td>
                         <td width="20">
                             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">

@@ -6,7 +6,6 @@ package cz.muni.fi.pa165.sportactivitymanager.dao;
 
 import cz.muni.fi.pa165.sportactivitymanager.SportActivity;
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *

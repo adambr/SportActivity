@@ -13,7 +13,6 @@ import java.util.Date;
 public class SportRecordDTO {
 
     private Long id;
-    private UserDTO userDTO;
     private SportActivityDTO activityDTO;
     //In seconds
     private Long duration;
@@ -24,30 +23,12 @@ public class SportRecordDTO {
     public SportRecordDTO() {
     }
 
-    public SportRecordDTO(Long id, UserDTO user, SportActivityDTO activity, Long duration, int distance, Date StartTime) {
-        this();
-        this.id = id;
-        this.userDTO = user;
-        this.activityDTO = activity;
-        this.duration = duration;
-        this.distance = distance;
-        this.StartTime = StartTime;
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UserDTO getUserDTO() {
-        return userDTO;
-    }
-
-    public void setUserDTO(UserDTO user) {
-        this.userDTO = user;
     }
 
     public SportActivityDTO getActivityDTO() {

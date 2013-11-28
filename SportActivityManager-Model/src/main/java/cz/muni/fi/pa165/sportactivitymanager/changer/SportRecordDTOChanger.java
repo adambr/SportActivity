@@ -29,7 +29,6 @@ public class SportRecordDTOChanger {
         sportRecord.setDistance(sportRecordDTO.getDistance());
         sportRecord.setDuration(sportRecordDTO.getDuration());
         sportRecord.setStartTime(sportRecordDTO.getStartTime());
-        sportRecord.setUser(UserDTOChanger.dtoToUserEntity(sportRecordDTO.getUserDTO()));
         sportRecord.setActivity(SportActivityDTOChanger.dtoToEntity(sportRecordDTO.getActivityDTO()));
         return sportRecord;
     }
@@ -47,12 +46,11 @@ public class SportRecordDTOChanger {
         sportRecordDTO.setDistance(sportRecord.getDistance());
         sportRecordDTO.setDuration(sportRecord.getDuration());
         sportRecordDTO.setStartTime(sportRecord.getStartTime());
-        sportRecordDTO.setUserDTO(UserDTOChanger.entityToDTO(sportRecord.getUser()));
         sportRecordDTO.setActivityDTO(SportActivityDTOChanger.entityToDTO(sportRecord.getActivity()));
         return sportRecordDTO;
     }
     
-    public static List<SportRecordDTO> entityListDTOToList(List<SportRecord> sportRecord) {
+    public static List<SportRecordDTO> entityListToDTOList(List<SportRecord> sportRecord) {
         if (sportRecord == null) {
             return null;
         }
@@ -62,5 +60,17 @@ public class SportRecordDTOChanger {
             sportRecordTOList.add(entityToDTO(sportRecord.get(i)));
         }
         return sportRecordTOList;
+    }
+    
+    public static List<SportRecord> DTOListToEntityList(List<SportRecordDTO> sportRecordsDTO) {
+        if (sportRecordsDTO == null) {
+            return null;
+        }
+        
+        List<SportRecord> sportRecords = new ArrayList<SportRecord>();
+        for (SportRecordDTO sportRecordDTO : sportRecordsDTO) {
+            sportRecords.add(DTOToEntity(sportRecordDTO));
+        }
+        return sportRecords;
     }
 }

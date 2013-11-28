@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -36,6 +37,7 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     @SpringBean
     protected SportRecordService srs;
     private List<SportRecordDTO> records;
+    @Validate(on = {"add", "save"}, required = true)
     private Long aktivita;
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "duration", required = true),
@@ -87,24 +89,21 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     public Resolution list() {
         record = new SportRecordDTO();
         String ids = getContext().getRequest().getParameter("user.id");
-        log.info("******************************************");
-        log.info(ids);
-        log.info("******************************************");
         user = userService.getByID(Long.parseLong(ids));
-        records = srs.findAll();
+        //records = srs.findAll();
+        records = user.getRecords();
         activity = activityService.findAll();
         return new ForwardResolution("/record/list.jsp");
     }
 
     public Resolution add() {
-        log.info(user.getId().toString());
-        log.info(aktivita.toString());
+        user = userService.getByID(user.getId());
+        
         record.setActivityDTO(activityService.getSportActivity(aktivita));
-        log.info("setActivity:" + record.getActivityDTO().getName());
-        record.setUserDTO(user);
-        log.info("setUser" + record.getUserDTO().getFirstName());
+        user.getRecords().add(record);
 
         srs.create(record);
+        userService.update(user);
 
         return new RedirectResolution(this.getClass(), "list")
                 .addParameter("user.id", user.getId());
