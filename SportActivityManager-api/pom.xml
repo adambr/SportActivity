@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.muni.fi.pa165</groupId>
-    <artifactId>SportActivityManager</artifactId>
+    <artifactId>SportActivityManager-api</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
