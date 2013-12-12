@@ -101,7 +101,8 @@ public class SportRecordServiceImpl implements SportRecordService {
             throw new NullPointerException("SportRecord ID is Null");
         }
     }
-
+    
+    @Transactional
     public void update(SportRecordDTO sportRecordTO) {
         if (sportRecordTO != null) {
             try {

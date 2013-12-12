@@ -7,15 +7,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
-<%--<s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" var="actionBean"/>
---%>
 
 <s:layout-render name="/layout.jsp" titlekey="record.title">
     <s:layout-component name="header">
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <%--  <link rel="stylesheet" href="/resources/demos/style.css" />   --%>
         <script>
             $(function() {
                 $("#datepicker").datepicker($.datepicker.regional[ "cs" ]);
@@ -48,7 +45,13 @@
                         <td><c:out value="${record.distance}"/></td>
                         <td><c:out value="${record.startTime}"/></td>
                         <td><c:out value="${record.activityDTO.name}"/></td>
-                        <td width="20">
+                        <td>
+                            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" event="edit">
+                                <s:param name="record.id" value="${record.id}"/>
+                                <s:param name="user.id" value="${actionBean.user.id}"/>
+                                <f:message key="user.list.edit"/> </s:link>
+                            </td>                        
+                            <td width="20">
                             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
                                 <s:hidden name="record.id" value="${record.id}"/>
                                 <s:hidden name="user.id" value="${user.id}"/>
