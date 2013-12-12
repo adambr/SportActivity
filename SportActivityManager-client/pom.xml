@@ -30,14 +30,23 @@
 	<version>1.8</version>
     </dependency>
     
-    <!-- REST Client - Cviceni
-     <dependency>
-        <groupId>org.glassfish.jersey.core</groupId>
-        <artifactId>jersey-client</artifactId>
-        <version>2.4.1</version>
+    <!-- pro převod JSONStringu na DTO-->
+    <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.18</version>
+      <type>jar</type>
     </dependency>
-    -->
-
-        
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey</artifactId>
+      <version>0.8-ea</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>SportActivityManager-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 </project>
