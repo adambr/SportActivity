@@ -10,14 +10,15 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -109,18 +110,34 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
                 .addParameter("user.id", user.getId());
     }
 
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit"})
+    public void loadRecordFromDatabase() {
+            String ids = getContext().getRequest().getParameter("record.id");
+        if (ids == null) {
+            return;
+        }
+        record = srs.getSportRecord(Long.parseLong(ids));
+    }
+
+    public Resolution edit() {
+        activity = activityService.findAll();
+        return new ForwardResolution("/record/edit.jsp"); 
+    }   
+
+    public Resolution save() {
+        log.info(record.getId()+"  "+ record.getDuration()+"  "+ record.getDistance());
+        user = userService.getByID(user.getId());    
+        srs.update(record);
+        return new RedirectResolution(this.getClass(), "list")
+                .addParameter("user.id", user.getId());
+    }
+    
+    
     public Resolution delete() {
         String ids = getContext().getRequest().getParameter("user.id");
-        log.info("******************************************");
-        log.info(ids);
-        log.info("******************************************");
         user = userService.getByID(Long.parseLong(ids));
-        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         log.info(record.getId().toString());
-        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         record = srs.getSportRecord(record.getId());
-        log.info(record.getId().toString());
-        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         srs.delete(record.getId());
         return new RedirectResolution(this.getClass(), "list")
                 .addParameter("user.id", user.getId());

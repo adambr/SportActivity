@@ -80,8 +80,13 @@ public class SportRecordDAOImpl implements SportRecordDAO {
         if (srUpd == null) {
             throw new IllegalArgumentException("This entity does not exist in database.");
         }
+        
+        srUpd.setActivity(sportRecord.getActivity());
+        srUpd.setDistance(sportRecord.getDistance());
+        srUpd.setDuration(sportRecord.getDuration());
+        srUpd.setStartTime(sportRecord.getStartTime());
 
-        em.persist(sportRecord);
+        em.persist(srUpd);
 
     }
 
