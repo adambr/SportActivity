@@ -37,6 +37,8 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     final static Logger log = LoggerFactory.getLogger(RecordActionBean.class);
     @SpringBean
     protected SportRecordService srs;
+    
+    
     private List<SportRecordDTO> records;
     @Validate(on = {"add", "save"}, required = true)
     private Long aktivita;
@@ -98,11 +100,9 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     }
 
     public Resolution add() {
-        user = userService.getByID(user.getId());
-        
+        user = userService.getByID(user.getId());        
         record.setActivityDTO(activityService.getSportActivity(aktivita));
         user.getRecords().add(record);
-
         srs.create(record);
         userService.update(user);
 
@@ -126,7 +126,8 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
 
     public Resolution save() {
         log.info(record.getId()+"  "+ record.getDuration()+"  "+ record.getDistance());
-        user = userService.getByID(user.getId());    
+        user = userService.getByID(user.getId()); 
+        record.setActivityDTO(activityService.getSportActivity(aktivita));
         srs.update(record);
         return new RedirectResolution(this.getClass(), "list")
                 .addParameter("user.id", user.getId());
