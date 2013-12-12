@@ -11,6 +11,7 @@
         <module>SportActivityManager-api</module>
         <module>SportActivityManager-impl</module>
         <module>sportactivitymanager-web</module>
+        <module>SportActivityManager-client</module>
     </modules>
     
       <developers>
