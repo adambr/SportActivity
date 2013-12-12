@@ -5,15 +5,34 @@
          version="3.0">
 
     <!-- Spring -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:webApplicationContext.xml</param-value>
+    </context-param>
+
     <listener>
-        <description>activates Spring IoC container during start</description>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    <context-param>
-        <description>config file for Spring</description>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring-context.xml</param-value>
-    </context-param>
+    
+    <!-- Jersey -->
+    <servlet>
+        <servlet-name>jersey-serlvet</servlet-name>
+        <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>cz.muni.fi.pa165.sportactivitymanager.web</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jersey-serlvet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
 
     <!-- JSTL 
     Ríká kde se berou lokalizované texty. V nasem pripade říká ať vezme to samé co používají Stripsy.
@@ -45,9 +64,9 @@
             <param-value>cs:utf-8,en:utf-8</param-value>
         </init-param>
         <!--
-        Pro jednoduché použití Springových bean.
-         Interceptor způsobí, že pokud ve Stripes Action beanu mám něco s anotací Spring Bean. Tak on vezme Spring Bean a nainjektuje ho tam.
-         -->
+       Pro jednoduché použití Springových bean.
+        Interceptor způsobí, že pokud ve Stripes Action beanu mám něco s anotací Spring Bean. Tak on vezme Spring Bean a nainjektuje ho tam.
+        -->
         <init-param>
             <description>Stripes injects Spring beans</description>
             <param-name>Interceptor.Classes</param-name>
