@@ -28,20 +28,18 @@ public class RESTClientActivity {
         this.client = Client.create(clientConfig);
     }
 
-    public void createActivity(SportActivityDTO activity) {
+    public SportActivityDTO createActivity(SportActivityDTO activity) {
         try {
             WebResource webResource = client.resource(urlActivity + "create");
-
             ClientResponse response = webResource.type("application/json").post(ClientResponse.class, activity);
             if (response.getStatus() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
             }
-            System.out.println("Output of method Create from Server .... \n");
-            String output = response.getEntity(String.class);
-            System.out.println(output);
+            return response.getEntity(SportActivityDTO.class);
 
         } catch (Exception e) {
             log.error(e.toString());
+            return null;
         }
     }
 
