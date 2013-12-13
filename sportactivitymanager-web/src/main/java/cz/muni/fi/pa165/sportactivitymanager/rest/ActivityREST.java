@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 @Path("activity")
 public class ActivityREST {
 
-    @Autowired
+    @Autowired  
     protected SportActivityService activityService;
     @Autowired
     protected CaloriesTableService caloriesService;
