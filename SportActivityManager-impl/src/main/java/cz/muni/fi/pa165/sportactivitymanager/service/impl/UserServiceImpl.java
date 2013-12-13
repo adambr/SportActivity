@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService{
         }
             return userDto;
     }
+   
    @Transactional
     public void delete(UserDTO userDto){
      if (userDto!=null)

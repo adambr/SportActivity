@@ -45,7 +45,7 @@ public class ActivityREST {
     }
 
     @POST
-    @Path("/create")
+    @Path("create")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public SportActivityDTO create(SportActivityDTO activity,
@@ -161,6 +161,9 @@ public class ActivityREST {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         try {
+             if (activity.getCalories() != null) {
+                caloriesService.update(activity.getCalories());
+            }
             activityService.update(activity);
         } catch (Exception ex) {
             log.error("Update activity error: " + ex);
