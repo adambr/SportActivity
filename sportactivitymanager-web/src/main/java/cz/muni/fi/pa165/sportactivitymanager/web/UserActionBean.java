@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.sportactivitymanager.web;
 
 import cz.muni.fi.pa165.sportactivitymanager.dto.*;
+import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
@@ -107,6 +108,9 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     }
     //2. metoda pro Edit - jsou potřeba obě
 
+    @SpringBean
+    protected SportRecordService srs;
+    
     public Resolution edit() {
         log.debug("edit() user={}", user);
         return new ForwardResolution("/user/edit.jsp");
@@ -116,6 +120,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     //součást edit.jsp
     public Resolution save() {
         log.debug("save() user={}", user);
+        user.setRecords(userService.getByID(user.getId()).getRecords());
         userService.update(user);
         return new RedirectResolution(this.getClass(), "list");
     }

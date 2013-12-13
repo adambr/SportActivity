@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author Dobes Kuba, Petr Jelínek
+ * @author Dobes Kuba, Petr Jelínek, Adam Brauner
  */
 @Entity
 @Table(name = "SPORT_USER")
@@ -38,7 +38,7 @@ public class User implements Serializable {
     private Date birthDay;
     private Integer weight;
     private Gender gender;
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade=CascadeType.REMOVE)
     @JoinColumn(name = "OWNER_ID", referencedColumnName = "USER_ID")
     private List<SportRecord> records;
 

@@ -34,7 +34,7 @@ public class SportActivity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private CaloriesTable calories;
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SportRecord> records;
