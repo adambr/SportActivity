@@ -44,7 +44,7 @@ public class RESTClientUser {
         }
     }
 
-    public UserDTO getUserByID(String id) {
+    public UserDTO getUserByID(long id) {
         try {
             WebResource webResource = client.resource(urlUser + "getByID/" + id);
             ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);

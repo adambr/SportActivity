@@ -141,6 +141,10 @@ public class UserREST
         if (list == null)  {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }        
+        
+        for (UserDTO userDTO : list) {
+            userDTO.setRecords(null);
+        }
         response.setHeader("Access-Control-Allow-Origin", "*");
         return list;
     }   
