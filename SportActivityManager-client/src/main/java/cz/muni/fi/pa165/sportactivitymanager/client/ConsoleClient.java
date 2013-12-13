@@ -26,11 +26,12 @@ public class ConsoleClient
         
         Scanner console = new Scanner(System.in);
         String command;
-        System.out.print("Enter your command: ");        
         Boolean exit = true;       
         
         while (exit)            
         {       
+            System.out.println();
+            System.out.print("Enter your command: "); 
             command = console.nextLine();
             
             if (command.equals("info"))
@@ -43,7 +44,7 @@ public class ConsoleClient
             }
             else if (command.equals("user create"))
             {
-                userCreate(clientUser);
+                userCreate(console, clientUser);
             }
             else if (command.equals("user get"))
             {
@@ -88,13 +89,13 @@ public class ConsoleClient
         }      
     }        
     
-    public static void userCreate(RESTClientUser clientUser)           
+    public static void userCreate(Scanner cons, RESTClientUser clientUser)           
     {
-        Scanner cons = new Scanner(System.in);
+        //Scanner cons = new Scanner(System.in);
         UserDTO userDTO = new UserDTO();
         
-        System.out.print("Enter user id: ");
-        userDTO.setId(cons.nextLong());
+//        System.out.print("Enter user id: ");
+//        userDTO.setId(cons.nextLong());
         
         System.out.print("Enter user first name: ");
         userDTO.setFirstName(cons.nextLine());
@@ -103,7 +104,7 @@ public class ConsoleClient
         userDTO.setLastName(cons.nextLine());
         
         // osetrit date
-        System.out.print("Enter user birthdate: ");
+//        System.out.print("Enter user birthdate: ");
         userDTO.setBirthDay(new Date(4456798798798L));
 //        userDTO.setBirthDay(console.nextLong());
         
@@ -111,18 +112,20 @@ public class ConsoleClient
         userDTO.setWeight(cons.nextInt());
         
         // osetrit gender
-        System.out.print("Enter user gender: ");
+//        System.out.print("Enter user gender: ");
         userDTO.setGender(Gender.MALE);
 //        userDTO.setGender(console.nextLine());
         
-        clientUser.createUser(userDTO);
-        cons.close();
+        userDTO = clientUser.createUser(userDTO);
+        //cons.close();
         
         System.out.println("Created user{id= " + userDTO.getId() 
                     + " ,name= " + userDTO.getFirstName() + " " + userDTO.getLastName() 
                     + " ,birthday= " + userDTO.getBirthDay().toString() 
                     + " ,weight= " + userDTO.getWeight() 
                     + " ,gender= " + userDTO.getGender());
+        
+        cons.nextLine();
     }
     
     public static void userGet(RESTClientUser clientUser)
