@@ -74,7 +74,8 @@ public class RESTClientUser {
     public UserDTO updateActivityByActivity(UserDTO user) {
         try {
             WebResource webResource = client.resource(urlUser + "update");
-            ClientResponse response = webResource.accept("application/json").put(ClientResponse.class, user);
+            ClientResponse response = webResource.type("application/json")
+                    .accept("application/json").post(ClientResponse.class, user);
             if (response.getStatus() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
             }
