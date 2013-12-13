@@ -112,7 +112,7 @@ public class SportRecordServiceImpl implements SportRecordService {
                 throw new DataAccException(ex.toString());
             }
         } else {
-            throw new NullPointerException("User can not be null.");
+            throw new NullPointerException("Reoord can not be null.");
         }
     }
 
