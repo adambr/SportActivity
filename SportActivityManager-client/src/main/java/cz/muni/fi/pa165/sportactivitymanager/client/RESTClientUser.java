@@ -62,7 +62,7 @@ public class RESTClientUser {
     public void deleteUserByUser(UserDTO user) {
         try {
             WebResource webResource = client.resource(urlUser + "deleteByUser");
-            ClientResponse response = webResource.accept("application/json").post(ClientResponse.class, user);
+            ClientResponse response = webResource.type("application/json").post(ClientResponse.class, user);
             if (response.getStatus() != 204) {
                 throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
             }
