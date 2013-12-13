@@ -41,7 +41,7 @@ public class ActivityREST {
     @GET
     @Produces("text/plain")
     public String getText() {
-        return "hello!";
+        return "Hello, Activity Rest API is ready!";
     }
 
     @POST
@@ -50,7 +50,8 @@ public class ActivityREST {
     @Consumes(MediaType.APPLICATION_JSON)
     public SportActivityDTO create(SportActivityDTO activity,
             @Context HttpServletResponse response) throws IOException {
-        if (activity == null || activity.getName().isEmpty()) {
+        
+        if (activity == null || activity.getName().isEmpty() || activity.getCalories() == null ) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         try {
@@ -66,13 +67,13 @@ public class ActivityREST {
     }
 
     @GET
-    @Path("getID/{id}")
+    @Path("getByID/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public SportActivityDTO getByID(@PathParam("id") String id,
             @Context HttpServletResponse response) throws IOException {
+        
         Long lid = Long.parseLong(id);
         SportActivityDTO activity = null;
-
         try {
             activity = activityService.getSportActivity(lid);
         } catch (DataAccException ex) {
@@ -87,13 +88,12 @@ public class ActivityREST {
     }
     
     @GET
-    @Path("getName/{name}")
+    @Path("getByName/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public SportActivityDTO getByName(@PathParam("name") String name,
             @Context HttpServletResponse response) throws IOException {
         
         SportActivityDTO activity = null;
-
         try {
             activity = activityService.getSportActivity(name);
         } catch (DataAccException ex) {
@@ -109,7 +109,7 @@ public class ActivityREST {
 
     @DELETE
     @Path("deleteByID/{id}")
-    public void remove(@PathParam("id") String sid,
+    public void deleteByID(@PathParam("id") String sid,
             @Context HttpServletResponse response) throws IOException {
         Long id = Long.parseLong(sid);
         SportActivityDTO activity = null;
@@ -132,9 +132,10 @@ public class ActivityREST {
         response.setHeader("Access-Control-Allow-Origin", "*");
     }
     
+    //TODO mazat i CaloriesTableDTO??
     @DELETE
     @Path("deleteByActivity")
-    public void removeByActivity(SportActivityDTO activity,
+    public void deleteByActivity(SportActivityDTO activity,
             @Context HttpServletResponse response) throws IOException {
                 
         if (activity == null || activity.getId() == null) {
@@ -155,6 +156,7 @@ public class ActivityREST {
     @Produces(MediaType.APPLICATION_JSON)
     public SportActivityDTO update(SportActivityDTO activity,
             @Context HttpServletResponse response) throws IOException {
+        
         if (activity == null || activity.getName().isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -173,6 +175,7 @@ public class ActivityREST {
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<SportActivityDTO> findAll(@Context HttpServletResponse response) throws IOException {
+        
         List<SportActivityDTO> list = null;
         try {
             if (activityService == null) {
