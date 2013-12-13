@@ -71,7 +71,7 @@ public class RESTClientUser {
         }
     }
 
-    public UserDTO updateActivityByActivity(UserDTO user) {
+    public UserDTO updateUserByUser(UserDTO user) {
         try {
             WebResource webResource = client.resource(urlUser + "update");
             ClientResponse response = webResource.type("application/json")
