@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.sportactivitymanager.client;
 import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,32 +15,49 @@ public class App {
     public static void main(String[] args) {
 
         /// priprava activity objektu            
-        SportActivityDTO activity2 = new SportActivityDTO();
-
-        System.out.print("Enter activity name : ");
-        Scanner scanIn = new Scanner(System.in);
-        activity2.setName(scanIn.nextLine());
-        scanIn.close();
-
-        CaloriesTableDTO calories = new CaloriesTableDTO();
-        calories.setCalories60Kg(10);
-        calories.setCalories70Kg(20);
-        calories.setCalories80Kg(30);
-        calories.setCalories90Kg(40);
-        calories.setGender(Gender.MALE);
-
-        activity2.setCalories(calories);
-
-        RESTClientActivity restclient = new RESTClientActivity();
-        restclient.createActivity(activity2);
-//        System.out.print("Enter something here : ");
+//        SportActivityDTO activity2 = new SportActivityDTO();
 //
-//        String sWhatever;
-//
+//        System.out.print("Enter activity name : ");
 //        Scanner scanIn = new Scanner(System.in);
-//        sWhatever = scanIn.nextLine();
-//
+//        activity2.setName(scanIn.nextLine());
 //        scanIn.close();
-//        System.out.println(sWhatever);
+//
+//        CaloriesTableDTO calories = new CaloriesTableDTO();
+//        calories.setCalories60Kg(10);
+//        calories.setCalories70Kg(20);
+//        calories.setCalories80Kg(30);
+//        calories.setCalories90Kg(40);
+//        calories.setGender(Gender.MALE);
+//
+//        activity2.setCalories(calories);
+        
+        RESTClientActivity restclient = new RESTClientActivity();
+
+        ///////////////////////////
+        /// test get by id
+        ///////////////////////////
+        
+        
+
+//        SportActivityDTO activity;
+//        
+//        System.out.print("Enter activity id : ");
+//        Scanner scanIn = new Scanner(System.in);
+//        activity = restclient.getActivityByID(scanIn.nextLine());
+//        scanIn.close();
+        
+        ///////////////////////////
+        /// test find all
+        ///////////////////////////
+        
+//        List<SportActivityDTO> list = restclient.findAllActivity();
+//        for (SportActivityDTO sportActivityDTO : list) {
+//            System.out.println(sportActivityDTO);
+//        }
+        
+        ///////////////////////////
+        /// test delete by id
+        ///////////////////////////
+//        restclient.deleteActivityByID(17);
     }
 }
