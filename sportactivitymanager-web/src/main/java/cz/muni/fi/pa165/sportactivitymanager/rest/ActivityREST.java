@@ -133,7 +133,7 @@ public class ActivityREST {
     }
     
     //TODO mazat i CaloriesTableDTO??
-    @DELETE
+    @POST
     @Path("deleteByActivity")
     public void deleteByActivity(SportActivityDTO activity,
             @Context HttpServletResponse response) throws IOException {

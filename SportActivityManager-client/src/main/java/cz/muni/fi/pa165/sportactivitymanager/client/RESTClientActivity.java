@@ -89,7 +89,7 @@ public class RESTClientActivity {
     public void deleteActivityByActivity(SportActivityDTO activity) {
         try {
             WebResource webResource = client.resource(urlActivity + "deleteByActivity");
-            ClientResponse response = webResource.accept("application/json").delete(ClientResponse.class, activity);
+            ClientResponse response = webResource.type("application/json").post(ClientResponse.class, activity);
             if (response.getStatus() != 204) {
                 throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
             }
