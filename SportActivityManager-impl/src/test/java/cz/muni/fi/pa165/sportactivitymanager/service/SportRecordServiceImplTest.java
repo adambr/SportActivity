@@ -1,20 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.service;
 
 import cz.muni.fi.pa165.sportactivitymanager.dao.SportRecordDAO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
 import cz.muni.fi.pa165.sportactivitymanager.changer.SportRecordDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
-import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
-import cz.muni.fi.pa165.sportactivitymanager.service.impl.SportRecordServiceImpl;
 import cz.muni.fi.pa165.sportactivitymanager.service.impl.SportRecordServiceImpl;
 import java.util.Date;
 import java.util.List;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
- * @author Phaser
+ * @author Adam Brauner
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -40,13 +31,12 @@ public class SportRecordServiceImplTest {
 
     @Before
     public void setUp() {
-        // service ve ktere se pouziva mock DAO misto zive implementace
         mockDAO = mock(SportRecordDAO.class);
         mockService = new SportRecordServiceImpl();
         mockService.setSRDao(mockDAO);
     }
 
-    @Test //mock DAO test
+    @Test
     public void testCreate() {
         SportRecordDTO sportDto = new SportRecordDTO();
         sportDto.setDistance(100);

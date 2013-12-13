@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.changer;
 
 import cz.muni.fi.pa165.sportactivitymanager.User;
@@ -11,16 +7,16 @@ import java.util.List;
 
 /**
  *
- * @author Dobes KUba
+ * @author Dobes Kuba
  */
-
 public class UserDTOChanger {
-  
-    //convert userDTO to Entity User
+
     public static User dtoToUserEntity(UserDTO userDto) {
-        
-        if(null == userDto) return null;
-        
+
+        if (null == userDto) {
+            return null;
+        }
+
         User user = new User();
         user.setId(userDto.getId());
         user.setFirstName(userDto.getFirstName());
@@ -32,10 +28,11 @@ public class UserDTOChanger {
         return user;
     }
 
-    //convert user to userDTO
     public static UserDTO entityToDTO(User user) {
-        if(null == user) return null;
-        
+        if (null == user) {
+            return null;
+        }
+
         UserDTO userDto = new UserDTO();
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
@@ -46,12 +43,14 @@ public class UserDTOChanger {
         userDto.setRecords(SportRecordDTOChanger.entityListToDTOList(user.getRecords()));
         return userDto;
     }
-  
-    public static List<UserDTO> entityListToDtoList( List<User> users ) {
-        if(users == null) return null;
-        
-        List<UserDTO> userDtoList =  new ArrayList<UserDTO>();
-        for(int i = 0; i<users.size(); i++){
+
+    public static List<UserDTO> entityListToDtoList(List<User> users) {
+        if (users == null) {
+            return null;
+        }
+
+        List<UserDTO> userDtoList = new ArrayList<UserDTO>();
+        for (int i = 0; i < users.size(); i++) {
             userDtoList.add(UserDTOChanger.entityToDTO(users.get(i)));
         }
         return userDtoList;

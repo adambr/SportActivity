@@ -45,9 +45,7 @@
                     </div>
                 </div>
                 <div id="content">
-                    <%--<s:messages/> - umo?nuje vypsat zpr?vy typu: kniha byla p?id?na, smaz?na--%>
                     <s:messages/>
-                    <%--zde se zobraz? ta hlavn? str?nka s name=body - stejne name ma i index.jsp--%>
                     <s:layout-component name="body"/>
                 </div>
             </div>

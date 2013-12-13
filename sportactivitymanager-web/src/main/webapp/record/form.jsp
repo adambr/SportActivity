@@ -1,7 +1,7 @@
 <%-- 
     Document   : form
     Created on : 22.11.2013, 18:04:53
-    Author     : Phaser
+    Author     : Adam Brauner
 --%>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <s:errors/>

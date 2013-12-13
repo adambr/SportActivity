@@ -3,16 +3,14 @@
     Created on : Nov 21, 2013, 8:00:03 AM
     Author     : Kuba Dobes
 
-    Formular pro zobrazení 5 údaju o uzivateli pro vyplnení/editaci
-    Neobsahuje tlcitko pro ulození. To se pridává az v .jsp který form.jsp
 --%>
 
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
-<s:errors/>     <%--zde se zobrazují chyby (tam kde je tag s:errors)--%>
+<s:errors/>    
 <table>
     <tr>
-        <th><s:label for="b1" name="user.firstName"/></th> <%--nazev pole, bere podle lokalizace proto vse male--%>
-        <td><s:text id="b1" name="user.firstName"/></td> <%--nazev atributu usera. Bere z UserDTO, proto camelCase--%>
+        <th><s:label for="b1" name="user.firstName"/></th> 
+        <td><s:text id="b1" name="user.firstName"/></td> 
     </tr>
     <tr>
         <th><s:label for="b2" name="user.lastName"/></th>
@@ -33,13 +31,13 @@
             </s:select></td>
     </tr>    
 </table>
-        
-         <%-- tlacitko pro smazani
-                                Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
-                                Podle toho Stripes poznají ?e mají volat metodu delete
-        
-        <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
-                         //   skryti user ID pro zapamatování
-                            <s:hidden name="user.id" value="${user.id}"/>
-                            <s:submit name="delete"><f:message key="user.list.delete"/></s:submit> 
-                        </s:form>--%>
+
+<%-- tlacitko pro smazani
+                       Kdyz ho stisknu, tak bude mít 2 parametry: user.id a delete
+                       Podle toho Stripes poznají ?e mají volat metodu delete
+
+<s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
+                //   skryti user ID pro zapamatování
+                   <s:hidden name="user.id" value="${user.id}"/>
+                   <s:submit name="delete"><f:message key="user.list.delete"/></s:submit> 
+               </s:form>--%>

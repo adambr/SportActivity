@@ -1,7 +1,7 @@
 <%-- 
     Document   : edit
     Created on : 22.11.2013, 23:20:56
-    Author     : Petaniss
+    Author     : Petr Jelínek
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +11,7 @@
 <s:layout-render name="/layout.jsp" titlekey="activity.edit.title">
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" var="actionBean"/>
-        
+
         <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" class="nav">
             <f:message key="activity.list"/>
         </s:link>
@@ -23,7 +23,7 @@
                 <fieldset><legend><f:message key="activity.edit"/></legend>
                     <%@include file="form.jsp"%>
                     <s:submit name="save"><f:message key="activity.save"/></s:submit>
-                </fieldset>
+                    </fieldset>
             </s:form>
         </div>
 

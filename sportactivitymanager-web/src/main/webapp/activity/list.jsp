@@ -1,7 +1,7 @@
 <%-- 
     Document   : list.jsp
     Created on : 22.11.2013, 11:31:02
-    Author     : Petaniss
+    Author     : Petr Jelínek
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,11 +11,11 @@
 <s:layout-render name="/layout.jsp" titlekey="activity.list.title">
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" var="actionBean"/>
-        
+
         <a href="${pageContext.request.contextPath}" class="nav">
             <f:message key="main.page"/>
         </a>
-        
+
         <div class="list">
             <table>
                 <tr>
@@ -38,8 +38,8 @@
                         <td width="20">
                             <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean" event="edit">
                                 <s:param name="activity.id" value="${activity.id}"/><f:message key="activity.edit"/></s:link>
-                        </td>
-                        <td width="20">
+                            </td>
+                            <td width="20">
                             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.ActivityActionBean">
                                 <s:hidden name="activity.id" value="${activity.id}"/>
                                 <s:submit name="delete"><f:message key="activity.del"/></s:submit>

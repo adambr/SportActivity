@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager;
 
 import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
@@ -38,7 +34,7 @@ public class User implements Serializable {
     private Date birthDay;
     private Integer weight;
     private Gender gender;
-    @OneToMany(cascade=CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "OWNER_ID", referencedColumnName = "USER_ID")
     private List<SportRecord> records;
 

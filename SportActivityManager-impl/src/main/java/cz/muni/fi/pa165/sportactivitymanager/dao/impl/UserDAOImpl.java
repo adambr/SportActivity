@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.dao.impl;
 
 import cz.muni.fi.pa165.sportactivitymanager.User;
 import cz.muni.fi.pa165.sportactivitymanager.dao.UserDAO;
-import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,9 +9,7 @@ import javax.persistence.EntityManager;
 /**
  *
  * @author Dobes Kuba
- * @version 2.0 - Spring: removed Transactions from methods and
- * EntityManagerFactory. Replaced by Spring beans and added default constructor
- * (empty)
+ *
  */
 public class UserDAOImpl implements UserDAO {
 

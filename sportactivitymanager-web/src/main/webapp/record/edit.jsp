@@ -1,7 +1,7 @@
 <%-- 
     Document   : edit.jsp
     Created on : 12.12.2013, 17:52:41
-    Author     : Phaser
+    Author     : Adam Brauner
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

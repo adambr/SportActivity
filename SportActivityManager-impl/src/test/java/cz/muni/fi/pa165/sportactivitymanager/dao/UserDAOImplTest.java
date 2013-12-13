@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.dao;
 
 import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.User;
 import cz.muni.fi.pa165.sportactivitymanager.dao.impl.UserDAOImpl;
-import cz.muni.fi.pa165.sportactivitymanager.dao.UserDAO;
 import static cz.muni.fi.pa165.sportactivitymanager.dao.UserDAOImplTest.AssertUserCompletely;
 import java.util.Date;
 import java.util.List;
@@ -39,43 +34,30 @@ public class UserDAOImplTest {
     public void tearDown() {
     }
 
-    /*
-     * Try create new Empty user 
-     */
     @Test
     public void testCreateEmpty() {
         User user = new User();
         em.getTransaction().begin();
         userDao.create(user);
-                em.getTransaction().commit();
+        em.getTransaction().commit();
         if (user.getId() == null) {
             fail("Fail due to empty User");
         }
     }
 
-    /*
-     * Try create new Null user1
-     */
     @Test
     public void testCreateNullUser() {
         User user = null;
         em.getTransaction().begin();
         try {
             userDao.create(user);
-            
+
             fail("Create was called with null User");
         } catch (NullPointerException ex) {
         }
-                em.getTransaction().commit();
+        em.getTransaction().commit();
     }
 
-    /*
-     * Try create new user 
-     * Then assertNotNull tests, whether id isn't null
-     * Then assertSame/assertEquals tests, whether created object and object returned by Get method refer to the same object/are same.  
-     * if not than throw Error
-     * 
-     */
     @Test
     public void testCreate() {
         User user = new User();
@@ -88,31 +70,19 @@ public class UserDAOImplTest {
         user.setWeight(57);
         em.getTransaction().begin();
         userDao.create(user);
-                em.getTransaction().commit();
-        //ID can't be null
+        em.getTransaction().commit();
+
         assertNotNull(user.getId());
         Long userId = user.getId();
 
         User user2fromDB = userDao.getByID(userId);
-        //are two objects equal?
+
         assertEquals(user, user2fromDB);
-        //refer two object to the same object?
+
         assertSame(user, user2fromDB);
         AssertUserCompletely(user, user2fromDB);
     }
 
-    /**
-     * Test of Get method, of User class
-     *
-     * Create 2 new users. Then assertEquals tests, whether created object and
-     * object returned by Get method are same and has same ID. Then conditional
-     * if tests, whether 2 users with same attributes has same ID, but could not
-     * have. Then assertSame test whether 2 object are same.
-     * AssertUserCompletely tests whether attributes of 2 objects are same. if
-     * not than throw Error
-     *
-     * Than try get user1 with Null id, and negative id
-     */
     @Test
     public void testGet() {
         User user1 = new User();
@@ -131,15 +101,15 @@ public class UserDAOImplTest {
         user2.setLastName("Kocu");
         user2.setWeight(120);
         user2.setGender(Gender.MALE);
-                em.getTransaction().begin();
+        em.getTransaction().begin();
         userDao.create(user1);
         userDao.create(user2);
-                em.getTransaction().commit();
+        em.getTransaction().commit();
         assertEquals(user1, userDao.getByID(user1.getId()));
         assertEquals(user2, userDao.getByID(user2.getId()));
 
         User getUserformDB = userDao.getByID(user1.getId());
-        //id check test 
+
         assertEquals(getUserformDB.getId(), user1.getId());
 
         if (getUserformDB.getId().equals(user2.getId())) {
@@ -162,14 +132,6 @@ public class UserDAOImplTest {
         }
     }
 
-    /**
-     * Test of findAll method, of User class
-     *
-     * Create 3 new users. Then tests findAll method, that should return all 3
-     * object into List Then assertTrue tests whether List contains all 3 users.
-     * Then assertEquals tests whether the list has right size if not than throw
-     * Error
-     */
     @Test
     public void testFindAll() {
         System.out.println("test of findAll Users");
@@ -194,11 +156,11 @@ public class UserDAOImplTest {
         user3.setFirstName("Vaclav");
         user1.setGender(Gender.MALE);
         user3.setLastName("Treti");
-                em.getTransaction().begin();
+        em.getTransaction().begin();
         userDao.create(user1);
         userDao.create(user2);
         userDao.create(user3);
-                em.getTransaction().commit();
+        em.getTransaction().commit();
         List<User> UserList = userDao.findAll();
 
         assertTrue(UserList.contains(user1));
@@ -218,14 +180,6 @@ public class UserDAOImplTest {
         AssertUserCompletely(user3, user3fromList);
     }
 
-    /**
-     * Test of Update method, that should update information about user1
-     *
-     * Create new user1, then update his attributes Than assertEqual tests
-     * whether object and his attributes are same , if aren't than throw Error
-     *
-     * Try update null user1
-     */
     @Test
     public void testUpdate() {
         User user1 = new User();
@@ -236,18 +190,18 @@ public class UserDAOImplTest {
         user1.setLastName("Stary");
         user1.setWeight(120);
         user1.setGender(Gender.MALE);
-                em.getTransaction().begin();
+        em.getTransaction().begin();
         userDao.create(user1);
-                em.getTransaction().commit();
+        em.getTransaction().commit();
         Date birthD2 = new Date(89, 3, 20);
         user1.setBirthDay(birthD2);
         user1.setFirstName("Honza");
         user1.setLastName("Novy");
         user1.setWeight(82);
         user1.setGender(Gender.MALE);
-                em.getTransaction().begin();
+        em.getTransaction().begin();
         userDao.update(user1);
-                        em.getTransaction().commit();
+        em.getTransaction().commit();
         assertNotNull(user1.getId());
         User userFromDB = userDao.getByID(user1.getId());
         AssertUserCompletely(user1, userFromDB);
@@ -259,11 +213,6 @@ public class UserDAOImplTest {
         }
     }
 
-    /**
-     * Test of Delete method, that should remove user1 Try delete Null user1.
-     * Then create new regular user1. Then delete that user1 and assertNull
-     * tests whether object is really Null, if isn't than throw Error
-     */
     @Test
     public void TestDelete() {
         try {
@@ -280,18 +229,14 @@ public class UserDAOImplTest {
         user1.setLastName("Stary");
         user1.setWeight(120);
         user1.setGender(Gender.MALE);
-                em.getTransaction().begin();
+        em.getTransaction().begin();
         userDao.create(user1);
         assertNotNull(userDao.getByID(user1.getId()));
         userDao.delete(user1);
         assertNull(userDao.getByID(user1.getId()));
-                        em.getTransaction().commit();
+        em.getTransaction().commit();
     }
 
-    /**
-     * Method for comparison information of 2 users that should be same throw
-     * Error when aren't same
-     */
     public static void AssertUserCompletely(User user1, User user2) {
         assertEquals(user1.getBirthDay(), user2.getBirthDay());
         assertEquals(user1.getGender(), user2.getGender());

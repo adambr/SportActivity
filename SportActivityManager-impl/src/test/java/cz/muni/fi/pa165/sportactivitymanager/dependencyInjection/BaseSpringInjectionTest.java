@@ -14,5 +14,4 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
     "classpath:applicationContext.xml"})
 @TransactionConfiguration(defaultRollback = true)
 public abstract class BaseSpringInjectionTest {
-    
 }

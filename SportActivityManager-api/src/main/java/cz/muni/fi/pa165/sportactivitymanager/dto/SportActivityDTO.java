@@ -1,15 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.dto;
-
 
 /**
  *
  * @author Petr Jelínek
  */
 public class SportActivityDTO {
+
     private Long id;
     private String name;
     private CaloriesTableDTO calories;
@@ -37,7 +33,7 @@ public class SportActivityDTO {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     @Override
     public String toString() {
         return "SportActivityDTO{" + "name=" + name + '}';

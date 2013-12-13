@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.dao;
 
 import cz.muni.fi.pa165.sportactivitymanager.SportRecord;
 import cz.muni.fi.pa165.sportactivitymanager.dao.impl.SportRecordDAOImpl;
-import cz.muni.fi.pa165.sportactivitymanager.dao.SportRecordDAO;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -101,15 +96,13 @@ public class SportRecordDAOImplTest {
         em.getTransaction().begin();
         sportRecordDAO.create(sr);
         em.getTransaction().commit();
-
-        //ID can't be null
         assertNotNull(sr.getId());
         Long srId = sr.getId();
 
         SportRecord sr2fromDB = sportRecordDAO.getSportRecord(srId);
-        //are two objects equal?
+
         assertEquals(sr, sr2fromDB);
-        //refer two object to the same object?
+
         assertSame(sr, sr2fromDB);
 
         assertEquals(sr.getId(), sr2fromDB.getId());

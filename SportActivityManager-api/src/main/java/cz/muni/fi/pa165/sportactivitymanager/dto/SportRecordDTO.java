@@ -1,22 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.dto;
 
 import java.util.Date;
 
 /**
  *
- * @author Phaser
+ * @author Adam Brauner
  */
 public class SportRecordDTO {
 
     private Long id;
     private SportActivityDTO activityDTO;
-    //In seconds
     private Long duration;
-    //in meters
     private int distance;
     private Date StartTime;
 
@@ -82,5 +76,10 @@ public class SportRecordDTO {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "SportRecordDTO{" + "id=" + id + ", activityDTO=" + activityDTO + ", duration=" + duration + ", distance=" + distance + ", StartTime=" + StartTime + '}';
     }
 }

@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Petr Jelínek
  */
 public class SportActivitySpringInjectionTest extends BaseSpringInjectionTest {
-    
+
     @Autowired
     private SportActivityService sportService;
-    
+
     @Test
     public void testCreateAndFind() {
         SportActivityDTO sportDto = new SportActivityDTO();
@@ -27,5 +27,4 @@ public class SportActivitySpringInjectionTest extends BaseSpringInjectionTest {
         SportActivityDTO sport2fromDB = sportService.getSportActivity(sportDto.getId());
         assertEquals(sportDto, sport2fromDB);
     }
-    
 }

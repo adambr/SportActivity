@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.sportactivitymanager.service.impl;
 
 import cz.muni.fi.pa165.sportactivitymanager.DataAccException;
@@ -15,6 +11,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ *
+ * @author Adam Brauner
+ */
 @Service
 public class SportRecordServiceImpl implements SportRecordService {
 
@@ -39,24 +39,6 @@ public class SportRecordServiceImpl implements SportRecordService {
         }
     }
 
-//    @Transactional
-//    public SportRecordDTO getSportRecordByUser(User) {
-//        SportRecordDTO sportRecordTO = null;
-//
-//        if (id != null) {
-//            try {
-//                SportRecord sportRecord = sRDao.getSportRecord(id);
-//                sportRecordTO = SportRecordDTOChanger.entityToDTO(sportRecord);
-//            } catch (Exception ex) {
-//                throw new DataAccException(ex.toString());
-//            }
-//        } else {
-//            throw new NullPointerException("SportRecord ID is Null");
-//        }
-//        return sportRecordTO;
-//
-//    }
-        
     @Transactional
     public SportRecordDTO getSportRecord(Long id) {
         SportRecordDTO sportRecordTO = null;
@@ -101,7 +83,7 @@ public class SportRecordServiceImpl implements SportRecordService {
             throw new NullPointerException("SportRecord ID is Null");
         }
     }
-    
+
     @Transactional
     public void update(SportRecordDTO sportRecordTO) {
         if (sportRecordTO != null) {
