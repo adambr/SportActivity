@@ -85,7 +85,7 @@ public class UserREST
     }  
   
     
-    @DELETE
+    @POST
     @Path("deleteByUser")
     public void deleteByUser(UserDTO user, 
             @Context HttpServletResponse response) throws IOException {                

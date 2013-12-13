@@ -132,7 +132,7 @@ public class ActivityREST {
         response.setHeader("Access-Control-Allow-Origin", "*");
     }
     
-    //TODO mazat i CaloriesTableDTO??
+    
     @POST
     @Path("deleteByActivity")
     public void deleteByActivity(SportActivityDTO activity,
