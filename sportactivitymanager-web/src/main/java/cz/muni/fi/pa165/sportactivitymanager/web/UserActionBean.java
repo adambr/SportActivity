@@ -14,25 +14,25 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 
 import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.escapeHTML;
 import net.sourceforge.stripes.controller.LifecycleStage;
-/*
+
+/**
  * @author Kuba Dobes
- * ValidationErrorHandler slouží pro ověření vyplněných vstupů
+ *
  */
 
-//říká na jaká URL to reaguje- ty co začínají /users
-//za lomítkem je název metody, která se má zavolat (list, add...)
-//v url může být i ID usera
+/*říká na jaká URL to reaguje- ty co začínají /users
+ * za lomítkem je název metody, která se má zavolat (list, add...)
+ * v url může být i ID usera
+ * ValidationErrorHandler slouží pro ověření vyplněných vstupů
+ */
 @UrlBinding("/users/{$event}/{user.id}")
 public class UserActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     final static Logger log = LoggerFactory.getLogger(UserActionBean.class);
-    /**
+    /*
      * field = název pole z form(formulář pro vkládání knih/uzivatelů) název ve
-     * filed se musí shodovat s name z form: <td><s:text id="b1"
-     * name="user.firstname"/></td>
-     *
-     * validuje to při volání metody add a save
-    *
+     * filed se musí shodovat s name z form: <td><s:text id="b1" name="user.firstname"/></td>     *
+     * validuje to při volání metody add a save     *
      */
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "firstName", required = true, minlength = 2),
@@ -69,18 +69,16 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         return new ForwardResolution("/user/list.jsp");
     }
 
-    /**
-     * --- part for adding a user
-     */
-    /**
+    /*
      * Save user part
-    *
+     *
      */
-    //escapeHTML - aby uživatel nevkládal žádny ošklivý znaky(javascript) - nespustí se
-    //tlacitko "Vytvořit nového uživatele"
-    //user je asi stejnej user co je ve form.jsp  user.něco
-    //  Tak už nemusím vytvářet nového usera a přiřazovat mu jméno... a pak ho uložit pomocí Service, ale je už vytvořen z form.jsp
-    // vezme obsah proměnné user. a ten obsahuje data z formuláře - to zajistí STRIPES automaticky. Z formuláře pozná že mám položku firstname a zjistí že třída User obsahuje metodu setfirstName a položku nastaví.
+    /*escapeHTML - aby uživatel nevkládal žádny ošklivý znaky(javascript) - nespustí se
+     *tlacitko "Vytvořit nového uživatele"
+     *user je asi stejnej user co je ve form.jsp  user.něco
+     *Tak už nemusím vytvářet nového usera a přiřazovat mu jméno... a pak ho uložit pomocí Service, ale je už vytvořen z form.jsp
+     *vezme obsah proměnné user. a ten obsahuje data z formuláře - to zajistí STRIPES automaticky. Z formuláře pozná že mám položku firstname a zjistí že třída User obsahuje metodu setfirstName a položku nastaví.
+     */
     public Resolution add() {
         log.debug("add() user={}", user);
         userService.create(user);
@@ -90,13 +88,13 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         return new RedirectResolution(this.getClass(), "list");
     }
 
-    /**
+    /*
      * User Editing part
-    *
+     *     
+     * 1. metoda pro Edit
+     * anotace before vytahne data predem z databaze
+     * vytáhu si usera a ID. Je to predtím než se data Bindují, proto dostanu ID jako řetězec a musím si ho převést na Long.
      */
-    //1. metoda pro Edit
-    //anotace before vytahne data predem z databaze
-    // vytáhu si usera a ID. Je to predtím než se data Bindují, proto dostanu ID jako řetězec a musím si ho převést na Long.
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit"})
     public void loadBookFromDatabase() {
         String ids = getContext().getRequest().getParameter("user.id");
@@ -105,8 +103,8 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         }
         user = userService.getByID(Long.parseLong(ids));
     }
+    
     //2. metoda pro Edit - jsou potřeba obě
-
     public Resolution edit() {
         log.debug("edit() user={}", user);
         return new ForwardResolution("/user/edit.jsp");
@@ -119,31 +117,26 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         userService.update(user);
         return new RedirectResolution(this.getClass(), "list");
     }
-    //tlactiko pro CANCEL (Task 2)  
-    //součást edit.jsp
-    //TODO    
-
+    
     public Resolution cancel() {
-        //    log.debug("cancel() book={}", book);
         return new ForwardResolution("/user/list.jsp");
     }
 
     /**
      * Deletion part
-    *
+     *
      */
     public Resolution delete() {
         // tlačítko delete předává 2 parametry: delete a user.id
         // podle id vytvořím usera a toho smažu
         log.debug("delete({})", user.getId());
-        user = userService.getByID(user.getId());
+        user = userService.getByID(user.getId());        
         userService.delete(user);
         //vypise ze user jmeno prijmeni byl smazán. jmeno a prijmeni se bere z formulare a vklada se do textu "book.delete.message" z lokalizace.
         getContext().getMessages().add(new LocalizableMessage("user.delete.message", escapeHTML(user.getFirstName()), escapeHTML(user.getLastName())));
         //znovu vypise seznam knih, aby uživatel mohl mačkat Reload
         return new RedirectResolution(this.getClass(), "list");
     }
-
 
     //po implementaci Validation bylo potreba pridat tuto tridu, 
     //když neproběhla Validace správně tak se musí zde uložit seznam chyb.
