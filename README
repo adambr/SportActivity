@@ -1,0 +1,31 @@
+README - SPORT ACTIVITY 
+*****************************************************
+*** Petr Jelínek
+*** Adam Brauner
+*** Kuba Dobeš
+*** Michal Galo
+*****************************************************
+
+*this command run web(have to be in web folder)
+mvn clean install tomcat7:run
+
+*this command run client(have to be in client folder)
+mvn exec:java
+
+*****************************************************
+*Client samples
+
+entities : activity | user 
+commands : create | get | delete | list
+client commands: info | exit 
+
+Example: activity create | user list
+
+*Client example work
+Enter your command: user create
+Enter user first name: Adam
+Enter user last name: Brauner
+Enter birthdate in dd-M-yyyy format: 10-11-1988
+Enter user weight: 90
+Enter user gender (male=1 / female=2): 1
+Created user{id= 1 ,name= Adam Brauner ,birthday= Thu Nov 10 00:00:00 CET 1988 ,weight= 90 ,gender= MALE
