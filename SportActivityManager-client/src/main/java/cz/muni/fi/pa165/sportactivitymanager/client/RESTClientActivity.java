@@ -43,7 +43,7 @@ public class RESTClientActivity {
         }
     }
 
-    public SportActivityDTO getActivityByID(String id) {
+    public SportActivityDTO getActivityByID(long id) {
         try {
             WebResource webResource = client.resource(urlActivity + "getByID/" + id);
             ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);

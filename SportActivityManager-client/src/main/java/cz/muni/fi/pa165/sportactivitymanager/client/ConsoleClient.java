@@ -6,17 +6,13 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Michal Galo
+ * @author Michal Galo, Petr Jelinek
  */
 public class ConsoleClient {
 
@@ -44,20 +40,16 @@ public class ConsoleClient {
                 userCreate(console, clientUser);
             } else if (command.equals("user get")) {
                 userGet(console, clientUser);
-            } else if (command.equals("user update")) {
-                userUpdate(clientUser);
             } else if (command.equals("user delete")) {
-                userDelete(clientUser);
+                userDelete(console, clientUser);
             } else if (command.equals("user list")) {
                 userList(clientUser);
             } else if (command.equals("activity create")) {
-                activityCreate(clientActivity);
+                activityCreate(console, clientActivity);
             } else if (command.equals("activity get")) {
-                activityGet(clientActivity);
-            } else if (command.equals("activity update")) {
-                activityUpdate(clientActivity);
+                activityGet(console, clientActivity);
             } else if (command.equals("activity delete")) {
-                activityDelete(clientActivity);
+                activityDelete(console, clientActivity);
             } else if (command.equals("activity list")) {
                 activityList(clientActivity);
             } else {
@@ -91,29 +83,31 @@ public class ConsoleClient {
         System.out.print("Enter user weight: ");
         try {
             userDTO.setWeight(cons.nextInt());
-        } catch(InputMismatchException ex) {
+        } catch (InputMismatchException ex) {
             System.out.println("input error...try it again");
             cons.nextLine();
             return;
         }
-        
+
         // gender
         int gender;
         System.out.print("Enter user gender (male=1 / female=2): ");
         try {
             gender = cons.nextInt();
-        } catch(InputMismatchException ex) {
+        } catch (InputMismatchException ex) {
             System.out.println("input error...try it again");
             cons.nextLine();
             return;
         }
-        
-        if (gender == 1) userDTO.setGender(Gender.MALE);
-        else if (gender == 2) userDTO.setGender(Gender.FEMALE);
-        else {
+
+        if (gender == 1) {
+            userDTO.setGender(Gender.MALE);
+        } else if (gender == 2) {
+            userDTO.setGender(Gender.FEMALE);
+        } else {
             System.out.println("input error...try it again");
             cons.nextLine();
-            return; 
+            return;
         }
 
         userDTO = clientUser.createUser(userDTO);
@@ -129,17 +123,17 @@ public class ConsoleClient {
 
     public static void userGet(Scanner cons, RESTClientUser clientUser) {
         Long id;
-        
+
         System.out.print("Enter user id: ");
 
         try {
             id = cons.nextLong();
-        } catch(InputMismatchException ex) {
+        } catch (InputMismatchException ex) {
             System.out.println("input error...try it again");
             cons.nextLine();
             return;
         }
-        
+
         UserDTO userDTO;
         userDTO = clientUser.getUserByID(id);
 
@@ -152,215 +146,146 @@ public class ConsoleClient {
                     + " ,weight=" + userDTO.getWeight()
                     + " ,gender=" + userDTO.getGender());
         }
-        
+
         cons.nextLine();
     }
 
-    public static void userUpdate(RESTClientUser clientUser) {
-        Scanner cons = new Scanner(System.in);
-        UserDTO userDTO = new UserDTO();
-
-        System.out.print("Enter user id: ");
-        userDTO.setId(cons.nextLong());
-
-        System.out.print("Enter user first name: ");
-        userDTO.setFirstName(cons.nextLine());
-
-        System.out.print("Enter user last name: ");
-        userDTO.setLastName(cons.nextLine());
-
-        // osetrit date
-        System.out.print("Enter user birthdate: ");
-        userDTO.setBirthDay(new Date(4456798798798L));
-//        userDTO.setBirthDay(console.nextLong());
-
-        System.out.print("Enter user weight: ");
-        userDTO.setWeight(cons.nextInt());
-
-        // osetrit gender
-        System.out.print("Enter user gender: ");
-        userDTO.setGender(Gender.MALE);
-//        userDTO.setGender(console.nextLine());
-
-        clientUser.updateUserByUser(userDTO);
-        cons.close();
-
-        System.out.println("Updated user{id= " + userDTO.getId()
-                + " ,name= " + userDTO.getFirstName() + " " + userDTO.getLastName()
-                + " ,birthday= " + userDTO.getBirthDay().toString()
-                + " ,weight= " + userDTO.getWeight()
-                + " ,gender= " + userDTO.getGender());
-    }
-
-    public static void userDelete(RESTClientUser clientUser) {
-        Scanner cons = new Scanner(System.in);
-        UserDTO userDTO = new UserDTO();
+    public static void userDelete(Scanner cons, RESTClientUser clientUser) {
         Long id;
-
         System.out.print("Enter user id: ");
-        id = cons.nextLong();
 
-        userDTO = clientUser.getUserByID(id);
-        clientUser.deleteUserByUser(userDTO);
+        try {
+            id = cons.nextLong();
+        } catch (InputMismatchException ex) {
+            System.out.println("input error...try it again");
+            cons.nextLine();
+            return;
+        }
 
-        cons.close();
+        UserDTO userDTO = clientUser.getUserByID(id);
 
-        System.out.println("Deleted user{id= " + userDTO.getId()
-                + " ,name= " + userDTO.getFirstName() + " " + userDTO.getLastName()
-                + " ,birthday= " + userDTO.getBirthDay().toString()
-                + " ,weight= " + userDTO.getWeight()
-                + " ,gender= " + userDTO.getGender());
+        if (userDTO == null) {
+            System.out.println("user not exists");
+        } else {
+            clientUser.deleteUserByUser(userDTO);
+        }
+        cons.nextLine();
     }
 
     public static void userList(RESTClientUser clientUser) {
-        List<UserDTO> list = new ArrayList<UserDTO>();
-        list = clientUser.findAllUsers();
+        List<UserDTO> list = clientUser.findAllUsers();
 
-        for (UserDTO userDTO : list) {
-            System.out.println("User{id= " + userDTO.getId()
-                    + " ,name= " + userDTO.getFirstName() + " " + userDTO.getLastName()
-                    + " ,birthday= " + userDTO.getBirthDay().toString()
-                    + " ,weight= " + userDTO.getWeight()
-                    + " ,gender= " + userDTO.getGender());
+        if (list != null) {
+            for (UserDTO userDTO : list) {
+                System.out.println("User{id= " + userDTO.getId()
+                        + " ,name= " + userDTO.getFirstName() + " " + userDTO.getLastName()
+                        + " ,birthday= " + userDTO.getBirthDay().toString()
+                        + " ,weight= " + userDTO.getWeight()
+                        + " ,gender= " + userDTO.getGender());
+            }
         }
     }
 
-    public static void activityCreate(RESTClientActivity clientActivity) {
-        Scanner cons = new Scanner(System.in);
+    public static void activityCreate(Scanner cons, RESTClientActivity clientActivity) {
         SportActivityDTO activityDTO = new SportActivityDTO();
         CaloriesTableDTO caloriesDTO = new CaloriesTableDTO();
-
-        System.out.print("Enter activity id: ");
-        activityDTO.setId(cons.nextLong());
-
-        // ako sa bude zadavat id pre calories table?
-        caloriesDTO.setId(activityDTO.getId());
-
         System.out.print("Enter activity name: ");
         activityDTO.setName(cons.nextLine());
 
-        System.out.print("Enter activity calories for 60 Kg: ");
-        caloriesDTO.setCalories60Kg(cons.nextInt());
+        try {
+            System.out.print("Enter activity calories for 60 Kg: ");
+            caloriesDTO.setCalories60Kg(cons.nextInt());
+            System.out.print("Enter activity calories for 70 Kg: ");
+            caloriesDTO.setCalories70Kg(cons.nextInt());
+            System.out.print("Enter activity calories for 80 Kg: ");
+            caloriesDTO.setCalories80Kg(cons.nextInt());
+            System.out.print("Enter activity calories for 90 Kg: ");
+            caloriesDTO.setCalories90Kg(cons.nextInt());
+        } catch (InputMismatchException ex) {
+            System.out.println("input error...try it again");
+            cons.nextLine();
+            return;
+        }
 
-        System.out.print("Enter activity calories for 70 Kg: ");
-        caloriesDTO.setCalories70Kg(cons.nextInt());
-
-        System.out.print("Enter activity calories for 80 Kg: ");
-        caloriesDTO.setCalories80Kg(cons.nextInt());
-
-        System.out.print("Enter activity calories for 90 Kg: ");
-        caloriesDTO.setCalories90Kg(cons.nextInt());
-
-        // osetrit caloriestable gender - ako sa to tam bude zadavat?        
         caloriesDTO.setGender(Gender.MALE);
-
         activityDTO.setCalories(caloriesDTO);
+        activityDTO = clientActivity.createActivity(activityDTO);
 
-        clientActivity.createActivity(activityDTO);
-        cons.close();
+        if (activityDTO != null) {
+            System.out.println("Created activity{id= " + activityDTO.getId()
+                    + " ,name= " + activityDTO.getName()
+                    + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
+                    + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
+                    + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
+                    + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
+        }
 
-        System.out.println("Created activity{id= " + activityDTO.getId()
-                + " ,name= " + activityDTO.getName()
-                + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
-                + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
-                + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
-                + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
+        cons.nextLine();
     }
 
-    public static void activityGet(RESTClientActivity clientActivity) {
-        Scanner cons = new Scanner(System.in);
-        SportActivityDTO activityDTO = new SportActivityDTO();
-        String id;
+    public static void activityGet(Scanner cons, RESTClientActivity clientActivity) {
+        Long id;
 
         System.out.print("Enter activity id: ");
-        id = cons.nextLine();
+        try {
+            id = cons.nextLong();
+        } catch (InputMismatchException ex) {
+            System.out.println("input error...try it again");
+            cons.nextLine();
+            return;
+        }
 
+        SportActivityDTO activityDTO;
         activityDTO = clientActivity.getActivityByID(id);
 
-        cons.close();
-
-        System.out.println("Activity{id= " + activityDTO.getId()
-                + " ,name= " + activityDTO.getName()
-                + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
-                + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
-                + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
-                + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
-    }
-
-    public static void activityUpdate(RESTClientActivity clientActivity) {
-        Scanner cons = new Scanner(System.in);
-        SportActivityDTO activityDTO = new SportActivityDTO();
-        CaloriesTableDTO caloriesDTO = new CaloriesTableDTO();
-
-        System.out.print("Enter activity id: ");
-        activityDTO.setId(cons.nextLong());
-
-        // ako sa bude zadavat id pre calories table?
-        caloriesDTO.setId(activityDTO.getId());
-
-        System.out.print("Enter activity name: ");
-        activityDTO.setName(cons.nextLine());
-
-        System.out.print("Enter activity calories for 60 Kg: ");
-        caloriesDTO.setCalories60Kg(cons.nextInt());
-
-        System.out.print("Enter activity calories for 70 Kg: ");
-        caloriesDTO.setCalories70Kg(cons.nextInt());
-
-        System.out.print("Enter activity calories for 80 Kg: ");
-        caloriesDTO.setCalories80Kg(cons.nextInt());
-
-        System.out.print("Enter activity calories for 90 Kg: ");
-        caloriesDTO.setCalories90Kg(cons.nextInt());
-
-        // osetrit caloriestable gender - ako sa to tam bude zadavat?        
-        caloriesDTO.setGender(Gender.MALE);
-
-        activityDTO.setCalories(caloriesDTO);
-
-        clientActivity.updateActivityByActivity(activityDTO);
-        cons.close();
-
-        System.out.println("Updated activity{id= " + activityDTO.getId()
-                + " ,name= " + activityDTO.getName()
-                + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
-                + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
-                + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
-                + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
-    }
-
-    public static void activityDelete(RESTClientActivity clientActivity) {
-        Scanner cons = new Scanner(System.in);
-        SportActivityDTO activityDTO = new SportActivityDTO();
-        String id;
-
-        System.out.print("Enter activity id: ");
-        id = cons.nextLine();
-
-        activityDTO = clientActivity.getActivityByID(id);
-        clientActivity.deleteActivityByActivity(activityDTO);
-
-        cons.close();
-
-        System.out.println("Deleted activity{id= " + activityDTO.getId()
-                + " ,name= " + activityDTO.getName()
-                + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
-                + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
-                + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
-                + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
-    }
-
-    public static void activityList(RESTClientActivity clientActivity) {
-        List<SportActivityDTO> list = new ArrayList<SportActivityDTO>();
-        list = clientActivity.findAllActivity();
-
-        for (SportActivityDTO activityDTO : list) {
+        if (activityDTO == null) {
+            System.out.println("activity not exists");
+        } else {
             System.out.println("Activity{id= " + activityDTO.getId()
                     + " ,name= " + activityDTO.getName()
                     + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
                     + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
                     + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
                     + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
+        }
+
+        cons.nextLine();
+    }
+
+    public static void activityDelete(Scanner cons, RESTClientActivity clientActivity) {       
+        Long id;
+        System.out.print("Enter activity id: ");
+
+        try {
+            id = cons.nextLong();
+        } catch (InputMismatchException ex) {
+            System.out.println("input error...try it again");
+            cons.nextLine();
+            return;
+        }
+
+        SportActivityDTO activity = clientActivity.getActivityByID(id);
+
+        if (activity == null) {
+            System.out.println("activity not exists");
+        } else {
+            clientActivity.deleteActivityByActivity(activity);
+        }
+        cons.nextLine();
+    }
+
+    public static void activityList(RESTClientActivity clientActivity) {
+        List<SportActivityDTO> list = clientActivity.findAllActivity();
+
+        if (list != null) {
+            for (SportActivityDTO activityDTO : list) {
+                System.out.println("Activity{id= " + activityDTO.getId()
+                        + " ,name= " + activityDTO.getName()
+                        + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
+                        + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
+                        + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
+                        + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
+            }
         }
     }
 
@@ -372,11 +297,11 @@ public class ConsoleClient {
 
     public static void info() {
         System.out.println("------------------------------    INFO    ------------------------------");
-        System.out.println("entities : activity  / user ");
-        System.out.println("commands : create / get / update / delete / list");
-        System.out.println("client commands: info / cancel / exit \n");
+        System.out.println("entities : activity | user ");
+        System.out.println("commands : create | get | delete | list");
+        System.out.println("client commands: info | exit \n");
 
-        System.out.println("Example: activity create / user list");
+        System.out.println("Example: activity create | user list");
         System.out.println("------------------------------------------------------------------------\n");
     }
 }
