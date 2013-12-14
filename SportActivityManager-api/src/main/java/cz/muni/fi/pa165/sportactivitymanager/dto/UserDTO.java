@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.sportactivitymanager.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -101,9 +102,12 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "UserDTO name = " + firstName + lastName
-                + ", id = " + id
-                + ", gender = " + gender
-                + ", Birdthday = " + birthDay;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return "{" + "id=" + id 
+                + ", name=" + firstName + " " + lastName 
+                + ", birthday=" + dateFormat.format(birthDay) 
+                + ", weight=" + weight 
+                + ", gender=" + gender 
+                + '}';
     }
 }

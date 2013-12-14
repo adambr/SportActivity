@@ -4,15 +4,12 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 /**
  *
- * @author Michal Galo, Petr Jelinek
+ * @author Petr Jelinek
  */
 public class ConsoleClient {
 
@@ -23,144 +20,89 @@ public class ConsoleClient {
         entryInfo();
         info();
 
-        Scanner console = new Scanner(System.in);
-        String command;
-        Boolean exit = true;
+        Scanner sc = new Scanner(System.in);
+        String choice = null;
 
-        while (exit) {
-            System.out.println();
+        while (!"exit".equals(choice)) {
             System.out.print("Enter your command: ");
-            command = console.nextLine();
+            choice = sc.nextLine();
 
-            if (command.equals("info")) {
-                info();
-            } else if (command.equals("exit")) {
-                exit = false;
-            } else if (command.equals("user create")) {
-                userCreate(console, clientUser);
-            } else if (command.equals("user get")) {
-                userGet(console, clientUser);
-            } else if (command.equals("user delete")) {
-                userDelete(console, clientUser);
-            } else if (command.equals("user list")) {
-                userList(clientUser);
-            } else if (command.equals("activity create")) {
-                activityCreate(console, clientActivity);
-            } else if (command.equals("activity get")) {
-                activityGet(console, clientActivity);
-            } else if (command.equals("activity delete")) {
-                activityDelete(console, clientActivity);
-            } else if (command.equals("activity list")) {
-                activityList(clientActivity);
-            } else {
-                System.out.println("Command NOT recognized... write \"info\"");
+            switch (choice) {
+                case "info":
+                    info();
+                    break;
+                case "user create":
+                    userCreate(sc, clientUser);
+                    break;
+                case "user get":
+                    userGet(sc, clientUser);
+                    break;
+                case "user delete":
+                    userDelete(sc, clientUser);
+                    break;
+                case "user list":
+                    userList(clientUser);
+                    break;
+                case "activity create":
+                    activityCreate(sc, clientActivity);
+                    break;
+                case "activity get":
+                    activityGet(sc, clientActivity);
+                    break;
+                case "activity delete":
+                    activityDelete(sc, clientActivity);
+                    break;
+                case "activity list":
+                    activityList(clientActivity);
+                    break;
+                default:
+                    if (!choice.equals("exit")) {
+                        System.out.println("Command NOT recognized... try \"info\"");
+                    }
             }
         }
+        sc.close();
     }
 
-    public static void userCreate(Scanner cons, RESTClientUser clientUser) {
+    public static void userCreate(Scanner sc, RESTClientUser clientUser) {
         UserDTO userDTO = new UserDTO();
 
-        System.out.print("Enter user first name: ");
-        userDTO.setFirstName(cons.nextLine());
-
-        System.out.print("Enter user last name: ");
-        userDTO.setLastName(cons.nextLine());
-
-        // date
-        System.out.print("Enter birthdate in dd-M-yyyy format: ");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
-        try {
-            String date = cons.nextLine();
-            userDTO.setBirthDay(sdf.parse(date));
-        } catch (ParseException ex) {
-            System.out.println("input error...try it again");
-            //cons.nextLine();
-            return;
-        }
-
-        // weight
-        System.out.print("Enter user weight: ");
-        try {
-            userDTO.setWeight(cons.nextInt());
-        } catch (InputMismatchException ex) {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
-        }
-
-        // gender
-        int gender;
-        System.out.print("Enter user gender (male=1 / female=2): ");
-        try {
-            gender = cons.nextInt();
-        } catch (InputMismatchException ex) {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
-        }
-
-        if (gender == 1) {
-            userDTO.setGender(Gender.MALE);
-        } else if (gender == 2) {
-            userDTO.setGender(Gender.FEMALE);
-        } else {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
-        }
+        userDTO.setFirstName(InputValidator.getString(sc, "Enter first name: "));
+        userDTO.setLastName(InputValidator.getString(sc, "Enter last name: "));
+        userDTO.setBirthDay(InputValidator.getDate(sc, "birthday"));
+        userDTO.setWeight(InputValidator.getInt(sc, "Enter weight: "));
+        userDTO.setGender(InputValidator.getGender(sc));
 
         userDTO = clientUser.createUser(userDTO);
 
-        System.out.println("Created user{id= " + userDTO.getId()
-                + " ,name= " + userDTO.getFirstName() + " " + userDTO.getLastName()
-                + " ,birthday= " + userDTO.getBirthDay().toString()
-                + " ,weight= " + userDTO.getWeight()
-                + " ,gender= " + userDTO.getGender());
-
-        cons.nextLine();
+        if (userDTO != null) {
+            System.out.println("User created " + userDTO);
+        }
     }
 
-    public static void userGet(Scanner cons, RESTClientUser clientUser) {
-        Long id;
-
-        System.out.print("Enter user id: ");
-
-        try {
-            id = cons.nextLong();
-        } catch (InputMismatchException ex) {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
-        }
-
-        UserDTO userDTO;
-        userDTO = clientUser.getUserByID(id);
+    public static void userGet(Scanner sc, RESTClientUser clientUser) {
+        Long id = InputValidator.getLong(sc, "Enter user id: ");
+        UserDTO userDTO = clientUser.getUserByID(id);
 
         if (userDTO == null) {
             System.out.println("user not exists");
         } else {
-            System.out.println("User {id=" + userDTO.getId()
-                    + " ,name=" + userDTO.getFirstName() + " " + userDTO.getLastName()
-                    + " ,birthday=" + userDTO.getBirthDay().toString()
-                    + " ,weight=" + userDTO.getWeight()
-                    + " ,gender=" + userDTO.getGender());
+            System.out.println("User " + userDTO);
         }
-
-        cons.nextLine();
     }
 
-    public static void userDelete(Scanner cons, RESTClientUser clientUser) {
-        Long id;
-        System.out.print("Enter user id: ");
+    public static void userList(RESTClientUser clientUser) {
+        List<UserDTO> list = clientUser.findAllUsers();
 
-        try {
-            id = cons.nextLong();
-        } catch (InputMismatchException ex) {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
+        if (list != null) {
+            for (UserDTO userDTO : list) {
+                System.out.println("User " + userDTO);
+            }
         }
+    }
+
+    public static void userDelete(Scanner sc, RESTClientUser clientUser) {
+        Long id = InputValidator.getLong(sc, "Enter user id: ");
 
         UserDTO userDTO = clientUser.getUserByID(id);
 
@@ -169,109 +111,53 @@ public class ConsoleClient {
         } else {
             clientUser.deleteUserByUser(userDTO);
         }
-        cons.nextLine();
     }
 
-    public static void userList(RESTClientUser clientUser) {
-        List<UserDTO> list = clientUser.findAllUsers();
-
-        if (list != null) {
-            for (UserDTO userDTO : list) {
-                System.out.println("User{id= " + userDTO.getId()
-                        + " ,name= " + userDTO.getFirstName() + " " + userDTO.getLastName()
-                        + " ,birthday= " + userDTO.getBirthDay().toString()
-                        + " ,weight= " + userDTO.getWeight()
-                        + " ,gender= " + userDTO.getGender());
-            }
-        }
-    }
-
-    public static void activityCreate(Scanner cons, RESTClientActivity clientActivity) {
+    public static void activityCreate(Scanner sc, RESTClientActivity clientActivity) {
         SportActivityDTO activityDTO = new SportActivityDTO();
         CaloriesTableDTO caloriesDTO = new CaloriesTableDTO();
-        System.out.print("Enter activity name: ");
-        activityDTO.setName(cons.nextLine());
 
-        try {
-            System.out.print("Enter activity calories for 60 Kg: ");
-            caloriesDTO.setCalories60Kg(cons.nextInt());
-            System.out.print("Enter activity calories for 70 Kg: ");
-            caloriesDTO.setCalories70Kg(cons.nextInt());
-            System.out.print("Enter activity calories for 80 Kg: ");
-            caloriesDTO.setCalories80Kg(cons.nextInt());
-            System.out.print("Enter activity calories for 90 Kg: ");
-            caloriesDTO.setCalories90Kg(cons.nextInt());
-        } catch (InputMismatchException ex) {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
-        }
-
+        activityDTO.setName(InputValidator.getString(sc,
+                "Enter activity name: "));
+        caloriesDTO.setCalories60Kg(InputValidator.getInt(sc,
+                "Enter activity calories for 60 Kg: "));
+        caloriesDTO.setCalories70Kg(InputValidator.getInt(sc,
+                "Enter activity calories for 70 Kg: "));
+        caloriesDTO.setCalories80Kg(InputValidator.getInt(sc,
+                "Enter activity calories for 80 Kg: "));
+        caloriesDTO.setCalories90Kg(InputValidator.getInt(sc,
+                "Enter activity calories for 90 Kg: "));
         caloriesDTO.setGender(Gender.MALE);
+
         activityDTO.setCalories(caloriesDTO);
+
         activityDTO = clientActivity.createActivity(activityDTO);
 
         if (activityDTO != null) {
-            System.out.println("Created activity{id= " + activityDTO.getId()
-                    + " ,name= " + activityDTO.getName()
-                    + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
-                    + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
-                    + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
-                    + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
+            System.out.println("Activity created " + activityDTO);
         }
-
-        cons.nextLine();
     }
 
     public static void activityGet(Scanner cons, RESTClientActivity clientActivity) {
-        Long id;
-
-        System.out.print("Enter activity id: ");
-        try {
-            id = cons.nextLong();
-        } catch (InputMismatchException ex) {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
-        }
-
-        SportActivityDTO activityDTO;
-        activityDTO = clientActivity.getActivityByID(id);
+        Long id = InputValidator.getLong(cons, "Enter activity id: ");
+        SportActivityDTO activityDTO = clientActivity.getActivityByID(id);
 
         if (activityDTO == null) {
             System.out.println("activity not exists");
         } else {
-            System.out.println("Activity{id= " + activityDTO.getId()
-                    + " ,name= " + activityDTO.getName()
-                    + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
-                    + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
-                    + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
-                    + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
+            System.out.println("Activity " + activityDTO);
         }
-
-        cons.nextLine();
     }
 
-    public static void activityDelete(Scanner cons, RESTClientActivity clientActivity) {       
-        Long id;
-        System.out.print("Enter activity id: ");
+    public static void activityDelete(Scanner cons, RESTClientActivity clientActivity) {
+        Long id = InputValidator.getLong(cons, "Enter activity id: ");
+        SportActivityDTO activityDTO = clientActivity.getActivityByID(id);
 
-        try {
-            id = cons.nextLong();
-        } catch (InputMismatchException ex) {
-            System.out.println("input error...try it again");
-            cons.nextLine();
-            return;
-        }
-
-        SportActivityDTO activity = clientActivity.getActivityByID(id);
-
-        if (activity == null) {
+        if (activityDTO == null) {
             System.out.println("activity not exists");
         } else {
-            clientActivity.deleteActivityByActivity(activity);
+            clientActivity.deleteActivityByActivity(activityDTO);
         }
-        cons.nextLine();
     }
 
     public static void activityList(RESTClientActivity clientActivity) {
@@ -279,12 +165,7 @@ public class ConsoleClient {
 
         if (list != null) {
             for (SportActivityDTO activityDTO : list) {
-                System.out.println("Activity{id= " + activityDTO.getId()
-                        + " ,name= " + activityDTO.getName()
-                        + " ,60Kg= " + activityDTO.getCalories().getCalories60Kg()
-                        + " ,70Kg= " + activityDTO.getCalories().getCalories70Kg()
-                        + " ,80Kg= " + activityDTO.getCalories().getCalories80Kg()
-                        + " ,90Kg= " + activityDTO.getCalories().getCalories90Kg());
+                System.out.println("Activity " + activityDTO);
             }
         }
     }
@@ -302,6 +183,6 @@ public class ConsoleClient {
         System.out.println("client commands: info | exit \n");
 
         System.out.println("Example: activity create | user list");
-        System.out.println("------------------------------------------------------------------------\n");
+        System.out.println("------------------------------------------------------------------------");
     }
 }

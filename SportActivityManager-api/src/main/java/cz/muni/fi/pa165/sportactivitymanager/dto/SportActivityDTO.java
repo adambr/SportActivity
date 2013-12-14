@@ -35,11 +35,6 @@ public class SportActivityDTO {
     }
 
     @Override
-    public String toString() {
-        return "SportActivityDTO{" + "name=" + name + '}';
-    }
-
-    @Override
     public int hashCode() {
         int hash = 7;
         hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
@@ -59,5 +54,13 @@ public class SportActivityDTO {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + "id=" + id 
+                + ", name=" + name 
+                + ", calories=" + calories 
+                + '}';
     }
 }
