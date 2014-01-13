@@ -29,7 +29,19 @@
         <td><s:select id="b5" name="user.gender">
                 <s:options-enumeration enum="cz.muni.fi.pa165.sportactivitymanager.dto.Gender"/>
             </s:select></td>
-    </tr>    
+    </tr>
+    <tr>
+        <th><s:label for="b6" name="user.password"/></th>
+        <td><s:text id="b6" name="user.password"/></td>
+    </tr>
+    <tr>
+        <th><s:label for="b7" name="user.login"/></th>
+        <td><s:text id="b7" name="user.login"/></td>
+    </tr>
+    <tr>
+        <th><s:label for="b8" name="user.credentials"/></th>
+        <td><s:text id="b8" name="user.credentials"/></td>
+    </tr>
 </table>
 
 <%-- tlacitko pro smazani

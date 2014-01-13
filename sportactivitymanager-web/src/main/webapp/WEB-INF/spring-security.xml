@@ -1,0 +1,33 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd
+       http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <context:component-scan base-package="cz.muni.fi.pa165.sportactivitymanager.web" />
+    <context:annotation-config/>
+    
+    
+    <http use-expressions="true" auto-config="true">
+        <intercept-url pattern="/login.jsp" access="isAuthenticated()" />
+        <form-login default-target-url="/index.jsp" />
+        <logout logout-success-url="/index.jsp" />
+    </http>
+    
+    
+    <authentication-manager alias="AuthenticationSportManager">
+        <authentication-provider ref="AuthenticationSportManagerBean" />
+    </authentication-manager> 
+
+    <beans:bean id="AuthenticationSportManagerBean" class="cz.muni.fi.pa165.sportactivitymanager.service.impl.AuthenticationSportManager"/>
+    <beans:bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler" />
+    
+    
+      
+</beans:beans>   

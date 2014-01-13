@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <s:layout-definition>
     <!DOCTYPE html>
     <html lang="${pageContext.request.locale}">
@@ -24,7 +25,17 @@
             <div id="page">
                 <div id="login-panel-cont">
                     <div id="title"><f:message key="${titlekey}"/></div>
-                    <div id="login">Administrator | <f:message key="logout"/></div>
+                    
+                    <%-- zobrazí se neautentizovaným uživatelům  --%>           
+                    <sec:authorize access="isAnonymous()">
+                        <div id="login"> <a href="${pageContext.request.contextPath}/login.jsp"><f:message key="login"/></a></div>
+                    </sec:authorize>
+
+                    <%-- zobrazí se pouze userum  --%>     
+                    <sec:authorize access="hasRole('USER')">                              
+                        <div id="login"> <a href="${pageContext.request.contextPath}/j_spring_security_logout"><f:message key="logout"/></a></div>
+                    </sec:authorize>
+
                 </div>
                 <div id="header">
                     <div id="logo">

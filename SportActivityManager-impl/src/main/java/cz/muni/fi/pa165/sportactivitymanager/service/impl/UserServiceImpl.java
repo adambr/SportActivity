@@ -13,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Dobes Kuba
+ * @author Dobes Kuba  
  */
+//TODO  security  methods
 @Service
 public class UserServiceImpl implements UserService {
 

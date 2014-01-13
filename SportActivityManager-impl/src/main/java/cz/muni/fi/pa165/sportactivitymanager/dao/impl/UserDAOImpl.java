@@ -51,6 +51,19 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    public User getByLogin(String login) {
+        if (login == null) {
+            throw new IllegalArgumentException("LOGIN is null");
+        }
+        List<User> list = em.createQuery("SELECT User FROM User WHERE login = " +login+ " ").getResultList();
+
+        if (list == null || list.isEmpty() || list.get(0) == null) {
+            return null;
+        } else {
+            return list.get(0);
+        }
+    }
+
     public void delete(User user) {
         if (user == null) {
             throw new NullPointerException("User is Null");

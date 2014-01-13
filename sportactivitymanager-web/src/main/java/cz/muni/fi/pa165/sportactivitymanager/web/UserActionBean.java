@@ -15,6 +15,11 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 
 import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.escapeHTML;
 import net.sourceforge.stripes.controller.LifecycleStage;
+//
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author Kuba Dobes
@@ -32,7 +37,7 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     final static Logger log = LoggerFactory.getLogger(UserActionBean.class);
     /*
      * field = název pole z form(formulář pro vkládání knih/uzivatelů) název ve
-     * filed se musí shodovat s name z form: <td><s:text id="b1" name="user.firstname"/></td>     *
+     * filed se musí shodovat s login z form: <td><s:text id="b1" login="user.firstname"/></td>     *
      * validuje to při volání metody add a save     *
      */
     @ValidateNestedProperties(value = {
@@ -48,6 +53,9 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     protected UserService userService;
     //pro zobrazení seznamu uživatelů
     private List<UserDTO> users;
+    
+//   @SpringBean("AuthenticationSportManager")
+//    protected AuthenticationManager am;
 
     public List<UserDTO> getUsers() {
         return users;
@@ -81,6 +89,8 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
      *vezme obsah proměnné user. a ten obsahuje data z formuláře - to zajistí STRIPES automaticky. Z formuláře pozná že mám položku firstname a zjistí že třída User obsahuje metodu setfirstName a položku nastaví.
      */
     public Resolution add() {
+        //TODO do user listu formula5e pridat policko credentials
+        
         log.debug("add() user={}", user);
         userService.create(user);
         //výpis že byl uživatel přidán
@@ -153,4 +163,31 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         //return null to let the event handling continue
         return null;
     }
+   
+//    public Resolution init(){
+//        
+//            String login = "admin";
+//            String password = "admin";
+//            String firstName  ="pepa z depa";
+//
+//            UserDTO userAdmin = new UserDTO();
+//
+//            userAdmin.setLogin(login);
+//            userAdmin.setPassword(password);
+//            userAdmin.setFirstName(firstName);
+//            //TODO dopsat ostatní atributy, mozna proot, ze jsou povinne
+//            String credentials = "USER";
+//            userAdmin.setCredentials(credentials);
+//            
+//            Authentication request = new UsernamePasswordAuthenticationToken("admin", "admin");
+//            Authentication result = am.authenticate(request);
+//            SecurityContextHolder.getContext().setAuthentication(result);
+//            try{
+//                userService.create(userAdmin);
+//            }catch(Exception e){
+//                log.error("Problem during create Admin : " + e);
+//            }
+//        return new RedirectResolution(this.getClass(), "list").addParameter("errors", "");
+//    }
+//    
 }

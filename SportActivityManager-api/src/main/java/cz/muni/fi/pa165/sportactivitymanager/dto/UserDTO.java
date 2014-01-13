@@ -13,6 +13,9 @@ public class UserDTO {
     private Long id;
     private String firstName;
     private String lastName;
+    private String password;
+    private String credentials;
+    private String login;
     private Date birthDay;
     private Integer weight;
     private Gender gender;
@@ -77,6 +80,31 @@ public class UserDTO {
         this.firstName = firstName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;

@@ -25,6 +25,9 @@ public class UserDTOChanger {
         user.setGender(userDto.getGender());
         user.setWeight(userDto.getWeight());
         user.setRecords(SportRecordDTOChanger.DTOListToEntityList(userDto.getRecords()));
+        user.setPassword(userDto.getPassword());
+        user.setLogin(userDto.getLogin());
+        user.setCredentials(userDto.getCredentials());
         return user;
     }
 
@@ -41,6 +44,9 @@ public class UserDTOChanger {
         userDto.setGender(user.getGender());
         userDto.setWeight(user.getWeight());
         userDto.setRecords(SportRecordDTOChanger.entityListToDTOList(user.getRecords()));
+        userDto.setPassword(user.getPassword());
+        userDto.setLogin(user.getLogin());
+        userDto.setCredentials(user.getCredentials());
         return userDto;
     }
 

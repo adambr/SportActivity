@@ -28,6 +28,16 @@ public interface UserDAO {
      */
     User getByID(Long id);
 
+     /**
+     * Find existing User
+     *
+     * @param login is name of User that we want getByLogin.
+     * @throws IllegalArgumentException when login is NULL.
+     * @return User with same login, or Null when user does not exist.
+     */
+    User getByLogin(String login);
+
+    
     /**
      * Delete existing User
      *

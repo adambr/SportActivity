@@ -30,6 +30,9 @@ public class User implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    private String login;
+    private String password;
+    private String credentials; //ADMIN x USER
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthDay;
     private Integer weight;
@@ -93,7 +96,32 @@ public class User implements Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+    
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;
