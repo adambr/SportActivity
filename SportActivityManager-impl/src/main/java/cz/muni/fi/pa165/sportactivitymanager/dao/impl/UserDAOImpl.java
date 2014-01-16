@@ -55,7 +55,8 @@ public class UserDAOImpl implements UserDAO {
         if (login == null) {
             throw new IllegalArgumentException("LOGIN is null");
         }
-        List<User> list = em.createQuery("SELECT User FROM User WHERE login = " +login+ " ").getResultList();
+        List<User> list = em.createQuery("SELECT u FROM User u WHERE u.login = '" +login+ "' ").getResultList();
+ //puvodni// List<User> list = em.createQuery("SELECT User FROM User WHERE login = " +login+ " ").getResultList();
 
         if (list == null || list.isEmpty() || list.get(0) == null) {
             return null;
