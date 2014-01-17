@@ -163,7 +163,8 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         //return null to let the event handling continue
         return null;
     }
-   
+
+    //slouží pro vytvoření uživatele "admin" po otevrení odkazu v browseru
 //    public Resolution init(){
 //        
 //            String login = "admin";

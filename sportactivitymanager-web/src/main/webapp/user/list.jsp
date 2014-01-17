@@ -34,62 +34,61 @@
             <f:message key="main.page"/>
         </a>
 
-        <sec:authorize access="hasRole('USER')">
-        <div class="list">
-            <table>
+        <sec:authorize access="hasAnyRole('USER','ADMIN')">
+            <div class="list">
+                <table>
 
-                <tr>
-                    <th>ID</th>
-                    <th><f:message key="user.firstName"/></th>
-                    <th><f:message key="user.lastName"/></th>
-                    <th><f:message key="user.birthDay"/></th>
-                    <th><f:message key="user.weight"/></th>
-                    <th><f:message key="user.gender"/></th>
-                    <th><f:message key="user.password"/></th>
-                    <th><f:message key="user.login"/></th>
-                    <th><f:message key="user.credentials"/></th>
-
-                </tr>
-
-                <c:forEach items="${actionBean.users}" var="user">
                     <tr>
-                        <td>${user.id}</td>
-                        <td><s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
-                                <s:param name="user.id" value="${user.id}"/>
-                                <c:out value="${user.firstName}"/>
-                            </s:link>
-                        </td>
-                        <td><c:out value="${user.lastName}"/></td>
-                        <td><c:out value="${user.birthDay}"/></td>
-                        <td><c:out value="${user.weight}"/></td>
-                        <td><c:out value="${user.gender}"/></td>
-                        <td><c:out value="${user.password}"/></td>
-                        <td><c:out value="${user.login}"/></td>
-                        <td><c:out value="${user.credentials}"/></td>
-                        <td>
-                            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" event="edit">
-                                <s:param name="user.id" value="${user.id}"/> <f:message key="user.list.edit"/> </s:link>
-                            </td>
+                        <th>ID</th>
+                        <th><f:message key="user.firstName"/></th>
+                        <th><f:message key="user.lastName"/></th>
+                        <th><f:message key="user.birthDay"/></th>
+                        <th><f:message key="user.weight"/></th>
+                        <th><f:message key="user.gender"/></th>
+                        <th><f:message key="user.password"/></th>
+                        <th><f:message key="user.login"/></th>
+                        <th><f:message key="user.credentials"/></th>
+                    </tr>
 
+                    <c:forEach items="${actionBean.users}" var="user">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td><s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">
+                                    <s:param name="user.id" value="${user.id}"/>
+                                    <c:out value="${user.firstName}"/>
+                                </s:link>
+                            </td>
+                            <td><c:out value="${user.lastName}"/></td>
+                            <td><c:out value="${user.birthDay}"/></td>
+                            <td><c:out value="${user.weight}"/></td>
+                            <td><c:out value="${user.gender}"/></td>
+                            <td><c:out value="${user.password}"/></td>
+                            <td><c:out value="${user.login}"/></td>
+                            <td><c:out value="${user.credentials}"/></td>
+                            <td>
+                                <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" event="edit">
+                                    <s:param name="user.id" value="${user.id}"/> <f:message key="user.list.edit"/> </s:link>
+                            </td>
 
                             <td>
-                            <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
-                                <s:hidden name="user.id" value="${user.id}"/>
-                                <s:submit name="delete"><f:message key="user.list.delete"/></s:submit>
-                            </s:form>
-                        </td>
-
-                        <td>
-                            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" event="list">
-                                <s:param name="user.id" value="${user.id}"/><f:message key="user.record"/></s:link>
+                                <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
+                                    <s:hidden name="user.id" value="${user.id}"/>
+                                    <s:submit name="delete"><f:message key="user.list.delete"/></s:submit>
+                                </s:form>
                             </td>
 
-                        </tr>
-                </c:forEach>
-            </table>
-        </div>
-                    </sec:authorize>
+                            <td>
+                                <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" event="list">
+                                    <s:param name="user.id" value="${user.id}"/><f:message key="user.record"/></s:link>
+                            </td>
 
+                         </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </sec:authorize>
+        
+        <sec:authorize access="hasRole('ADMIN')">
         <div class="new">
             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean">
 
@@ -99,5 +98,6 @@
                     </fieldset>
             </s:form>
         </div>
+        </sec:authorize>
     </s:layout-component>
 </s:layout-render>

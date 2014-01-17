@@ -6,6 +6,8 @@
 --%>
 
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <s:errors/>    
 <table>
     <tr>
@@ -38,10 +40,13 @@
         <th><s:label for="b7" name="user.login"/></th>
         <td><s:text id="b7" name="user.login"/></td>
     </tr>
+    
+    <sec:authorize access="hasRole('ADMIN')">
     <tr>
         <th><s:label for="b8" name="user.credentials"/></th>
         <td><s:text id="b8" name="user.credentials"/></td>
     </tr>
+    </sec:authorize>
 </table>
 
 <%-- tlacitko pro smazani

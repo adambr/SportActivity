@@ -31,8 +31,13 @@
                         <div id="login"> <a href="${pageContext.request.contextPath}/login.jsp"><f:message key="login"/></a></div>
                     </sec:authorize>
 
-                    <%-- zobrazí se pouze userum  --%>     
+                    <%-- zobrazí se pouze userum       
                     <sec:authorize access="hasRole('USER')">                              
+                        <div id="login"> <a href="${pageContext.request.contextPath}/j_spring_security_logout"><f:message key="logout"/></a></div>
+                    </sec:authorize>
+                    --%>    
+                    <%-- zobrazí se pouze admnistratorum  --%>     
+                    <sec:authorize access="isAuthenticated()">                              
                         <div id="login"> <a href="${pageContext.request.contextPath}/j_spring_security_logout"><f:message key="logout"/></a></div>
                     </sec:authorize>
 

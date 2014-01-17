@@ -25,7 +25,6 @@ public class AuthenticationSportManager implements AuthenticationProvider {
         this.userDAO = userDAO;
     }
     
-    private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
@@ -36,34 +35,29 @@ public class AuthenticationSportManager implements AuthenticationProvider {
         String login = auth.getName();
         String password = auth.getCredentials().toString();
 
-
-        //SEKCE - overeni ADMINA:
         
-        User fromDB = userDAO.getByLogin(login);  
-       //   if(fromDB == null && userDAO.findAll().isEmpty()){
-        if (login.equals("admin") && password.equals("admin")) {
-            authorities.add(new SimpleGrantedAuthority("USER")); //TODO zmenit USER na ADMIN
+        //SEKCE - overeni ADMINA:
+        if (login.equals("admin") && password.equals("admin")) {            
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            authorities.add(new SimpleGrantedAuthority("ADMIN"));
             return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(), authorities);
         }
-        //   throw new BadCredentialsException("User with given login not exists");
-        //    }
-        //     return null;
-
-
-        //SEKCE - overeni ostatnich uzivatelu: 
+ 
+        
+        //SEKCE - overeni ostatnich Uzivatelu: 
+        User fromDB = userDAO.getByLogin(login);  
 
         //JEN pro kontrolu co vraci metoda getByLogin - pro ostrou verzi SMAZAT
         System.out.println("#############HESLOOOOOOOOOOOOOOOOOOOOOOO########################");
         System.out.println(fromDB.getPassword());
 
-        //kuba: kdyz se zadane heslo rovná "fromDB" rovnaji tak se mu priradi vsechny credentials co se najdou v seznamu
+        //když se zadané heslo a heslo usera "fromDB" rovnaji, tak se mu priradi vsechny credentials co se najdou v seznamu
         if (password.equals(fromDB.getPassword())) {
-
-            // for(int i = 0; i < fromDB.getCredentials().size(); i++){
+            //uzivateli přiřadí roli podle toho jakou má v atributu "credentials" (ten se vyplni pri vytvářrni nového usera)
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             authorities.add(new SimpleGrantedAuthority(fromDB.getCredentials().toUpperCase()));
             return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(), authorities);
         }
-
         throw new BadCredentialsException("Bad Credentials");
     }
 
