@@ -8,12 +8,15 @@ import cz.muni.fi.pa165.sportactivitymanager.User;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Dobes Kuba  
+ * @author Dobes Kuba
  */
 //TODO  security  methods
 @Service
@@ -33,6 +36,21 @@ public class UserServiceImpl implements UserService {
     public void create(UserDTO userDto) {
         if (userDto != null) {
             try {
+                //tato metoda create(), je použita ve webovém rozhraní pro vytvoření nového usera. Proto se musí zabezpečit i zde.
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    //vypíše info o tom která trida autentizovala, jaký user, jaké oprávnění...
+                    System.out.println("SECURITY CONTEXT HOLDER: " + SecurityContextHolder.getContext().getAuthentication());
+                    //role která je predaná v contextu se pridá do authorities
+                    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+                    authorities.addAll((List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
+                    //pokud v authorities není role user tak se neprovede create a vyhodí to vyjímku.
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        //System.out.println("SEC CX isA");
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
+
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
                 uDao.create(user);
                 userDto.setId(user.getId());
