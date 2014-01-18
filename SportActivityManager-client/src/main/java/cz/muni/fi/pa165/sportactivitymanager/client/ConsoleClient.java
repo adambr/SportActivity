@@ -71,6 +71,9 @@ public class ConsoleClient {
         userDTO.setLastName(InputValidator.getString(sc, "Enter last name: "));
         userDTO.setBirthDay(InputValidator.getDate(sc, "birthday"));
         userDTO.setWeight(InputValidator.getInt(sc, "Enter weight: "));
+        userDTO.setLogin(InputValidator.getString(sc, "Enter login: "));
+        userDTO.setPassword(InputValidator.getString(sc, "Enter password: "));
+        userDTO.setCredentials(InputValidator.getRole(sc));
         userDTO.setGender(InputValidator.getGender(sc));
 
         userDTO = clientUser.createUser(userDTO);

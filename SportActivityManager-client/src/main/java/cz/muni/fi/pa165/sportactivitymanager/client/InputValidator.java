@@ -53,6 +53,21 @@ public class InputValidator {
             System.out.print("Incorrect input. ");
         }
     }
+    
+        public static String getRole(Scanner sc) {
+        String role;
+        while (true) {
+            System.out.print("Enter role (user/admin): ");
+            role = sc.nextLine();
+            if (role.equals("user")) {
+                return role;
+            }
+            if (role.equals("admin")) {
+                return role;
+            }
+            System.out.print("Incorrect input. ");
+        }
+    }
 
     public static Date getDate(Scanner sc, String dateName) {
         String message = "Enter " + dateName + " in dd/MM/yyyy format: ";

@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Michal Galo
  */
-//Delete by ID neni v Service vrstve, tak sem ho smazal i tady
+
 @Component
 @Path("user")
 public class UserREST {

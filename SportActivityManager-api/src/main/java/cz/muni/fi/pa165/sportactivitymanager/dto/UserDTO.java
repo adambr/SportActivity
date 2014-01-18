@@ -136,6 +136,9 @@ public class UserDTO {
                 + ", birthday=" + dateFormat.format(birthDay) 
                 + ", weight=" + weight 
                 + ", gender=" + gender 
+                + ", login=" + login
+                + ", password=" + password
+                + ", credentials=" + credentials
                 + '}';
     }
 }
