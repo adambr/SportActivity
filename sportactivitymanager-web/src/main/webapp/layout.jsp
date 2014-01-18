@@ -39,7 +39,7 @@
                     <%-- zobrazí se pouze admnistratorum  --%>     
                     <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.IndexActionBean" var="indexBean"/>
                     <sec:authorize access="isAuthenticated()">                              
-                        <div id="login">logged: <sec:authentication property="name" /> (<a href="${pageContext.request.contextPath}/j_spring_security_logout"><f:message key="logout"/></a>)</div>
+                        <div id="login"><f:message key="logged"/>: <sec:authentication property="name" /> (<a href="${pageContext.request.contextPath}/j_spring_security_logout"><f:message key="logout"/></a>)</div>
                     </sec:authorize>
                         
                 </div>

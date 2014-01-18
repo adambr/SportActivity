@@ -88,6 +88,9 @@ public class UserDAOImpl implements UserDAO {
         userUpd.setLastName(user.getLastName());
         userUpd.setRecords(user.getRecords());
         userUpd.setWeight(user.getWeight());
+        userUpd.setLogin(user.getLogin());
+        userUpd.setPassword(user.getPassword());
+        userUpd.setCredentials(user.getCredentials());
 
         em.persist(userUpd);
     }

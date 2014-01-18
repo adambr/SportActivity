@@ -14,14 +14,14 @@
             </sec:authorize>
             <sec:authorize access="hasRole('USER')"> 
                 <div id="menu-box">
-                    <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" class="activity">sportovní záznamy</s:link>
+                    <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" class="activity"><f:message key="sportRecord"/></s:link>
                     </div>
             </sec:authorize>
         </sec:authorize>
 
 
         <sec:authorize access="isAnonymous()">
-            <div class="userTitle">Pokud nemate ucet, pozadejte spravce webu.</div>
+            <div class="userTitle"><f:message key="indexMessage"/></div>
         </sec:authorize>
 
     </s:layout-component>

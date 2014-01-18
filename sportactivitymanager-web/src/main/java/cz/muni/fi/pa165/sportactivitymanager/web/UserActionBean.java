@@ -29,9 +29,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UserActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     final static Logger log = LoggerFactory.getLogger(UserActionBean.class);
-    
-    public enum MyRole { USER, ADMIN; }
-    
+
+    public enum MyRole {
+
+        USER, ADMIN;
+    }
+
     @Validate(on = {"add", "save"}, required = true)
     private MyRole selectedRole;
 
@@ -54,10 +57,21 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     })
     private UserDTO user;
 
-    @ValidationMethod(on = {"add", "save"})
-    public void validate(ValidationErrors errors) {
+    @ValidationMethod(on = {"add"})
+    public void validateAdd(ValidationErrors errors) {
         if (userService.getByLogin(this.user.getLogin()) != null) {
             errors.add("user.login", new LocalizableError("loginTaken"));
+        }
+    }
+
+    @ValidationMethod(on = {"save"})
+    public void validateSave(ValidationErrors errors) {
+        UserDTO fromDB = userService.getByID(user.getId());
+
+        if (!user.getLogin().equals(fromDB.getLogin())) {
+            if (userService.getByLogin(this.user.getLogin()) != null) {
+                errors.add("user.login", new LocalizableError("loginTaken"));
+            }
         }
     }
 
@@ -117,6 +131,12 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
             user = userService.getByID(Long.parseLong(ids));
         } catch (NumberFormatException ex) {
             return new RedirectResolution(this.getClass());
+        }
+        
+        if (user.getCredentials().equals("ADMIN")) {
+            selectedRole = MyRole.ADMIN;
+        } else {
+            selectedRole = MyRole.USER;
         }
 
         return new ForwardResolution("/user/edit.jsp");
