@@ -60,4 +60,13 @@ public interface UserService {
      * @return List of all UserDTOs
      */
     List<UserDTO> findAll();
+
+    /**
+     * Find existing UserDto
+     *     
+     * @param login is login of User that we want getByLogin.
+     * @throws IllegalArgumentException when login is NULL.
+     * @return User with same login, or Null when user does not exist.
+     */
+    public UserDTO getByLogin(String login);
 }

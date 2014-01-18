@@ -10,7 +10,9 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -26,6 +28,11 @@ import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
@@ -90,10 +97,23 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
 
     @DefaultHandler
     public Resolution list() {
+        
+        
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<GrantedAuthority> roles;
+        roles = (List<GrantedAuthority>) auth.getAuthorities();
+
+
+         if (!roles.contains(new SimpleGrantedAuthority("ADMIN"))) {
+             user = userService.getByLogin(auth.getName());
+         } else {
+             String ids = getContext().getRequest().getParameter("user.id");
+             user = userService.getByID(Long.parseLong(ids));
+         }
+
         record = new SportRecordDTO();
-        String ids = getContext().getRequest().getParameter("user.id");
-        user = userService.getByID(Long.parseLong(ids));
-        //records = srs.findAll();
         records = user.getRecords();
         activity = activityService.findAll();
         return new ForwardResolution("/record/list.jsp");

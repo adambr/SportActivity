@@ -120,4 +120,22 @@ public class UserServiceImpl implements UserService {
         }
         return usersDto;
     }
+
+    @Transactional
+    public UserDTO getByLogin(String login) {
+
+        UserDTO userDto = null;
+
+        if (login != null) {
+            try {
+                User user = uDao.getByLogin(login);
+                userDto = UserDTOChanger.entityToDTO(user);
+            } catch (Exception ex) {
+                throw new DataAccException(ex.toString());
+            }
+        } else {
+            throw new NullPointerException("User login is Null");
+        }
+        return userDto;
+    }
 }

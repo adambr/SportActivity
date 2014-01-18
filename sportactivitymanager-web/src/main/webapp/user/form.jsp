@@ -8,6 +8,21 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<s:layout-component name="header">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#datepicker").datepicker($.datepicker.regional[ "cs" ]);
+            $("#locale").change(function() {
+                $("#datepicker").datepicker("option",
+                        $.datepicker.regional[ $(this).val() ]);
+            });
+        });
+    </script>
+</s:layout-component> 
+
 <s:errors/>    
 <table>
     <tr>
@@ -34,18 +49,18 @@
     </tr>
     <tr>
         <th><s:label for="b6" name="user.password"/></th>
-        <td><s:text id="b6" name="user.password"/></td>
+        <td><s:password id="b6" name="user.password"/></td>
     </tr>
     <tr>
         <th><s:label for="b7" name="user.login"/></th>
         <td><s:text id="b7" name="user.login"/></td>
     </tr>
-    
+
     <sec:authorize access="hasRole('ADMIN')">
-    <tr>
-        <th><s:label for="b8" name="user.credentials"/></th>
-        <td><s:text id="b8" name="user.credentials"/></td>
-    </tr>
+        <tr>
+            <th><s:label for="b8" name="user.credentials"/></th>
+            <td><s:text id="b8" name="user.credentials"/></td>
+        </tr>
     </sec:authorize>
 </table>
 
