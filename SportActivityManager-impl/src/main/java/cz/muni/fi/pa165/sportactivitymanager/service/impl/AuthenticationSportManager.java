@@ -41,6 +41,13 @@ public class AuthenticationSportManager implements AuthenticationProvider {
             authorities.add(new SimpleGrantedAuthority("ADMIN"));
             return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(), authorities);
         }
+        
+        //SEKCE - overeni REST:
+        if (login.equals("rest") && password.equals("rest")) {
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+            return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(), authorities);
+        }
 
 
         //SEKCE - overeni ostatnich Uzivatelu: 

@@ -40,10 +40,11 @@ public class UserREST {
     protected UserService userService;
     final static Logger log = LoggerFactory.getLogger(UserREST.class);
     
-//    @Inject
-//    @InjectParam("cz.muni.fi.pa165.sportactivitymanager.service.impl.AuthenticationSportManager")
+   
+  @Inject
     @InjectParam("org.springframework.security.authenticationManager")
-//    @SpringBean("AuthenticationSportManager")
+//  @InjectParam("cz.muni.fi.pa165.sportactivitymanager.service.impl.AuthenticationSportManager")
+//  @SpringBean("AuthenticationSportManager")
     protected AuthenticationManager authenticationManager;
 
     @GET
@@ -62,13 +63,10 @@ public class UserREST {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         
-        /*je to vlastne to same co se dela v authenticationSportManageru. 
-         * Jen v DB musí asi být user rest rest
-         * 
-        */
+        //authorizace REST klenta. je to vlastne to same co se dela v authenticationSportManageru. 
         try {
             if (authenticationManager != null) {
-                Authentication auth = new UsernamePasswordAuthenticationToken("admin", "admin");
+                Authentication auth = new UsernamePasswordAuthenticationToken("rest", "rest");
                 Authentication result = authenticationManager.authenticate(auth);
                 SecurityContextHolder.getContext().setAuthentication(result);
  
@@ -114,7 +112,15 @@ public class UserREST {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         try {
-            userService.delete(user);
+            if (authenticationManager != null) {
+                Authentication auth = new UsernamePasswordAuthenticationToken("rest", "rest");
+                Authentication result = authenticationManager.authenticate(auth);
+                SecurityContextHolder.getContext().setAuthentication(result);
+ 
+                userService.delete(user);
+            } else {
+                log.error("authenticationManager is null");
+            }
         } catch (Exception e) {
             log.error("Delete user error: " + e);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -134,7 +140,15 @@ public class UserREST {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         try {
-            userService.update(user);
+            if (authenticationManager != null) {
+                Authentication auth = new UsernamePasswordAuthenticationToken("rest", "rest");
+                Authentication result = authenticationManager.authenticate(auth);
+                SecurityContextHolder.getContext().setAuthentication(result);
+ 
+                userService.update(user);
+            } else {
+                log.error("authenticationManager is null");
+            }
         } catch (Exception ex) {
             log.error("Update user error: " + ex);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
