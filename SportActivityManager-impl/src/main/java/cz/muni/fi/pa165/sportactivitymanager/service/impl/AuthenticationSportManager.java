@@ -24,7 +24,6 @@ public class AuthenticationSportManager implements AuthenticationProvider {
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
-    
 
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
@@ -35,18 +34,20 @@ public class AuthenticationSportManager implements AuthenticationProvider {
         String login = auth.getName();
         String password = auth.getCredentials().toString();
 
-        
+
         //SEKCE - overeni ADMINA:
-        if (login.equals("admin") && password.equals("admin")) {            
+        if (login.equals("admin") && password.equals("admin")) {
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             authorities.add(new SimpleGrantedAuthority("ADMIN"));
             return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(), authorities);
         }
- 
-        
-        //SEKCE - overeni ostatnich Uzivatelu: 
-        User fromDB = userDAO.getByLogin(login);  
 
+
+        //SEKCE - overeni ostatnich Uzivatelu: 
+        User fromDB = userDAO.getByLogin(login);
+        if (fromDB == null) {
+            throw new BadCredentialsException("Bad Credentials");
+        }
         //JEN pro kontrolu co vraci metoda getByLogin - pro ostrou verzi SMAZAT
         System.out.println("#############HESLOOOOOOOOOOOOOOOOOOOOOOO########################");
         System.out.println(fromDB.getPassword());

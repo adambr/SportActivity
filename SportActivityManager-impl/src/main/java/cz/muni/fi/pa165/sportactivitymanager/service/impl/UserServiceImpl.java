@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
                     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
                     authorities.addAll((List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 
-                    //pokud v authorities není role user tak se neprovede create a vyhodí to vyjímku.
+                    //pokud v authorities není role admin tak se neprovede create a vyhodí to vyjímku.
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
                         //System.out.println("SEC CX isA");
                         throw new DataAccException("Only role ADMIN can use create method");
