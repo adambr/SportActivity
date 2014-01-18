@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class UserREST {
     @Autowired
     protected UserService userService;
     final static Logger log = LoggerFactory.getLogger(UserREST.class);
-    @Inject
-    @InjectParam("cz.muni.fi.pa165.sportactivitymanager.service.impl")
+    
+//    @Inject
+//    @InjectParam("cz.muni.fi.pa165.sportactivitymanager.service.impl.AuthenticationSportManager")
+    @InjectParam("org.springframework.security.authenticationManager")
+//    @SpringBean("AuthenticationSportManager")
     protected AuthenticationManager authenticationManager;
 
     @GET
@@ -60,14 +64,14 @@ public class UserREST {
         
         /*je to vlastne to same co se dela v authenticationSportManageru. 
          * Jen v DB musí asi být user rest rest
-         * a v clientovi se asi bude tenhle user zadávat
+         * 
         */
         try {
             if (authenticationManager != null) {
-                Authentication request = new UsernamePasswordAuthenticationToken("rest", "rest");
-                Authentication result = authenticationManager.authenticate(request);
+                Authentication auth = new UsernamePasswordAuthenticationToken("admin", "admin");
+                Authentication result = authenticationManager.authenticate(auth);
                 SecurityContextHolder.getContext().setAuthentication(result);
-
+ 
                 userService.create(user);
             } else {
                 log.error("authenticationManager is null");
