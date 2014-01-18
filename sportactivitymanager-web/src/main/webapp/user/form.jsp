@@ -26,6 +26,15 @@
 <s:errors/>    
 <table>
     <tr>
+        <th><s:label for="b7" name="user.login"/></th>
+        <td><s:text id="b7" name="user.login"/></td>
+    </tr>
+    <tr>
+        <th><s:label for="b6" name="user.password"/></th>
+        <td><s:password id="b6" name="user.password"/></td>
+    </tr>
+
+    <tr>
         <th><s:label for="b1" name="user.firstName"/></th> 
         <td><s:text id="b1" name="user.firstName"/></td> 
     </tr>
@@ -47,19 +56,14 @@
                 <s:options-enumeration enum="cz.muni.fi.pa165.sportactivitymanager.dto.Gender"/>
             </s:select></td>
     </tr>
-    <tr>
-        <th><s:label for="b6" name="user.password"/></th>
-        <td><s:password id="b6" name="user.password"/></td>
-    </tr>
-    <tr>
-        <th><s:label for="b7" name="user.login"/></th>
-        <td><s:text id="b7" name="user.login"/></td>
-    </tr>
+
 
     <sec:authorize access="hasRole('ADMIN')">
         <tr>
-            <th><s:label for="b8" name="user.credentials"/></th>
-            <td><s:text id="b8" name="user.credentials"/></td>
+            <th><s:label for="b5" name="selectedRole"/></th>
+            <td><s:select id="b5" name="selectedRole">
+                    <s:options-enumeration enum="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean.MyRole"/>
+                </s:select></td>
         </tr>
     </sec:authorize>
 </table>

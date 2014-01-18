@@ -21,7 +21,7 @@
 
 
         <sec:authorize access="isAnonymous()">
-            Pokud nemate ucet, pozadejte spravce webu.
+            <div class="userTitle">Pokud nemate ucet, pozadejte spravce webu.</div>
         </sec:authorize>
 
     </s:layout-component>

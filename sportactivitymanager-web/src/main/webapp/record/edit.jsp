@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <s:layout-render name="/layout.jsp" titlekey="record.edit.title">
     <s:layout-component name="header">
@@ -27,10 +28,17 @@
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" var="actionBean"/>
 
-        <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" class="nav">
-            <s:param name="user.id" value="${actionBean.user.id}"/>
-            <f:message key="record.title"/>
-        </s:link>
+        <sec:authorize access="hasRole('ADMIN')">
+            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" class="nav">
+                <s:param name="user.id" value="${actionBean.user.id}"/>
+                <f:message key="record.title"/>
+            </s:link>
+        </sec:authorize>
+        <sec:authorize access="hasRole('USER')">
+            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" class="nav">
+                <f:message key="record.title"/>
+            </s:link>
+        </sec:authorize>
 
         <div class="new">            
             <s:form beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean">

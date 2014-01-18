@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <s:layout-render name="/layout.jsp" titlekey="record.title">
     <s:layout-component name="header">
@@ -26,29 +27,41 @@
     <s:layout-component name="body">
         <s:useActionBean beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" var="actionBean"/>
 
-        <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" class="nav"> 
-            <f:message key="record.list.userlist"/>
-        </s:link>
+        <sec:authorize access="hasRole('ADMIN')">
+            <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.UserActionBean" class="nav"> 
+                <f:message key="record.list.userlist"/>
+            </s:link>
+        </sec:authorize>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}" class="nav">
+                <f:message key="main.page"/>
+            </a>
+        </sec:authorize>
+        
+        <div class="userTitle">${actionBean.user.firstName} ${actionBean.user.lastName}</div>
         <div class="list">
             <table>
                 <tr>
-                    <th>id</th>
+                    <sec:authorize access="hasRole('ADMIN')"><th>id</th></sec:authorize>
+                    <th><f:message key="record.aktivity"/></th>
+                    <th><f:message key="record.startTime"/></th>
                     <th><f:message key="record.duration"/></th>
                     <th><f:message key="record.distance"/></th>
-                    <th><f:message key="record.startTime"/></th>
-                    <th><f:message key="record.aktivity"/></th>
                 </tr>
                 <c:forEach items="${actionBean.records}" var="record">
                     <tr>
-                        <td>${record.id}</td>
+                        <sec:authorize access="hasRole('ADMIN')"><td>${record.id}</td></sec:authorize>
+                        <td><c:out value="${record.activityDTO.name}"/></td>
+                        <td><c:out value="${record.startTime}"/></td>
                         <td><c:out value="${record.duration}"/></td>
                         <td><c:out value="${record.distance}"/></td>
-                        <td><c:out value="${record.startTime}"/></td>
-                        <td><c:out value="${record.activityDTO.name}"/></td>
                         <td>
                             <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" event="edit">
                                 <s:param name="record.id" value="${record.id}"/>
-                                <s:param name="user.id" value="${actionBean.user.id}"/>
+                                <sec:authorize access="hasRole('ADMIN')">
+                                    <s:param name="user.id" value="${actionBean.user.id}"/>
+                                </sec:authorize>
+                                
                                 <f:message key="user.list.edit"/> </s:link>
                             </td>                        
                             <td width="20">

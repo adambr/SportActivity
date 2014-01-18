@@ -81,6 +81,15 @@ h2 {
     color: #ccf0ca;
 }
 
+#login a {
+    color: #ccf0ca;
+    text-decoration: none;
+}
+
+#login a:hover {
+    color: black;
+}
+
 #title {
     float: left;
     margin: 1px 0 0 73px;
@@ -120,7 +129,7 @@ h2 {
 }
 
 .list {
-    margin-top: 40px;
+    margin-top: 25px;
 }
 
 .list table {
@@ -135,6 +144,7 @@ h2 {
 
 .list table th {
     background-color: #ccf0ca;
+    padding: 2px;
 }
 
 .new form {
@@ -155,6 +165,12 @@ h2 {
 
 .list a:hover {
     text-decoration: underline;
+}
+
+.userTitle {
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
 }
 
 .messages {

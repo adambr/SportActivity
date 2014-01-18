@@ -10,9 +10,8 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
-import java.util.ArrayList;
+import cz.muni.fi.pa165.sportactivitymanager.web.tools.AuthTool;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -20,7 +19,6 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -29,23 +27,21 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
  * @author Adam Brauner
  */
-@UrlBinding("/records/{$event}/user/{user.id}/")
+@UrlBinding("/records/{$event}/record/{record.id}/user/{user.id}")
 public class RecordActionBean extends BaseActionBean implements ValidationErrorHandler {
 
     final static Logger log = LoggerFactory.getLogger(RecordActionBean.class);
     @SpringBean
     protected SportRecordService srs;
-    
-    
+
+    Authentication auth;
+
     private List<SportRecordDTO> records;
     @Validate(on = {"add", "save"}, required = true)
     private Long aktivita;
@@ -95,24 +91,31 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
         this.user = user;
     }
 
+    @Before
+    public Resolution authorization() {
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        if (AuthTool.isRole(auth, ADMIN)) {
+            authRole = ADMIN;
+        } else if (AuthTool.isRole(auth, USER)) {
+            authRole = USER;
+        } else {
+            return new RedirectResolution(IndexActionBean.class);
+        }
+
+        authName = auth.getName();
+        return null;
+    }
+
     @DefaultHandler
     public Resolution list() {
+
+        if (authRole.equals(ADMIN)) {
+            String ids = getContext().getRequest().getParameter("user.id");
+            user = userService.getByID(Long.parseLong(ids));
+        } else {
+            user = userService.getByLogin(authName);
+        }
         
-        
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        List<GrantedAuthority> roles;
-        roles = (List<GrantedAuthority>) auth.getAuthorities();
-
-
-         if (!roles.contains(new SimpleGrantedAuthority("ADMIN"))) {
-             user = userService.getByLogin(auth.getName());
-         } else {
-             String ids = getContext().getRequest().getParameter("user.id");
-             user = userService.getByID(Long.parseLong(ids));
-         }
-
         record = new SportRecordDTO();
         records = user.getRecords();
         activity = activityService.findAll();
@@ -120,48 +123,90 @@ public class RecordActionBean extends BaseActionBean implements ValidationErrorH
     }
 
     public Resolution add() {
-        user = userService.getByID(user.getId());        
+        user = userService.getByID(user.getId());
         record.setActivityDTO(activityService.getSportActivity(aktivita));
         user.getRecords().add(record);
         srs.create(record);
         userService.update(user);
 
-        return new RedirectResolution(this.getClass(), "list")
-                .addParameter("user.id", user.getId());
-    }
-
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit"})
-    public void loadRecordFromDatabase() {
-            String ids = getContext().getRequest().getParameter("record.id");
-        if (ids == null) {
-            return;
+        if (authRole.equals(ADMIN)) {
+            return new RedirectResolution(this.getClass(), "list")
+                    .addParameter("user.id", user.getId());
+        } else {
+            return new RedirectResolution(this.getClass());
         }
-        record = srs.getSportRecord(Long.parseLong(ids));
     }
 
     public Resolution edit() {
+        String ids = getContext().getRequest().getParameter("record.id");
+        Long id;
+
+        try {
+            id = Long.parseLong(ids);
+        } catch (NumberFormatException ex) {
+            return new RedirectResolution(this.getClass());
+        }
+
+        if (authRole.equals(ADMIN)) {
+            record = srs.getSportRecord(id);
+        } else {
+            record = srs.getSportRecord(id);
+            user = userService.getByLogin(authName);
+            if (!user.getRecords().contains(record)) {
+                return new RedirectResolution(this.getClass());
+            }
+            record = srs.getSportRecord(id);
+        }
+
         activity = activityService.findAll();
-        return new ForwardResolution("/record/edit.jsp"); 
-    }   
+        return new ForwardResolution("/record/edit.jsp");
+    }
 
     public Resolution save() {
-        log.info(record.getId()+"  "+ record.getDuration()+"  "+ record.getDistance());
-        user = userService.getByID(user.getId()); 
+
+        if (authRole.equals(ADMIN)) {
+            user = userService.getByID(user.getId());
+        } else {
+            user = userService.getByLogin(authName);
+            if (!user.getRecords().contains(record)) {
+                return new RedirectResolution(this.getClass());
+            }
+        }
+
         record.setActivityDTO(activityService.getSportActivity(aktivita));
+
         srs.update(record);
-        return new RedirectResolution(this.getClass(), "list")
-                .addParameter("user.id", user.getId());
+
+        if (authRole.equals(ADMIN)) {
+            return new RedirectResolution(this.getClass(), "list")
+                    .addParameter("user.id", user.getId());
+        } else {
+            return new RedirectResolution(this.getClass());
+        }
     }
-    
-    
+
     public Resolution delete() {
-        String ids = getContext().getRequest().getParameter("user.id");
-        user = userService.getByID(Long.parseLong(ids));
-        log.info(record.getId().toString());
+
+        if (authRole.equals(ADMIN)) {
+            String ids = getContext().getRequest().getParameter("user.id");
+            user = userService.getByID(Long.parseLong(ids));
+        } else {
+            user = userService.getByLogin(authName);
+            if (!user.getRecords().contains(record)) {
+                return new RedirectResolution(this.getClass());
+            }
+        }
+
         record = srs.getSportRecord(record.getId());
+
         srs.delete(record.getId());
-        return new RedirectResolution(this.getClass(), "list")
-                .addParameter("user.id", user.getId());
+
+        if (authRole.equals(ADMIN)) {
+            return new RedirectResolution(this.getClass(), "list")
+                    .addParameter("user.id", user.getId());
+        } else {
+            return new RedirectResolution(this.getClass());
+        }
     }
 
     @Override

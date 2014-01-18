@@ -4,13 +4,14 @@
  */
 package cz.muni.fi.pa165.sportactivitymanager.web;
 
-
 import cz.muni.fi.pa165.sportactivitymanager.dto.CaloriesTableDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dto.Gender;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportActivityDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.CaloriesTableService;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
+import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.ADMIN;
 import static cz.muni.fi.pa165.sportactivitymanager.web.BaseActionBean.escapeHTML;
+import cz.muni.fi.pa165.sportactivitymanager.web.tools.AuthTool;
 import java.nio.charset.Charset;
 import java.util.List;
 import net.sourceforge.stripes.action.Before;
@@ -28,40 +29,42 @@ import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
- * @author Petaniss
+ * @author Petr Jelínek
  */
 @UrlBinding("/activities/{$event}/{activity.id}")
 public class ActivityActionBean extends BaseActionBean implements ValidationErrorHandler {
-    
+
     final static Logger log = LoggerFactory.getLogger(ActivityActionBean.class);
 
     @SpringBean
     protected SportActivityService activityService;
-    
+
     @SpringBean
     protected CaloriesTableService caloriesService;
-    
+
     private List<SportActivityDTO> activities;
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name",
-            required = true,
-            minlength = 2,
-            maxlength = 30)
+                required = true,
+                minlength = 2,
+                maxlength = 30)
     })
     private SportActivityDTO activity;
-    
+
     @ValidateNestedProperties(value = {
-        @Validate(on = {"add", "save"}, field = "calories60Kg", 
-            required = true),
-        @Validate(on = {"add", "save"}, field = "calories70Kg", 
-            required = true),
-        @Validate(on = {"add", "save"}, field = "calories80Kg", 
-            required = true),
-        @Validate(on = {"add", "save"}, field = "calories90Kg", 
-            required = true)
+        @Validate(on = {"add", "save"}, field = "calories60Kg",
+                required = true),
+        @Validate(on = {"add", "save"}, field = "calories70Kg",
+                required = true),
+        @Validate(on = {"add", "save"}, field = "calories80Kg",
+                required = true),
+        @Validate(on = {"add", "save"}, field = "calories90Kg",
+                required = true)
     })
     private CaloriesTableDTO calories;
 
@@ -101,9 +104,19 @@ public class ActivityActionBean extends BaseActionBean implements ValidationErro
         this.activity = activity;
     }
 
+    @Before
+    public Resolution authorization() {
+        Authentication auth;
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!AuthTool.isRole(auth, ADMIN)) {
+            return new RedirectResolution(IndexActionBean.class);
+        }
+
+        return null;
+    }
+
     @DefaultHandler
     public Resolution list() {
-        log.info("@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println(Charset.defaultCharset());
         activities = activityService.findAll();
         return new ForwardResolution("/activity/list.jsp");
@@ -117,26 +130,28 @@ public class ActivityActionBean extends BaseActionBean implements ValidationErro
         getContext().getMessages().add(new LocalizableMessage("activity.add.message", escapeHTML(activity.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
-    
+
     public Resolution delete() {
         activity = activityService.getSportActivity(activity.getId());
         activityService.delete(activity);
         getContext().getMessages().add(new LocalizableMessage("activity.del.message", escapeHTML(activity.getName())));
         return new RedirectResolution(this.getClass(), "list");
     }
-    
+
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit"})
     public void loadBookFromDatabase() {
         String ids = getContext().getRequest().getParameter("activity.id");
-        if (ids == null) return;
+        if (ids == null) {
+            return;
+        }
         activity = activityService.getSportActivity(Long.parseLong(ids));
         calories = activity.getCalories();
     }
-    
+
     public Resolution edit() {
         return new ForwardResolution("/activity/edit.jsp");
     }
-    
+
     public Resolution save() {
         activityService.update(activity);
         caloriesService.update(calories);
