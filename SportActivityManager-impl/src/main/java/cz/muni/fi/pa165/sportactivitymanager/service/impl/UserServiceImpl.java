@@ -36,21 +36,14 @@ public class UserServiceImpl implements UserService {
     public void create(UserDTO userDto) {
         if (userDto != null) {
             try {
-                //tato metoda create(), je použita ve webovém rozhraní pro vytvoření nového usera. Proto se musí zabezpečit i zde.
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                    //vypíše info o tom která trida autentizovala, jaký user, jaké oprávnění...
                     System.out.println("SECURITY CONTEXT HOLDER: " + SecurityContextHolder.getContext().getAuthentication());
-                    //role která je predaná v contextu se pridá do authorities
                     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
                     authorities.addAll((List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-
-                    //pokud v authorities není role admin tak se neprovede create a vyhodí to vyjímku.
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                        //System.out.println("SEC CX isA");
                         throw new DataAccException("Only role ADMIN can use create method");
                     }
                 }
-
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
                 uDao.create(user);
                 userDto.setId(user.getId());
@@ -69,6 +62,7 @@ public class UserServiceImpl implements UserService {
 
         if (id != null) {
             try {
+
                 User user = uDao.getByID(id);
                 userDto = UserDTOChanger.entityToDTO(user);
             } catch (Exception ex) {
@@ -84,6 +78,14 @@ public class UserServiceImpl implements UserService {
     public void delete(UserDTO userDto) {
         if (userDto != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    System.out.println("SECURITY CONTEXT HOLDER: " + SecurityContextHolder.getContext().getAuthentication());
+                    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+                    authorities.addAll((List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
                 uDao.delete(user);
             } catch (Exception ex) {
@@ -98,6 +100,17 @@ public class UserServiceImpl implements UserService {
     public void update(UserDTO userDto) {
         if (userDto != null) {
             try {
+                User u = uDao.getByID(userDto.getId());                
+                if (!u.getCredentials().equals(userDto.getCredentials())) {
+                    if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                        System.out.println("SECURITY CONTEXT HOLDER: " + SecurityContextHolder.getContext().getAuthentication());
+                        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+                        authorities.addAll((List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+                        if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                            throw new DataAccException("Only role ADMIN can use create method");
+                        }
+                    }
+                }
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
                 uDao.update(user);
             } catch (Exception ex) {

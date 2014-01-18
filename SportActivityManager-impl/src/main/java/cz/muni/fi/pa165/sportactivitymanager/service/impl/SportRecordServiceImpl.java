@@ -8,6 +8,9 @@ import cz.muni.fi.pa165.sportactivitymanager.changer.SportRecordDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SportRecordServiceImpl implements SportRecordService {
 
+    private UserServiceImpl userSI;
+
+    public void setUserSI(UserServiceImpl userSI) {
+        this.userSI = userSI;
+    }
     private SportRecordDAO sRDao;
 
     public void setSRDao(SportRecordDAO sRDao) {
@@ -28,6 +36,15 @@ public class SportRecordServiceImpl implements SportRecordService {
     public void create(SportRecordDTO sportRecordTO) {
         if (sportRecordTO != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                            return;
+                        }
+                    }
+                }
                 SportRecord sr = SportRecordDTOChanger.DTOToEntity(sportRecordTO);
                 sRDao.create(sr);
                 sportRecordTO.setId(sr.getId());
@@ -42,9 +59,17 @@ public class SportRecordServiceImpl implements SportRecordService {
     @Transactional
     public SportRecordDTO getSportRecord(Long id) {
         SportRecordDTO sportRecordTO = null;
-
         if (id != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                            return null;
+                        }
+                    }
+                }
                 SportRecord sportRecord = sRDao.getSportRecord(id);
                 sportRecordTO = SportRecordDTOChanger.entityToDTO(sportRecord);
             } catch (Exception ex) {
@@ -61,6 +86,15 @@ public class SportRecordServiceImpl implements SportRecordService {
     public void delete(SportRecordDTO sportRecordTO) {
         if (sportRecordTO != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                            return;
+                        }
+                    }
+                }
                 SportRecord sportRecord = SportRecordDTOChanger.DTOToEntity(sportRecordTO);
                 sRDao.delete(sportRecord);
             } catch (Exception ex) {
@@ -75,6 +109,15 @@ public class SportRecordServiceImpl implements SportRecordService {
     public void delete(Long id) {
         if (id != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+                        if (!userSI.getByLogin(userLogin).getRecords().contains(SportRecordDTOChanger.entityToDTO(sRDao.getSportRecord(id)))) {
+                            return;
+                        }
+                    }
+                }
                 sRDao.delete(id);
             } catch (Exception ex) {
                 throw new DataAccException(ex.toString());
@@ -88,13 +131,22 @@ public class SportRecordServiceImpl implements SportRecordService {
     public void update(SportRecordDTO sportRecordTO) {
         if (sportRecordTO != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                            return;
+                        }
+                    }
+                }
                 SportRecord sportRecord = SportRecordDTOChanger.DTOToEntity(sportRecordTO);
                 sRDao.update(sportRecord);
             } catch (Exception ex) {
                 throw new DataAccException(ex.toString());
             }
         } else {
-            throw new NullPointerException("Reoord can not be null.");
+            throw new NullPointerException("Record can not be null.");
         }
     }
 

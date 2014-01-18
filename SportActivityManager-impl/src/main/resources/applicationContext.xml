@@ -19,6 +19,22 @@
     </bean>
     <tx:annotation-driven transaction-manager="txManager"/>
     
+        <!-- /// user /// -->
+    <!-- userDao + entityManager -->
+    <bean id="userDao" class="cz.muni.fi.pa165.sportactivitymanager.dao.impl.UserDAOImpl">
+        <property name="em">
+            <bean class = "org.springframework.orm.jpa.support.SharedEntityManagerBean">
+                <property name = "entityManagerFactory" ref="emf"/>  
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- userService -->
+    <bean id="userService" class="cz.muni.fi.pa165.sportactivitymanager.service.impl.UserServiceImpl">
+        <property name="uDao" ref="userDao" />
+    </bean>
+    
+    
     <!-- /// sportActivity /// -->
     <!-- sportActivityDao + entityManager -->
     <bean id="sportActivityDao" class="cz.muni.fi.pa165.sportactivitymanager.dao.impl.SportActivityDAOImpl">
@@ -47,23 +63,11 @@
     <!-- sportRecordService -->
     <bean id="sportRecordService" class="cz.muni.fi.pa165.sportactivitymanager.service.impl.SportRecordServiceImpl">
         <property name="sRDao" ref="sportRecordDao" />
+        <property name="userSI" ref="userService" />
     </bean>
     
 
-    <!-- /// user /// -->
-    <!-- userDao + entityManager -->
-    <bean id="userDao" class="cz.muni.fi.pa165.sportactivitymanager.dao.impl.UserDAOImpl">
-        <property name="em">
-            <bean class = "org.springframework.orm.jpa.support.SharedEntityManagerBean">
-                <property name = "entityManagerFactory" ref="emf"/>  
-            </bean>
-        </property>
-    </bean>
-    
-    <!-- userService -->
-    <bean id="userService" class="cz.muni.fi.pa165.sportactivitymanager.service.impl.UserServiceImpl">
-        <property name="uDao" ref="userDao" />
-    </bean>
+
 
 
     <!-- /// caloriesTable /// -->
