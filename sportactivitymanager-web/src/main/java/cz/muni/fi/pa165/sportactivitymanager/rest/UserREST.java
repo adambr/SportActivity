@@ -1,6 +1,7 @@
-
 package cz.muni.fi.pa165.sportactivitymanager.rest;
 
+import com.sun.jersey.api.core.InjectParam;
+import com.sun.jersey.spi.inject.Inject;
 import cz.muni.fi.pa165.sportactivitymanager.DataAccException;
 import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
@@ -19,6 +20,10 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,17 +33,18 @@ import org.springframework.stereotype.Component;
 //Delete by ID neni v Service vrstve, tak sem ho smazal i tady
 @Component
 @Path("user")
-public class UserREST
-{
+public class UserREST {
+
     @Autowired
-    protected UserService userService;   
-    
+    protected UserService userService;
     final static Logger log = LoggerFactory.getLogger(UserREST.class);
+    @Inject
+    @InjectParam("cz.muni.fi.pa165.sportactivitymanager.service.impl")
+    protected AuthenticationManager authenticationManager;
 
     @GET
     @Produces("text/plain")
-    public String getText() 
-    {
+    public String getText() {
         return "Hello, User REST API is ready!";
     }
 
@@ -46,19 +52,30 @@ public class UserREST
     @Path("create")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UserDTO create(UserDTO user, @Context HttpServletResponse response) throws IOException 
-    {       
-        if (user == null || user.getFirstName().isEmpty() || user.getLastName().isEmpty() || 
-                user.getBirthDay() == null || user.getWeight() == null || user.getGender() == null)            
-        {           
+    public UserDTO create(UserDTO user, @Context HttpServletResponse response) throws IOException {
+        if (user == null || user.getFirstName().isEmpty() || user.getLastName().isEmpty()
+                || user.getBirthDay() == null || user.getWeight() == null || user.getGender() == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
+        }
+        
+        /*je to vlastne to same co se dela v authenticationSportManageru. 
+         * Jen v DB musí asi být user rest rest
+         * a v clientovi se asi bude tenhle user zadávat
+        */
         try {
-            userService.create(user);        
+            if (authenticationManager != null) {
+                Authentication request = new UsernamePasswordAuthenticationToken("rest", "rest");
+                Authentication result = authenticationManager.authenticate(request);
+                SecurityContextHolder.getContext().setAuthentication(result);
+
+                userService.create(user);
+            } else {
+                log.error("authenticationManager is null");
+            }
         } catch (DataAccException ex) {
             log.error("Create user error: " + ex);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
+        }
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Access-Control-Allow-Origin", "*");
         return user;
@@ -67,29 +84,28 @@ public class UserREST
     @GET
     @Path("getByID/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public UserDTO getByID(@PathParam("id") String id, 
-            @Context HttpServletResponse response) throws IOException {        
+    public UserDTO getByID(@PathParam("id") String id,
+            @Context HttpServletResponse response) throws IOException {
         Long lid = Long.parseLong(id);
-        UserDTO user = null;        
+        UserDTO user = null;
         try {
             user = userService.getByID(lid);
         } catch (DataAccException ex) {
             log.error("Get user by id error: " + ex);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
+        }
         if (user == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "id_not_found");
-        }        
+        }
         response.setHeader("Access-Control-Allow-Origin", "*");
         return user;
-    }  
-  
-    
+    }
+
     @POST
     @Path("deleteByUser")
-    public void deleteByUser(UserDTO user, 
-            @Context HttpServletResponse response) throws IOException {                
-        
+    public void deleteByUser(UserDTO user,
+            @Context HttpServletResponse response) throws IOException {
+
         if (user == null || user.getId() == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -98,28 +114,27 @@ public class UserREST
         } catch (Exception e) {
             log.error("Delete user error: " + e);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
+        }
         response.setHeader("Access-Control-Allow-Origin", "*");
     }
-    
+
     @POST
     @Path("update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UserDTO update(UserDTO user, 
-            @Context HttpServletResponse response) throws IOException {        
-        
-        if (user == null || user.getFirstName().isEmpty() || user.getLastName().isEmpty() || 
-                user.getBirthDay() == null || user.getWeight() == null || user.getGender() == null) 
-        {
+    public UserDTO update(UserDTO user,
+            @Context HttpServletResponse response) throws IOException {
+
+        if (user == null || user.getFirstName().isEmpty() || user.getLastName().isEmpty()
+                || user.getBirthDay() == null || user.getWeight() == null || user.getGender() == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
-        try  {
+        }
+        try {
             userService.update(user);
         } catch (Exception ex) {
             log.error("Update user error: " + ex);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
+        }
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Access-Control-Allow-Origin", "*");
         return user;
@@ -128,24 +143,26 @@ public class UserREST
     @GET
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserDTO> findAll(@Context HttpServletResponse response) throws IOException  {                
-       
-        List<UserDTO> list = null;        
+    public List<UserDTO> findAll(@Context HttpServletResponse response) throws IOException {
+
+        List<UserDTO> list = null;
         try {
-            if (userService == null) { log.info("userService is NULL"); }            
+            if (userService == null) {
+                log.info("userService is NULL");
+            }
             list = userService.findAll();
         } catch (Exception e) {
             log.error("Find all users error: " + e);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
-        if (list == null)  {
+        }
+        if (list == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }        
-        
+        }
+
         for (UserDTO userDTO : list) {
             userDTO.setRecords(null);
         }
         response.setHeader("Access-Control-Allow-Origin", "*");
         return list;
-    }   
+    }
 }
