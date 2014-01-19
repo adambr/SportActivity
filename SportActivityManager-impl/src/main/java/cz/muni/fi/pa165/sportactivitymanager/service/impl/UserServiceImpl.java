@@ -8,6 +8,8 @@ import cz.muni.fi.pa165.sportactivitymanager.User;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 //TODO  security  methods
 @Service
 public class UserServiceImpl implements UserService {
+    
+    final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserDAO uDao;
 
@@ -97,15 +101,20 @@ public class UserServiceImpl implements UserService {
         if (userDto != null) {
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-                    System.out.print("############################################# "+userLogin + "   " + userDto.getLogin());
-                    if (userDto.getId() != uDao.getByLogin(userLogin).getId()) {
-                            if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                                throw new DataAccException("Only role ADMIN can use update methodTEST");
-                            }
+                    UserDTO fromDB = UserDTOChanger.entityToDTO(uDao.getByLogin(userLogin));
+
+                    if (!userDto.equals(fromDB)) {
+                        log.info("user is not owner");
+                        if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                            log.info("not admin");
+                            throw new DataAccException("Only owner or admin can update user.");
                         }
-                    }                
+                    }
+                }
+                log.info("test passed, lets update user");
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
                 uDao.update(user);
 

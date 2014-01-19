@@ -5,8 +5,11 @@ import cz.muni.fi.pa165.sportactivitymanager.SportRecord;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dao.SportRecordDAO;
 import cz.muni.fi.pa165.sportactivitymanager.changer.SportRecordDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.changer.UserDTOChanger;
+import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
+import static cz.muni.fi.pa165.sportactivitymanager.service.impl.UserServiceImpl.log;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -52,6 +55,8 @@ public class SportRecordServiceImpl implements SportRecordService {
     public SportRecordDTO getSportRecord(Long id) {
         SportRecordDTO sportRecordTO = null;
         if (id != null) {
+            SportRecord sportRecord = sRDao.getSportRecord(id);
+            sportRecordTO = SportRecordDTOChanger.entityToDTO(sportRecord);
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
@@ -62,8 +67,6 @@ public class SportRecordServiceImpl implements SportRecordService {
                         }
                     }
                 }
-                SportRecord sportRecord = sRDao.getSportRecord(id);
-                sportRecordTO = SportRecordDTOChanger.entityToDTO(sportRecord);
             } catch (Exception ex) {
                 throw new DataAccException(ex.toString());
             }
