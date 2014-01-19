@@ -8,9 +8,6 @@ import cz.muni.fi.pa165.sportactivitymanager.changer.CaloriesTableDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.CaloriesTableService;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,12 +42,6 @@ public class CaloriesTableServiceImpl implements CaloriesTableService {
         }
 
         try {
-            if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                    throw new DataAccException("Only role ADMIN can use create method");
-                }
-            }
             CaloriesTable caloriesTable = CaloriesTableDTOChanger.dtoToEntity(caloriesTableDTO);
             caloriesTableDAO.create(caloriesTable);
             caloriesTableDTO.setId(caloriesTable.getId());
@@ -68,12 +59,6 @@ public class CaloriesTableServiceImpl implements CaloriesTableService {
         CaloriesTableDTO caloriesTableDTO = null;
 
         try {
-            if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                    throw new DataAccException("Only role ADMIN can use create method");
-                }
-            }
             CaloriesTable caloriesTable = caloriesTableDAO.get(id);
             caloriesTableDTO = CaloriesTableDTOChanger.entityToDTO(caloriesTable);
         } catch (Exception ex) {
@@ -90,12 +75,6 @@ public class CaloriesTableServiceImpl implements CaloriesTableService {
         }
 
         try {
-            if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                    throw new DataAccException("Only role ADMIN can use create method");
-                }
-            }
             CaloriesTable caloriesTable = CaloriesTableDTOChanger.dtoToEntity(caloriesTableDTO);
             caloriesTableDAO.update(caloriesTable);
         } catch (Exception ex) {
@@ -110,12 +89,6 @@ public class CaloriesTableServiceImpl implements CaloriesTableService {
         }
 
         try {
-            if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                    throw new DataAccException("Only role ADMIN can use create method");
-                }
-            }
             CaloriesTable caloriesTable = CaloriesTableDTOChanger.dtoToEntity(caloriesTableDTO);
             caloriesTableDAO.delete(caloriesTable);
         } catch (Exception ex) {
@@ -130,12 +103,6 @@ public class CaloriesTableServiceImpl implements CaloriesTableService {
         }
 
         try {
-            if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                    throw new DataAccException("Only role ADMIN can use create method");
-                }
-            }
             caloriesTableDAO.delete(id);
         } catch (Exception ex) {
             throw new DataAccException(ex.toString());

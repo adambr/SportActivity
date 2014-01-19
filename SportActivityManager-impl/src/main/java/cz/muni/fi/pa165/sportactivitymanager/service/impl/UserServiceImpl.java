@@ -40,9 +40,17 @@ public class UserServiceImpl implements UserService {
         if (userDto != null) {
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                        throw new DataAccException("Only role ADMIN can use create method");
+                    String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+                    UserDTO fromDB = UserDTOChanger.entityToDTO(uDao.getByLogin(userLogin));
+
+                    if (!userDto.equals(fromDB)) {
+                        log.info("user is not owner");
+                        if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                            log.info("not admin");
+                            throw new DataAccException("Only owner or admin can update user.");
+                        }
                     }
                 }
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
