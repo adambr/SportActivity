@@ -63,6 +63,7 @@
     <!-- sportRecordService -->
     <bean id="sportRecordService" class="cz.muni.fi.pa165.sportactivitymanager.service.impl.SportRecordServiceImpl">
         <property name="sRDao" ref="sportRecordDao" />
+        <property name="userS" ref="userService" />
     </bean>
     
     <!-- /// caloriesTable /// -->

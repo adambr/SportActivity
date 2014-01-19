@@ -5,11 +5,8 @@ import cz.muni.fi.pa165.sportactivitymanager.SportRecord;
 import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dao.SportRecordDAO;
 import cz.muni.fi.pa165.sportactivitymanager.changer.SportRecordDTOChanger;
-import cz.muni.fi.pa165.sportactivitymanager.changer.UserDTOChanger;
-import cz.muni.fi.pa165.sportactivitymanager.dto.UserDTO;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
 import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
-import static cz.muni.fi.pa165.sportactivitymanager.service.impl.UserServiceImpl.log;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -59,10 +56,14 @@ public class SportRecordServiceImpl implements SportRecordService {
             sportRecordTO = SportRecordDTOChanger.entityToDTO(sportRecord);
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-                        if (!userS.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                        
+                        if (!userS.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {        
                             return null;
                         }
                     }
@@ -82,9 +83,13 @@ public class SportRecordServiceImpl implements SportRecordService {
         if (sportRecordTO != null) {
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+
                         if (!userS.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
                             return;
                         }
@@ -105,14 +110,19 @@ public class SportRecordServiceImpl implements SportRecordService {
         if (id != null) {
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+
                         if (!userS.getByLogin(userLogin).getRecords().contains(SportRecordDTOChanger.entityToDTO(sRDao.getSportRecord(id)))) {
                             return;
                         }
                     }
                 }
+
                 sRDao.delete(id);
             } catch (Exception ex) {
                 throw new DataAccException(ex.toString());
@@ -127,9 +137,13 @@ public class SportRecordServiceImpl implements SportRecordService {
         if (sportRecordTO != null) {
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+
                         if (!userS.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
                             return;
                         }
