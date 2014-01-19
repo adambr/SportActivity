@@ -184,3 +184,27 @@ h2 {
 #content {
     position: relative;
 }
+
+.login-box {
+    position: relative;
+    width: 340px;
+    height: 130px;
+    margin: 0 auto;
+    border-radius: 20px;
+    background-color: #ccf0ca;
+}
+
+.login-box .submit {
+    padding: 3px 20px;
+    margin: 12px auto 0 auto;
+    display: block;
+}
+
+.login-box table {
+    padding-top: 10px;
+    margin: 20px auto 0 auto;
+}
+
+.login-table {
+    margin: 0 auto;
+}

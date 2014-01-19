@@ -2,10 +2,7 @@ package cz.muni.fi.pa165.sportactivitymanager.web;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.Before;
 import org.apache.taglibs.standard.functions.Functions;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Base actionBean implementing the required methods for setting and getting

@@ -26,10 +26,10 @@
                 <div id="login-panel-cont">
                     <div id="title"><f:message key="${titlekey}"/></div>
                     
-                    <%-- zobrazí se neautentizovaným uživatelům  --%>           
+                    <%-- zobrazí se neautentizovaným uživatelům            
                     <sec:authorize access="isAnonymous()">
                         <div id="login"> <a href="${pageContext.request.contextPath}/login.jsp"><f:message key="login"/></a></div>
-                    </sec:authorize>
+                    </sec:authorize>--%> 
 
                     <%-- zobrazí se pouze userum       
                     <sec:authorize access="hasRole('USER')">                              

@@ -21,4 +21,5 @@ public class IndexActionBean extends BaseActionBean {
     public Resolution index() {
         return new ForwardResolution("/index.jsp");
     }
+    
 }
