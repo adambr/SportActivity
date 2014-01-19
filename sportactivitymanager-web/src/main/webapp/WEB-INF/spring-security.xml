@@ -15,11 +15,13 @@ http://www.springframework.org/schema/beans
     
     
     <http use-expressions="true" auto-config="true">
-        <intercept-url pattern="/login.jsp" access="isAuthenticated()" />
+        <intercept-url pattern="/users*" access="isAuthenticated()" />
+        <intercept-url pattern="/records*" access="isAuthenticated()" />
+        <intercept-url pattern="/activities*" access="isAuthenticated()" />
         <form-login 
             login-page='/'
             default-target-url="/"
-            authentication-failure-url="/login_error" />
+            authentication-failure-url="/?login=fail" />
         <logout logout-success-url="/" />
     </http>
     

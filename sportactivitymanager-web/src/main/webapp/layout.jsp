@@ -12,11 +12,16 @@
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
             <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
             <script>
-                $(function() {
-                    setTimeout(function() {
-                        $('.messages').fadeOut('fast');
-                    }, 3000);
+                $(document).ready(function() {
+                    $('form:first *:input[type!=hidden]:first').focus();
+                    $(function() {
+                        setTimeout(function() {
+                            $('.messages').fadeOut('fast');
+                            $('.error').fadeOut('fast');
+                        }, 3000);
+                    });
                 });
+
             </script>
             <s:layout-component name="header"/>
 
@@ -25,7 +30,7 @@
             <div id="page">
                 <div id="login-panel-cont">
                     <div id="title"><f:message key="${titlekey}"/></div>
-                    
+
                     <%-- zobrazí se neautentizovaným uživatelům            
                     <sec:authorize access="isAnonymous()">
                         <div id="login"> <a href="${pageContext.request.contextPath}/login.jsp"><f:message key="login"/></a></div>
@@ -41,7 +46,7 @@
                     <sec:authorize access="isAuthenticated()">                              
                         <div id="login"><f:message key="logged"/>: <sec:authentication property="name" /> (<a href="${pageContext.request.contextPath}/j_spring_security_logout"><f:message key="logout"/></a>)</div>
                     </sec:authorize>
-                        
+
                 </div>
                 <div id="header">
                     <div id="logo">

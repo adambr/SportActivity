@@ -15,13 +15,19 @@
             </sec:authorize>
             <sec:authorize access="hasRole('USER')"> 
                 <div id="menu-box">
+                    <s:link href="/users/edit" class="users"><f:message key="index.users.link.for.user"/></s:link>
                     <s:link beanclass="cz.muni.fi.pa165.sportactivitymanager.web.RecordActionBean" class="activity"><f:message key="sportRecord"/></s:link>
                     </div>
             </sec:authorize>
         </sec:authorize>
 
         <sec:authorize access="isAnonymous()">
-            
+
+
+            <c:if test="${not empty param['login']}" >
+                <div class="error"><f:message key="bad.login"/></div>
+            </c:if>
+
             <div class="userTitle"><f:message key="indexMessage"/></div>
             <div class="login-box">
                 <form name='f' action="j_spring_security_check" method='POST'>

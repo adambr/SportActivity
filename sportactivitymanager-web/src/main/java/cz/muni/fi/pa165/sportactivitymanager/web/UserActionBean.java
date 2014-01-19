@@ -30,12 +30,13 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
 
     final static Logger log = LoggerFactory.getLogger(UserActionBean.class);
 
+    Authentication auth;
+
     public enum MyRole {
 
         USER, ADMIN;
     }
 
-    @Validate(on = {"add", "save"}, required = true)
     private MyRole selectedRole;
 
     public MyRole getSelectedRole() {
@@ -75,6 +76,32 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         }
     }
 
+    @Before(on = {"list", "delete"})
+    public Resolution authorizationAdmin() {
+        Authentication auth;
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!AuthTool.isRole(auth, ADMIN)) {
+            return new RedirectResolution(IndexActionBean.class);
+        }
+
+        return null;
+    }
+
+    @Before(on = {"edit", "save"})
+    public Resolution authorizationUser() {
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        if (AuthTool.isRole(auth, ADMIN)) {
+            authRole = ADMIN;
+        } else if (AuthTool.isRole(auth, USER)) {
+            authRole = USER;
+        } else {
+            return new RedirectResolution(IndexActionBean.class);
+        }
+
+        authName = auth.getName();
+        return null;
+    }
+
     @SpringBean
     protected SportRecordService srs;
 
@@ -95,17 +122,6 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
         this.user = user;
     }
 
-    @Before
-    public Resolution authorization() {
-        Authentication auth;
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!AuthTool.isRole(auth, ADMIN)) {
-            return new RedirectResolution(IndexActionBean.class);
-        }
-
-        return null;
-    }
-
     @DefaultHandler
     public Resolution list() {
         log.debug("list()");
@@ -122,17 +138,20 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     }
 
     public Resolution edit() {
-        String ids = getContext().getRequest().getParameter("user.id");
-        if (ids == null) {
-            return new RedirectResolution(this.getClass());
+        if (authRole.equals(ADMIN)) {
+            String ids = getContext().getRequest().getParameter("user.id");
+            Long id;
+            try {
+                id = Long.parseLong(ids);
+            } catch (NumberFormatException ex) {
+                return new RedirectResolution(this.getClass());
+            }
+            user = userService.getByID(id);
+        } else {
+            user = userService.getByLogin(authName);
         }
 
-        try {
-            user = userService.getByID(Long.parseLong(ids));
-        } catch (NumberFormatException ex) {
-            return new RedirectResolution(this.getClass());
-        }
-        
+        // for edit form select box
         if (user.getCredentials().equals("ADMIN")) {
             selectedRole = MyRole.ADMIN;
         } else {
@@ -143,11 +162,32 @@ public class UserActionBean extends BaseActionBean implements ValidationErrorHan
     }
 
     public Resolution save() {
-        log.debug("save() user={}", user);
-        user.setRecords(userService.getByID(user.getId()).getRecords());
-        user.setCredentials(selectedRole.toString());
+        boolean logout = false;
+
+        if (authRole.equals(ADMIN)) {
+            user.setRecords(userService.getByID(user.getId()).getRecords());
+            user.setCredentials(selectedRole.toString());
+        } else {
+            UserDTO userDB = userService.getByLogin(authName);
+            user.setRecords(userService.getByID(userDB.getId()).getRecords());
+            user.setCredentials(userDB.getCredentials());
+            if (!user.getLogin().equals(userDB.getLogin())) {
+                logout = true;
+            }
+        }
+
         userService.update(user);
-        return new RedirectResolution(this.getClass(), "list");
+        getContext().getMessages().add(new LocalizableMessage("user.update.message", escapeHTML(user.getFirstName()), escapeHTML(user.getLastName())));
+
+        if (logout) {
+            SecurityContextHolder.clearContext();
+        }
+
+        if (authRole.equals(ADMIN)) {
+            return new RedirectResolution(this.getClass(), "list");
+        } else {
+            return new RedirectResolution(this.getClass(), "edit");
+        }
     }
 
     public Resolution cancel() {

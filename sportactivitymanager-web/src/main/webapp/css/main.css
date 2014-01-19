@@ -178,8 +178,18 @@ h2 {
     background-color: lightgreen;
     left: 306px;
     top: -37px;
-    padding-right: 5px;
+    padding: 2px 5px 0px 5px;
 }
+
+.error {
+    position: absolute;
+    border: 1px solid red;
+    background-color: rgb(255, 103, 103);
+    left: 386px;
+    top: -37px;
+    padding: 2px 5px 0px 5px;
+}
+
 
 #content {
     position: relative;
