@@ -27,15 +27,15 @@
                 <form name='f' action="j_spring_security_check" method='POST'>
                     <table>
                         <tr>
-                            <td>User:</td>
+                            <td><f:message key="login.user"/>:</td>
                             <td><input type='text' name='j_username' value=''></td>
                         </tr>
                         <tr>
-                            <td>Password:</td>
+                            <td><f:message key="login.pass"/>:</td>
                             <td><input type='password' name='j_password' /></td>
                         </tr>
                     </table>
-                    <input class="submit" name="submit" type="submit" value="submit" />
+                    <input class="submit" name="submit" type="submit" value="<f:message key="login.submit"/>" />
                 </form>
             </div>
         </sec:authorize>
