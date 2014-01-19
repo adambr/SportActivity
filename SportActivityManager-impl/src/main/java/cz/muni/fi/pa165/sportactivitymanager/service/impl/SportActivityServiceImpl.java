@@ -8,6 +8,9 @@ import cz.muni.fi.pa165.sportactivitymanager.changer.SportActivityDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportActivityService;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +41,12 @@ public class SportActivityServiceImpl implements SportActivityService {
     public void create(SportActivityDTO sportActivityDTO) {
         if (sportActivityDTO != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
                 SportActivity activity = SportActivityDTOChanger.dtoToEntity(sportActivityDTO);
                 sportDAO.create(activity);
                 sportActivityDTO.setId(activity.getId());
@@ -56,6 +65,12 @@ public class SportActivityServiceImpl implements SportActivityService {
 
         if (id != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
                 SportActivity activity = sportDAO.getSportActivity(id);
                 activityDto = SportActivityDTOChanger.entityToDTO(activity);
             } catch (Exception ex) {
@@ -73,6 +88,12 @@ public class SportActivityServiceImpl implements SportActivityService {
 
         if (name != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
                 SportActivity activity = sportDAO.getSportActivity(name);
                 activityDto = SportActivityDTOChanger.entityToDTO(activity);
             } catch (Exception ex) {
@@ -88,6 +109,12 @@ public class SportActivityServiceImpl implements SportActivityService {
     public void delete(SportActivityDTO sportActivity) {
         if (sportActivity != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
                 sportDAO.delete(sportActivity.getId());
             } catch (Exception ex) {
                 throw new DataAccException(ex.toString());
@@ -101,6 +128,12 @@ public class SportActivityServiceImpl implements SportActivityService {
     public void delete(Long id) {
         if (id != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
                 sportDAO.delete(id);
             } catch (Exception ex) {
                 throw new DataAccException(ex.toString());
@@ -114,6 +147,12 @@ public class SportActivityServiceImpl implements SportActivityService {
     public void update(SportActivityDTO sportActivity) {
         if (sportActivity != null) {
             try {
+                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                        throw new DataAccException("Only role ADMIN can use create method");
+                    }
+                }
                 SportActivity activity = SportActivityDTOChanger.dtoToEntity(sportActivity);
                 sportDAO.update(activity);
             } catch (Exception ex) {

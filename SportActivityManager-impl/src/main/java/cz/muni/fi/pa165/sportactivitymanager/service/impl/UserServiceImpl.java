@@ -23,9 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 //TODO  security  methods
 @Service
 public class UserServiceImpl implements UserService {
-    
-    final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private UserDAO uDao;
 
     public void setuDao(UserDAO uDao) {
@@ -101,7 +100,7 @@ public class UserServiceImpl implements UserService {
         if (userDto != null) {
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                    
+
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
                     UserDTO fromDB = UserDTOChanger.entityToDTO(uDao.getByLogin(userLogin));
