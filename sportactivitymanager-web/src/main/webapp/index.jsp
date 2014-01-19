@@ -25,7 +25,7 @@
 
 
             <c:if test="${not empty param['login']}" >
-                <div class="error"><f:message key="bad.login"/></div>
+                <div class="error-login"><f:message key="bad.login"/></div>
             </c:if>
 
             <div class="userTitle"><f:message key="indexMessage"/></div>

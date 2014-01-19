@@ -17,7 +17,7 @@
                     $(function() {
                         setTimeout(function() {
                             $('.messages').fadeOut('fast');
-                            $('.error').fadeOut('fast');
+                            $('.error-login').fadeOut('fast');
                         }, 3000);
                     });
                 });

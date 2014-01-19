@@ -181,13 +181,21 @@ h2 {
     padding: 2px 5px 0px 5px;
 }
 
-.error {
+.error-login {
     position: absolute;
     border: 1px solid red;
     background-color: rgb(255, 103, 103);
     left: 386px;
     top: -37px;
     padding: 2px 5px 0px 5px;
+}
+
+.error {
+    color: red;
+}
+
+.error input {
+    border-color: red;
 }
 
 
