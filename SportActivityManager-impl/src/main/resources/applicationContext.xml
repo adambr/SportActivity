@@ -19,7 +19,7 @@
     </bean>
     <tx:annotation-driven transaction-manager="txManager"/>
     
-        <!-- /// user /// -->
+    <!-- /// user /// -->
     <!-- userDao + entityManager -->
     <bean id="userDao" class="cz.muni.fi.pa165.sportactivitymanager.dao.impl.UserDAOImpl">
         <property name="em">
@@ -63,13 +63,8 @@
     <!-- sportRecordService -->
     <bean id="sportRecordService" class="cz.muni.fi.pa165.sportactivitymanager.service.impl.SportRecordServiceImpl">
         <property name="sRDao" ref="sportRecordDao" />
-        <property name="userSI" ref="userService" />
     </bean>
     
-
-
-
-
     <!-- /// caloriesTable /// -->
     <!-- caloriesTableDAO + entityManager -->
     <bean id="tableDAO" class="cz.muni.fi.pa165.sportactivitymanager.dao.impl.CaloriesTableDAOImpl">

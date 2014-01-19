@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.sportactivitymanager.dto.SportRecordDTO;
 import cz.muni.fi.pa165.sportactivitymanager.dao.SportRecordDAO;
 import cz.muni.fi.pa165.sportactivitymanager.changer.SportRecordDTOChanger;
 import cz.muni.fi.pa165.sportactivitymanager.service.SportRecordService;
+import cz.muni.fi.pa165.sportactivitymanager.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,10 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SportRecordServiceImpl implements SportRecordService {
 
-    private UserServiceImpl userSI;
+    private UserService userS;
 
-    public void setUserSI(UserServiceImpl userSI) {
-        this.userSI = userSI;
+    public void setUserS(UserService userS) {
+        this.userS = userS;
     }
     private SportRecordDAO sRDao;
 
@@ -36,15 +37,6 @@ public class SportRecordServiceImpl implements SportRecordService {
     public void create(SportRecordDTO sportRecordTO) {
         if (sportRecordTO != null) {
             try {
-                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                    List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                    if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
-                            return;
-                        }
-                    }
-                }
                 SportRecord sr = SportRecordDTOChanger.DTOToEntity(sportRecordTO);
                 sRDao.create(sr);
                 sportRecordTO.setId(sr.getId());
@@ -65,7 +57,7 @@ public class SportRecordServiceImpl implements SportRecordService {
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                        if (!userS.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
                             return null;
                         }
                     }
@@ -90,7 +82,7 @@ public class SportRecordServiceImpl implements SportRecordService {
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                        if (!userS.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
                             return;
                         }
                     }
@@ -113,7 +105,7 @@ public class SportRecordServiceImpl implements SportRecordService {
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-                        if (!userSI.getByLogin(userLogin).getRecords().contains(SportRecordDTOChanger.entityToDTO(sRDao.getSportRecord(id)))) {
+                        if (!userS.getByLogin(userLogin).getRecords().contains(SportRecordDTOChanger.entityToDTO(sRDao.getSportRecord(id)))) {
                             return;
                         }
                     }
@@ -135,7 +127,7 @@ public class SportRecordServiceImpl implements SportRecordService {
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
                         String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-                        if (!userSI.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
+                        if (!userS.getByLogin(userLogin).getRecords().contains(sportRecordTO)) {
                             return;
                         }
                     }

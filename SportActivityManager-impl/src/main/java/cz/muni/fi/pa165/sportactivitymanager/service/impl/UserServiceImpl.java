@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                        throw new DataAccException("Only role ADMIN can use create method");
+                        throw new DataAccException("Only role ADMIN can use delete method");
                     }
                 }
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
@@ -98,14 +98,17 @@ public class UserServiceImpl implements UserService {
             try {
                 if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
                     List<GrantedAuthority> authorities = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-                    if (userDto.getId() != uDao.getByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()) {
-                        if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-                            throw new DataAccException("Only role ADMIN can use create method");
+                    String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+                    System.out.print("############################################# "+userLogin + "   " + userDto.getLogin());
+                    if (userDto.getId() != uDao.getByLogin(userLogin).getId()) {
+                            if (!authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+                                throw new DataAccException("Only role ADMIN can use update methodTEST");
+                            }
                         }
-                    }
-                }
+                    }                
                 User user = UserDTOChanger.dtoToUserEntity(userDto);
                 uDao.update(user);
+
             } catch (Exception ex) {
                 throw new DataAccException(ex.toString());
             }
