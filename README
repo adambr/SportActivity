@@ -12,6 +12,10 @@ mvn clean install tomcat7:run
 *this command run client(have to be in client folder)
 mvn exec:java
 
+default authentication (ADMIN):
+	user: admin
+	pass: admin
+
 *****************************************************
 *Client samples
 
